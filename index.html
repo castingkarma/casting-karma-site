@@ -3,20 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Casting Karma LLC — AI implementation that ships</title>
-<meta name="description" content="Casting Karma LLC builds and operates real AI-automated businesses — and offers that same capability as a service. Done-with-you AI implementation for operations, content, data, and reporting.">
+<title>AI Implementation &amp; Automation Services | Casting Karma LLC</title>
+<meta name="description" content="Casting Karma LLC delivers done-with-you AI implementation, automation, AI agents, and custom software — AI wired into how your business actually runs. Get in touch.">
+<meta name="keywords" content="AI implementation, AI automation, AI consulting, AI agents, business process automation, custom software development, AI integrations, workflow automation">
+<meta name="author" content="Casting Karma LLC">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="theme-color" content="#FBF8F1">
 <link rel="canonical" href="https://castingkarmallc.com/">
-<link rel="icon" href="emblem.png" type="image/png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="emblem.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="emblem.png">
+<link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Casting Karma LLC">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://castingkarmallc.com/">
-<meta property="og:title" content="Casting Karma LLC — AI implementation that ships">
-<meta property="og:description" content="We wire AI into how a business actually runs — operations, content, data, reporting. Our own portfolio is the proof.">
+<meta property="og:title" content="AI Implementation &amp; Automation Services | Casting Karma LLC">
+<meta property="og:description" content="Done-with-you AI implementation, automation, AI agents, and custom software — AI wired into how your business actually runs.">
 <meta property="og:image" content="https://castingkarmallc.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Casting Karma LLC — AI implementation that ships">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Implementation &amp; Automation Services | Casting Karma LLC">
+<meta name="twitter:description" content="Done-with-you AI implementation, automation, AI agents, and custom software — built into how your business runs.">
+<meta name="twitter:image" content="https://castingkarmallc.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -37,6 +48,7 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
   .serif{font-family:'Cinzel',Georgia,serif}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
   /* header */
   header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(150%) blur(12px);
@@ -144,7 +156,19 @@
     background:var(--gold);padding:15px 28px;border-radius:11px;transition:.22s;box-shadow:0 8px 26px rgba(194,162,82,.26)}
   .mailchip:hover{transform:translateY(-2px);background:#cdb064}
   .mailchip svg{width:18px;height:18px;stroke:#221b07;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .contact .sub{margin-top:18px;font-size:13px;color:var(--muted)}
+  .contact .sub{margin-top:22px;font-size:13px;color:var(--muted)}
+  .needs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:860px;margin:34px auto 36px}
+  .need{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:30px 24px;
+    text-align:center;transition:.25s;display:flex;flex-direction:column;align-items:center}
+  .need:hover{transform:translateY(-4px);border-color:rgba(194,162,82,.5);box-shadow:0 18px 40px rgba(46,58,40,.1)}
+  .need .ic{margin:0 auto 16px}
+  .need h3{font-family:'Cinzel',serif;font-size:15.5px;font-weight:500;letter-spacing:.3px;margin-bottom:9px;color:var(--green)}
+  .need p{color:var(--muted);font-size:13.5px;font-weight:300;margin:0 0 18px;max-width:none}
+  .need .need-cta{margin-top:auto;font-size:13.5px;font-weight:500;color:var(--gold-2);
+    display:inline-flex;align-items:center;gap:7px;transition:.2s}
+  .need .need-cta svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+  .need:hover .need-cta{color:var(--green)}
+  .need:hover .need-cta svg{transform:translateX(3px)}
 
   /* footer */
   footer{border-top:1px solid var(--line);padding:40px 0;background:var(--cream-2)}
@@ -166,6 +190,7 @@
     .hero img.logo{width:250px}
     section{padding:70px 0}
     .contact .panel{padding:50px 22px}
+    .needs{grid-template-columns:1fr;gap:14px;max-width:420px}
     .nav-links a.navlink{display:none}
     .logo-tag{font-size:9.5px;letter-spacing:.14em;gap:9px}
     .logo-tag::before,.logo-tag::after{width:20px}
@@ -177,13 +202,75 @@
     .svc{padding:28px 22px}
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://castingkarmallc.com/#organization",
+      "name": "Casting Karma LLC",
+      "url": "https://castingkarmallc.com/",
+      "logo": "https://castingkarmallc.com/logo.png",
+      "image": "https://castingkarmallc.com/og.png",
+      "description": "Casting Karma LLC builds and operates real AI-automated businesses and offers done-with-you AI implementation, automation, AI agents, and custom software as a service.",
+      "email": "contact@castingkarmallc.com",
+      "slogan": "Good energy in, good energy out.",
+      "foundingLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressRegion": "TX", "addressCountry": "US" } },
+      "areaServed": [ { "@type": "Country", "name": "United States" }, { "@type": "State", "name": "Texas" } ],
+      "knowsAbout": [ "AI implementation", "AI automation", "Business process automation", "AI agents", "AI workflow automation", "AI consulting", "System integration", "Custom software development" ],
+      "contactPoint": { "@type": "ContactPoint", "email": "contact@castingkarmallc.com", "contactType": "sales", "areaServed": "US", "availableLanguage": "English" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://castingkarmallc.com/#website",
+      "url": "https://castingkarmallc.com/",
+      "name": "Casting Karma LLC",
+      "publisher": { "@id": "https://castingkarmallc.com/#organization" },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://castingkarmallc.com/#service",
+      "name": "Casting Karma LLC — AI Implementation",
+      "url": "https://castingkarmallc.com/",
+      "description": "Done-with-you AI implementation for teams that want AI actually built into how their business runs — operations, content, data, and reporting.",
+      "provider": { "@id": "https://castingkarmallc.com/#organization" },
+      "serviceType": [ "AI implementation", "AI automation", "AI agent setup", "AI consulting", "Custom software development", "App integrations" ],
+      "areaServed": [ { "@type": "Country", "name": "United States" }, { "@type": "State", "name": "Texas" } ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "AI implementation services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ops automation", "description": "Turn a manual workflow — follow-ups, reporting, data entry, reminders — into a running system that does it for you, on schedule." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI agent & workflow setup", "description": "Task-scoped AI agents inside your tools that draft, sort, route, summarize, and act — with guardrails and a human check where it matters." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Connector & data wiring", "description": "Connect the apps you already use — email, CRM, spreadsheets, storage, billing — so data flows without copy-paste." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Internal AI enablement", "description": "Set your team up with AI workflows and practical guardrails that fit how they work." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom software development", "description": "A focused web app or internal tool, designed and built around how your team actually works." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI consulting", "description": "Map the highest-leverage places to start with AI." } }
+        ]
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://castingkarmallc.com/#webpage",
+      "url": "https://castingkarmallc.com/",
+      "name": "AI Implementation & Automation Services | Casting Karma LLC",
+      "isPartOf": { "@id": "https://castingkarmallc.com/#website" },
+      "about": { "@id": "https://castingkarmallc.com/#organization" },
+      "description": "Done-with-you AI implementation, automation, AI agents, and custom software.",
+      "inLanguage": "en-US"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
     <a class="brand" href="#top">
-      <img src="emblem.png" alt="Casting Karma lotus emblem">
+      <img src="emblem.png" alt="Casting Karma lotus emblem" width="40" height="42">
       <span class="wm serif">Casting Karma<span class="llc">LLC</span></span>
     </a>
     <div class="nav-links">
@@ -198,7 +285,8 @@
 <section class="hero">
   <div class="halo"></div>
   <div class="wrap">
-    <img class="logo" src="casting-karma-logo-clean.png" alt="Casting Karma LLC">
+    <img class="logo" src="casting-karma-logo-clean.png" alt="Casting Karma LLC — AI implementation and automation" width="300" height="191" fetchpriority="high">
+    <h1 class="sr-only">AI Implementation &amp; Automation Services — Casting Karma LLC</h1>
     <div class="logo-tag">Good energy in&nbsp;·&nbsp;Good energy out</div>
     <div class="eyebrow">Technology &amp; AI solutions</div>
     <p class="lede">We build and operate real AI-automated businesses — and we bring that same capability to yours. AI wired into how the work actually runs, not slideware.</p>
@@ -228,7 +316,7 @@
     <div class="sec-head reveal">
       <div class="kicker">Work with us</div>
       <h2>AI implementation that ships</h2>
-      <p>Done-with-you AI operations for teams that want it actually built in — not just advised on. We map how your business runs today, wire AI into the parts that eat time, and hand back working systems your team can trust: operations, content, data, and reporting.</p>
+      <p>We build AI directly into how your business runs — we don't just advise on it. First we learn how your operation works today. Then we automate the parts that eat your team's time and hand back reliable systems you can trust, across operations, content, data, and reporting.</p>
     </div>
     <div class="svc-cards">
       <div class="svc reveal">
@@ -312,7 +400,33 @@
     <div class="panel reveal">
       <div class="kicker">Get in touch</div>
       <h2>Tell us about your operations</h2>
-      <p>Have a workflow eating your team's time, or an idea you want AI actually built into? Send one message — we read every one.</p>
+      <p>However you'd like to work with us — AI built into your operations, a custom tool, or help figuring out where to start — it begins with a single message. Pick what fits, or just send a note.</p>
+      <div class="needs">
+        <div class="need reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3v12M6 21a3 3 0 100-6 3 3 0 000 6zM18 9a3 3 0 100-6 3 3 0 000 6zM18 6c0 7-12 4-12 9"/></svg></div>
+          <h3>Need AI integrations?</h3>
+          <p>Connect the tools you already use so your data and workflows finally talk to each other.</p>
+          <a class="need-cta" href="mailto:contact@castingkarmallc.com?subject=AI%20integrations%20inquiry">Let's connect
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="need reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13.5 6l-3 12"/></svg></div>
+          <h3>Have a custom software need?</h3>
+          <p>A focused web app or internal tool, designed and built around how your team actually works.</p>
+          <a class="need-cta" href="mailto:contact@castingkarmallc.com?subject=Custom%20software%20inquiry">Tell us about it
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="need reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.7 10.7c.5.4.7 1 .7 1.6v.2h6v-.2c0-.6.2-1.2.7-1.6A6 6 0 0012 3z"/></svg></div>
+          <h3>Looking for consulting?</h3>
+          <p>Not sure where AI fits yet? We'll map the highest-leverage places to start.</p>
+          <a class="need-cta" href="mailto:contact@castingkarmallc.com?subject=AI%20consulting%20inquiry">Start the conversation
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
       <a class="mailchip" href="mailto:contact@castingkarmallc.com?subject=AI%20Implementation%20inquiry">
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
         contact@castingkarmallc.com
@@ -325,7 +439,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-brand">
-      <img src="emblem.png" alt="">
+      <img src="emblem.png" alt="" width="32" height="34" loading="lazy">
       <span class="wm serif">Casting Karma <span style="color:var(--gold-2);font-size:11px;letter-spacing:3px">LLC</span></span>
     </div>
     <small>© <span id="yr"></span> Casting Karma LLC · United States</small>

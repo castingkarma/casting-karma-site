@@ -1,0 +1,13 @@
+{
+  "name": "Casting Karma LLC",
+  "short_name": "Casting Karma",
+  "description": "AI implementation, automation, and custom software — built into how your business runs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF8F1",
+  "theme_color": "#FBF8F1",
+  "icons": [
+    { "src": "emblem.png", "sizes": "476x502", "type": "image/png" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
