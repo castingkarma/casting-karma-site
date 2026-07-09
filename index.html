@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casting Karma LLC — AI implementation that ships</title>
+<meta name="description" content="Casting Karma LLC builds and operates real AI-automated businesses — and offers that same capability as a service. Done-with-you AI implementation for operations, content, data, and reporting.">
+<meta name="theme-color" content="#FBF8F1">
+<link rel="canonical" href="https://castingkarmallc.com/">
+<link rel="icon" href="emblem.png" type="image/png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Casting Karma LLC">
+<meta property="og:url" content="https://castingkarmallc.com/">
+<meta property="og:title" content="Casting Karma LLC — AI implementation that ships">
+<meta property="og:description" content="We wire AI into how a business actually runs — operations, content, data, reporting. Our own portfolio is the proof.">
+<meta property="og:image" content="https://castingkarmallc.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF8F1; --cream-2:#F4EFE4; --paper:#FFFFFF;
+    --green:#2E3A28; --green-2:#46553C; --green-soft:#5E6E54;
+    --gold:#C2A252; --gold-2:#A8863F; --gold-soft:rgba(194,162,82,.12);
+    --line:rgba(46,58,40,.12); --line-2:rgba(46,58,40,.2);
+    --muted:#6E7A63;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--cream);color:var(--green);-webkit-font-smoothing:antialiased;
+    line-height:1.7;font-weight:400;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .serif{font-family:'Cinzel',Georgia,serif}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(150%) blur(12px);
+    background:rgba(251,248,241,.82);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{height:42px;width:auto;display:block}
+  .wm{font-family:'Cinzel',serif;font-size:18px;font-weight:600;letter-spacing:2px;color:var(--green);line-height:1}
+  .wm .llc{font-size:9px;letter-spacing:4px;color:var(--gold-2);display:block;margin-top:3px}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  .nav-links a.navlink{font-size:13.5px;font-weight:500;color:var(--green-2);transition:.2s}
+  .nav-links a.navlink:hover{color:var(--gold-2)}
+  .nav-cta{font-size:13px;font-weight:500;color:var(--green);border:1px solid var(--line-2);
+    padding:10px 18px;border-radius:8px;transition:.2s}
+  .nav-cta:hover{border-color:var(--gold);color:var(--gold-2);background:var(--gold-soft)}
+
+  /* hero */
+  .hero{position:relative;text-align:center;padding:78px 0 92px;border-bottom:1px solid var(--line);overflow:hidden}
+  .hero .halo{position:absolute;left:50%;top:60px;transform:translateX(-50%);
+    width:640px;height:640px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,var(--gold-soft),rgba(194,162,82,0) 62%)}
+  .hero .wrap{position:relative;z-index:2}
+  .hero img.logo{display:block;width:300px;max-width:78%;height:auto;margin:0 auto 6px}
+  .logo-tag{margin:2px auto 0;font-size:12.5px;font-weight:500;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--green-soft);display:flex;justify-content:center;align-items:center;gap:14px}
+  .logo-tag::before,.logo-tag::after{content:"";width:32px;height:1px;background:var(--gold);opacity:.7}
+  .eyebrow{display:flex;justify-content:center;align-items:center;gap:10px;font-size:11px;font-weight:500;
+    letter-spacing:.28em;text-transform:uppercase;color:var(--gold-2);margin:14px 0 6px}
+  .eyebrow::before,.eyebrow::after{content:"";width:34px;height:1px;background:var(--gold);opacity:.6}
+  .lede{margin:20px auto 0;font-size:clamp(17px,2vw,20px);font-weight:300;color:var(--green-2);
+    max-width:48ch;line-height:1.7}
+  .cta-row{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:500;font-size:15px;
+    padding:14px 28px;border-radius:10px;transition:.22s;cursor:pointer}
+  .btn-gold{background:var(--gold);color:#221b07;box-shadow:0 8px 26px rgba(194,162,82,.28)}
+  .btn-gold:hover{transform:translateY(-2px);background:#cdb064;box-shadow:0 14px 38px rgba(194,162,82,.36)}
+  .btn-gold svg{transition:transform .22s}
+  .btn-gold:hover svg{transform:translateX(3px)}
+  .btn-ghost{color:var(--green);border:1px solid var(--line-2)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-2)}
+
+  /* values strip */
+  .strip{border-bottom:1px solid var(--line);background:var(--cream-2)}
+  .strip .wrap{display:flex;flex-wrap:wrap;gap:12px 40px;justify-content:center;
+    padding:20px 28px;font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--muted)}
+  .strip span{display:inline-flex;align-items:center;gap:9px}
+  .strip span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
+  /* sections */
+  section{padding:96px 0}
+  .sec-head{max-width:680px;margin:0 auto 56px;text-align:center}
+  .kicker{font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--gold-2);margin-bottom:18px}
+  h2{font-family:'Cinzel',serif;font-size:clamp(26px,3.4vw,38px);line-height:1.18;
+    font-weight:500;letter-spacing:.5px;color:var(--green)}
+  .sec-head p{margin-top:18px;color:var(--green-2);font-size:17px;font-weight:300}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    padding:36px 30px;text-align:center;transition:.25s}
+  .card:hover{transform:translateY(-5px);border-color:rgba(194,162,82,.5);
+    box-shadow:0 22px 46px rgba(46,58,40,.1)}
+  .ic{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--gold-soft);border:1px solid rgba(194,162,82,.32);margin:0 auto 22px}
+  .ic svg{width:24px;height:24px;stroke:var(--gold-2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .card h3{font-family:'Cinzel',serif;font-size:17px;font-weight:500;letter-spacing:.5px;margin-bottom:12px;color:var(--green)}
+  .card p{color:var(--muted);font-size:14.5px;font-weight:300}
+
+  /* ===== NEW: AI Implementation band ===== */
+  .services{background:var(--green);color:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .services::before{content:"";position:absolute;left:50%;top:-140px;transform:translateX(-50%);
+    width:820px;height:820px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(194,162,82,.14),rgba(194,162,82,0) 60%)}
+  .services .wrap{position:relative;z-index:2}
+  .services .kicker{color:var(--gold)}
+  .services h2{color:var(--cream)}
+  .services .sec-head p{color:rgba(251,248,241,.78)}
+  .svc-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:900px;margin:0 auto}
+  .svc{background:rgba(251,248,241,.05);border:1px solid rgba(194,162,82,.28);border-radius:16px;
+    padding:34px 30px;transition:.25s;text-align:center}
+  .svc:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(251,248,241,.08)}
+  .svc .ic{margin:0 auto 20px;background:rgba(194,162,82,.14);border-color:rgba(194,162,82,.4)}
+  .svc .ic svg{stroke:var(--gold)}
+  .svc h3{font-family:'Cinzel',serif;font-size:17px;font-weight:500;letter-spacing:.4px;margin-bottom:10px;color:var(--cream)}
+  .svc .tag{font-size:12px;font-weight:500;letter-spacing:.05em;color:var(--gold);margin-bottom:12px}
+  .svc p{color:rgba(251,248,241,.72);font-size:14.5px;font-weight:300}
+  .svc-note{text-align:center;margin-top:40px;font-size:14px;font-weight:300;color:rgba(251,248,241,.62)}
+
+  /* ===== NEW: proof / why-us ===== */
+  .proof .panel{border-radius:22px;background:var(--cream-2);border:1px solid var(--line);
+    padding:60px 52px;text-align:center;max-width:880px;margin:0 auto}
+  .proof .panel .lead h2{text-align:center}
+  .proof .panel .lead .kicker{text-align:center}
+  .proof .panel p{color:var(--green-2);font-size:16px;font-weight:300;margin:18px auto 0;max-width:62ch}
+  .proof ul{list-style:none;display:grid;gap:16px;max-width:640px;margin:34px auto 0}
+  .proof li{text-align:center;font-size:15px;font-weight:300;color:var(--green-2);line-height:1.65}
+  .proof li svg{display:inline-block;vertical-align:-4px;width:20px;height:20px;stroke:var(--gold-2);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;margin-right:9px}
+  .proof li b{font-weight:500;color:var(--green)}
+
+  /* contact */
+  .contact .panel{border-radius:22px;background:var(--cream-2);border:1px solid var(--line);
+    padding:70px 56px;text-align:center}
+  .contact p{color:var(--green-2);font-size:17px;font-weight:300;margin:18px auto 32px;max-width:46ch}
+  .mailchip{display:inline-flex;align-items:center;gap:11px;font-weight:500;font-size:15.5px;color:#221b07;
+    background:var(--gold);padding:15px 28px;border-radius:11px;transition:.22s;box-shadow:0 8px 26px rgba(194,162,82,.26)}
+  .mailchip:hover{transform:translateY(-2px);background:#cdb064}
+  .mailchip svg{width:18px;height:18px;stroke:#221b07;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .contact .sub{margin-top:18px;font-size:13px;color:var(--muted)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0;background:var(--cream-2)}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .foot-brand{display:flex;align-items:center;gap:11px}
+  .foot-brand img{height:34px}
+  .foot-brand .wm{font-size:15px}
+  footer small{color:var(--muted);font-size:13px}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:820px){
+    .cards{grid-template-columns:1fr}
+    .svc-cards{grid-template-columns:1fr}
+    .proof .panel{padding:44px 24px}
+    .proof li{text-align:center}
+    .hero{padding:54px 0 64px}
+    .hero img.logo{width:250px}
+    section{padding:70px 0}
+    .contact .panel{padding:50px 22px}
+    .nav-links a.navlink{display:none}
+    .logo-tag{font-size:9.5px;letter-spacing:.14em;gap:9px}
+    .logo-tag::before,.logo-tag::after{width:20px}
+  }
+  @media(max-width:420px){
+    .wrap{padding:0 20px}
+    .logo-tag{font-size:8.5px;letter-spacing:.1em;gap:7px}
+    .logo-tag::before,.logo-tag::after{width:14px}
+    .svc{padding:28px 22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <img src="emblem.png" alt="Casting Karma lotus emblem">
+      <span class="wm serif">Casting Karma<span class="llc">LLC</span></span>
+    </a>
+    <div class="nav-links">
+      <a class="navlink" href="#services">AI Implementation</a>
+      <a class="navlink" href="#work">What we do</a>
+      <a class="nav-cta" href="mailto:contact@castingkarmallc.com?subject=AI%20Implementation%20inquiry">Work with us</a>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="halo"></div>
+  <div class="wrap">
+    <img class="logo" src="casting-karma-logo-clean.png" alt="Casting Karma LLC">
+    <div class="logo-tag">Good energy in&nbsp;·&nbsp;Good energy out</div>
+    <div class="eyebrow">Technology &amp; AI solutions</div>
+    <p class="lede">We build and operate real AI-automated businesses — and we bring that same capability to yours. AI wired into how the work actually runs, not slideware.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="#services">
+        Explore AI implementation
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="mailto:contact@castingkarmallc.com?subject=AI%20Implementation%20inquiry">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span>Independent</span>
+    <span>U.S.-based</span>
+    <span>Privacy-first</span>
+    <span>Built with modern AI</span>
+    <span>Outcomes over buzzwords</span>
+  </div>
+</div>
+
+<!-- ===== NEW: AI IMPLEMENTATION SERVICES BAND ===== -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Work with us</div>
+      <h2>AI implementation that ships</h2>
+      <p>Done-with-you AI operations for teams that want it actually built in — not just advised on. We map how your business runs today, wire AI into the parts that eat time, and hand back working systems your team can trust: operations, content, data, and reporting.</p>
+    </div>
+    <div class="svc-cards">
+      <div class="svc reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M5 12H2M22 12h-3M6 6l-2-2M20 20l-2-2M6 18l-2 2M20 4l-2 2"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <div class="tag">Ops automation</div>
+        <h3>Put the busywork on autopilot</h3>
+        <p>We take a workflow that's done by hand today — follow-ups, reporting, data entry, reminders — and turn it into a running system that does it for you, on schedule.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M8 9l2 2 4-4"/></svg></div>
+        <div class="tag">Agent &amp; workflow setup</div>
+        <h3>A working AI teammate, not a chatbot</h3>
+        <p>Task-scoped AI agents set up inside your tools to do real work — draft, sort, route, summarize, and act — with clear guardrails and a human check where it matters.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3v12M6 21a3 3 0 100-6 3 3 0 000 6zM18 9a3 3 0 100-6 3 3 0 000 6zM18 6c0 7-12 4-12 9"/></svg></div>
+        <div class="tag">Connector &amp; data wiring</div>
+        <h3>Get your tools talking</h3>
+        <p>We connect the apps you already use — email, CRM, spreadsheets, storage, billing — so data flows between them without the copy-paste, and your numbers stay in one place.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="tag">Internal AI enablement</div>
+        <h3>Level up your team</h3>
+        <p>We set your people up with AI workflows and practical guardrails that fit how they actually work — so the capability stays after we're done, instead of walking out the door.</p>
+      </div>
+    </div>
+    <p class="svc-note">Fixed-scope engagements, framed around the outcome — not open-ended retainers. Tell us the workflow; we'll tell you what it takes.</p>
+  </div>
+</section>
+
+<!-- ===== NEW: PROOF / WHY US ===== -->
+<section class="proof" id="proof">
+  <div class="wrap">
+    <div class="panel reveal">
+      <div class="lead">
+        <div class="kicker">Why us</div>
+        <h2>Our own portfolio is the proof</h2>
+        <p>Casting Karma isn't a consultancy that read about AI — we run a multi-product software studio on it. Our own operation is coordinated by a team of specialized AI agents working from shared living documents, connected tools, and scheduled automations. The same playbook we'd build for you, we run on ourselves every day.</p>
+      </div>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span><b>A real operating system, not a demo.</b> Living-docs coordination, autonomous lanes for build, distribution, finance, and legal work.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span><b>Products across several industries.</b> Software spanning marine, aviation, agriculture, and logistics — each built and run on the same stack.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span><b>Automations that run without us.</b> Connected email, browser, and data tools plus scheduled tasks that do the recurring work on their own.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span><b>We ship, then we hand it over.</b> You get a working system and the know-how to run it — that's the whole point.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- existing studio "what we do" retained -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">What we do</div>
+      <h2>We design and build practical software</h2>
+      <p>Casting Karma is an independent technology company. We build focused products and tools — with technology and artificial intelligence at the center of the work.</p>
+    </div>
+    <div class="cards">
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Software products</h3>
+        <p>Focused web and platform apps, designed to be simple to use.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M5 12H2M22 12h-3M6 6l-2-2M20 20l-2-2M6 18l-2 2M20 4l-2 2"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>AI &amp; automation</h3>
+        <p>Applying AI to cut busywork and streamline everyday workflows.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
+        <h3>Marketplace apps</h3>
+        <p>Tools that work inside the platforms teams already rely on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="panel reveal">
+      <div class="kicker">Get in touch</div>
+      <h2>Tell us about your operations</h2>
+      <p>Have a workflow eating your team's time, or an idea you want AI actually built into? Send one message — we read every one.</p>
+      <a class="mailchip" href="mailto:contact@castingkarmallc.com?subject=AI%20Implementation%20inquiry">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        contact@castingkarmallc.com
+      </a>
+      <div class="sub">Prefer a quick note? Just tell us the workflow and the tools you use — we'll take it from there.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <img src="emblem.png" alt="">
+      <span class="wm serif">Casting Karma <span style="color:var(--gold-2);font-size:11px;letter-spacing:3px">LLC</span></span>
+    </div>
+    <small>© <span id="yr"></span> Casting Karma LLC · United States</small>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.16});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*0.08+'s';io.observe(el)});
+</script>
+</body>
+</html>

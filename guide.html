@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting Started — Certification &amp; License Expiry Tracker</title>
+<meta name="description" content="Installation and user guide for the Certification & License Expiry Tracker app by Casting Karma LLC.">
+<link rel="icon" href="emblem.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#2E3A28;--ink2:#6E7A63;--soft:#f6f7fb;--line:#e7e9f0;--gold:#A8863F;--gold-hi:#C2A252}
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:#FBF8F1;font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;font-weight:400}
+  a{color:var(--gold)}
+  .wrap{max-width:780px;margin:0 auto;padding:0 26px}
+  header{border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:940px;margin:0 auto;padding:0 26px}
+  .brand{display:flex;align-items:center;gap:13px}
+  .wm{font-family:'Cinzel',Georgia,serif;font-size:17px;font-weight:600;letter-spacing:2px;color:var(--ink)}
+  .wm b{font-weight:600;color:var(--ink)}
+  .wm .llc{font-size:10px;font-weight:600;letter-spacing:3px;color:var(--gold);display:block;margin-top:2px}
+  .nav .links a{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none}
+  .nav .links a:hover{color:var(--ink)}
+  main{padding:52px 0 24px}
+  h1{font-size:30px;font-weight:600;letter-spacing:-.4px;margin:0 0 4px}
+  .sub{color:var(--ink2);font-size:15px;margin-bottom:30px}
+  h2{font-size:20px;font-weight:600;margin:34px 0 10px;display:flex;align-items:center;gap:12px}
+  .num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--gold-hi);font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+  p{margin:0 0 14px;color:#3D4A36}
+  ul{margin:0 0 14px;padding-left:22px;color:#28304a}
+  li{margin:0 0 7px}
+  .tip{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:18px 0;font-size:14.5px;color:var(--ink2)}
+  code{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:13.5px}
+  footer{margin-top:44px;border-top:1px solid var(--line)}
+  .foot{max-width:780px;margin:0 auto;padding:24px 26px 48px;color:var(--ink2);font-size:13px}
+  .foot a{color:var(--ink2)}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="brand" href="index.html" style="text-decoration:none">
+      <img src="emblem.png" alt="Casting Karma" style="height:40px;width:auto;display:block">
+      <span class="wm">Casting <b>Karma</b><span class="llc">LLC</span></span>
+    </a>
+    <nav class="links"><a href="index.html">Home</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Getting started</h1>
+    <div class="sub">Certification &amp; License Expiry Tracker — installation &amp; user guide</div>
+
+    <h2><span class="num">1</span> Install the app</h2>
+    <p>Click the install button on the marketplace listing (or your installation link), choose the monday account you want to add it to, and approve the requested permissions. The app installs in seconds — there's nothing to download.</p>
+
+    <h2><span class="num">2</span> Add it to a board</h2>
+    <p>Open any monday board that lists your people and their credentials, with <strong>one row per credential</strong>. Add the <strong>Certification Tracker</strong> board view to that board. The app automatically detects your columns by their titles — no configuration needed.</p>
+    <p>Column auto-detection recognizes any of these naming styles:</p>
+    <ul>
+      <li><strong>Person</strong> — "Person", "Employee", "Name", "Staff"…</li>
+      <li><strong>Credential</strong> — "Certification", "License", "Training", "Course"…</li>
+      <li><strong>Expiry date</strong> — a Date column named "Expiry", "Renewal", "Due", "Valid until"…</li>
+      <li><strong>Issue date</strong> — a Date column named "Issued", "Completed", "Last trained"…</li>
+      <li><strong>Frequency</strong> — "Frequency", "Interval", "Renewal period" with values like <em>annual</em>, <em>biennial</em>, <em>triennial</em>.</li>
+    </ul>
+    <div class="tip">No expiry column? If you have an issue date and a frequency, the app computes the expiry date for you. If something isn't detected, rename the column (for example to <code>Expiry Date</code>) and reload the view.</div>
+
+    <h2><span class="num">3</span> Read your compliance status</h2>
+    <ul>
+      <li><strong>Compliance Dashboard</strong> — your audit view: percent compliant, what's expired, and what's due in 30/60/90 days.</li>
+      <li><strong>Expiry Tracker</strong> — every credential, sorted by urgency, with search and color-coded status badges.</li>
+      <li><strong>Who's Qualified</strong> — a live grid of who currently holds each valid credential.</li>
+    </ul>
+
+    <h2><span class="num">4</span> Turn on automatic reminders</h2>
+    <p>Click <strong>Enable auto-reminders</strong> in the app header and approve access. The app then checks your board every day and sends a monday notification at <strong>60, 30, and 7 days</strong> before each expiration — one notification per stage, delivered to the user who enabled reminders.</p>
+
+    <h2><span class="num">5</span> Log a training session</h2>
+    <p>When a group completes training, open the <strong>Log a Session</strong> tab, choose the credential and the date completed, select the attendees, and click <strong>Apply to board</strong>. Every attendee's next expiry date is recomputed and written straight back to your board — no per-person data entry.</p>
+
+    <h2><span class="num">6</span> People &amp; plans</h2>
+    <p>Your board is the source of truth: add a row to add a person or credential, edit a date on the row, or delete the row to remove it — the app updates instantly. Plan limits count <strong>distinct people</strong> tracked (not rows or monday seats). The free plan covers up to 10 people; paid plans raise the limit.</p>
+
+    <h2><span class="num">7</span> Support</h2>
+    <p>Questions or issues? Email <a href="mailto:support@castingkarmallc.com">support@castingkarmallc.com</a> — we reply within one business day.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot">Certification &amp; License Expiry Tracker · operated by Casting Karma LLC · <a href="mailto:support@castingkarmallc.com">support@castingkarmallc.com</a></div>
+</footer>
+</body>
+</html>
