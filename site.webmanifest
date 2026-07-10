@@ -7,7 +7,7 @@
   "background_color": "#FBF8F1",
   "theme_color": "#FBF8F1",
   "icons": [
-    { "src": "emblem.png", "sizes": "476x502", "type": "image/png" },
+    { "src": "emblem-icon.png", "sizes": "491x491", "type": "image/png" },
     { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }
