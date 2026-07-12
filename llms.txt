@@ -1,0 +1,32 @@
+# Casting Karma LLC
+
+> Casting Karma LLC builds and operates real AI-automated businesses — and offers that same capability as a service: done-with-you AI implementation, automation, AI agents, and custom software. AI wired into how a business actually runs, not slideware.
+
+## Company
+- Name: Casting Karma LLC
+- Website: https://castingkarmallc.com
+- Contact: contact@castingkarmallc.com
+- Location: Texas, United States (serving clients across the US, remote)
+- Type: Independent technology company / multi-product software studio
+- Tagline: Good energy in · Good energy out
+
+## What we offer (AI implementation services)
+- **Ops automation** — Take a workflow done by hand today (follow-ups, reporting, data entry, reminders) and turn it into a running system that does it for you, on schedule.
+- **AI agent & workflow setup** — Task-scoped AI agents inside your existing tools that draft, sort, route, summarize, and act, with guardrails and a human check where it matters.
+- **Connector & data wiring** — Connect the apps you already use (email, CRM, spreadsheets, storage, billing) so data flows without copy-paste and numbers live in one place.
+- **Internal AI enablement** — Set your team up with AI workflows and practical guardrails that fit how they actually work, so the capability stays after the engagement.
+- **Custom software development** — A focused web app or internal tool designed and built around how your team actually works.
+- **AI consulting** — Not sure where AI fits? We map the highest-leverage places to start.
+
+Engagements are fixed-scope and framed around the outcome — not open-ended retainers.
+
+## Why Casting Karma
+Casting Karma is not a consultancy that read about AI — it runs a multi-product software studio on it. The operation is coordinated by specialized AI agents working from shared living documents, connected tools, and scheduled automations. Products span several industries (marine, aviation, agriculture, logistics). The same playbook we build for clients, we run on ourselves.
+
+## Key pages
+- [Home — AI implementation services + contact](https://castingkarmallc.com/): services, proof, and how to get in touch.
+- [Privacy Policy](https://castingkarmallc.com/privacy.html)
+- [Terms of Use](https://castingkarmallc.com/terms.html)
+
+## Contact
+Email contact@castingkarmallc.com to discuss a workflow, a custom tool, or where to start with AI.

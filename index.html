@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2BYYY71SSE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2BYYY71SSE');
+</script>
 <title>AI Implementation &amp; Automation Services | Casting Karma LLC</title>
 <meta name="description" content="Casting Karma LLC delivers done-with-you AI implementation, automation, AI agents, and custom software — AI wired into how your business actually runs. Get in touch.">
 <meta name="keywords" content="AI implementation, AI automation, AI consulting, AI agents, business process automation, custom software development, AI integrations, workflow automation">
@@ -450,6 +458,22 @@
   document.getElementById('yr').textContent=new Date().getFullYear();
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.16});
   document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*0.08+'s';io.observe(el)});
+
+  /* GA4 — count contact-CTA clicks as leads.
+     Delegated + evaluated at click time so it still works after Cloudflare's
+     email-obfuscation rewrites the mailto hrefs. */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href') || '';
+    var isEmail = href.indexOf('mailto:') === 0 || href.indexOf('/cdn-cgi/l/email-protection') !== -1;
+    if(isEmail && typeof gtag === 'function'){
+      gtag('event','generate_lead',{
+        link_text: (a.textContent || '').trim().slice(0,80),
+        section: (a.closest('section') && a.closest('section').id) || 'header'
+      });
+    }
+  });
 </script>
 </body>
 </html>
