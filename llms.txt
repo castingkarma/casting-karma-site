@@ -25,12 +25,12 @@ Casting Karma is not a consultancy that read about AI — it runs a multi-produc
 
 ## Key pages
 - [Home — AI implementation services + contact](https://castingkarmallc.com/): services, proof, FAQ, and how to get in touch.
-- [AI Implementation & Automation Services](https://castingkarmallc.com/ai-implementation.html): done-with-you AI implementation and workflow automation — mapping the operation, automating repetitive work, guardrails, handover.
-- [AI Agents & App Integrations](https://castingkarmallc.com/ai-agents-integrations.html): task-scoped AI agents inside your tools, plus integrations connecting email, CRM, spreadsheets, storage and billing.
-- [Custom Software Development](https://castingkarmallc.com/custom-software.html): focused custom web apps and internal tools built around how a team actually works.
-- [AI Consulting](https://castingkarmallc.com/ai-consulting.html): mapping where AI actually fits, what it's worth, and what to do first — including when not to.
-- [Privacy Policy](https://castingkarmallc.com/privacy.html)
-- [Terms of Use](https://castingkarmallc.com/terms.html)
+- [AI Implementation & Automation Services](https://castingkarmallc.com/ai-implementation): done-with-you AI implementation and workflow automation — mapping the operation, automating repetitive work, guardrails, handover.
+- [AI Agents & App Integrations](https://castingkarmallc.com/ai-agents-integrations): task-scoped AI agents inside your tools, plus integrations connecting email, CRM, spreadsheets, storage and billing.
+- [Custom Software Development](https://castingkarmallc.com/custom-software): focused custom web apps and internal tools built around how a team actually works.
+- [AI Consulting](https://castingkarmallc.com/ai-consulting): mapping where AI actually fits, what it's worth, and what to do first — including when not to.
+- [Privacy Policy](https://castingkarmallc.com/privacy)
+- [Terms of Use](https://castingkarmallc.com/terms)
 
 ## Contact
 Email contact@castingkarmallc.com to discuss a workflow, a custom tool, or where to start with AI.
