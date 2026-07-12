@@ -24,7 +24,11 @@ Engagements are fixed-scope and framed around the outcome — not open-ended ret
 Casting Karma is not a consultancy that read about AI — it runs a multi-product software studio on it. The operation is coordinated by specialized AI agents working from shared living documents, connected tools, and scheduled automations. Products span several industries (marine, aviation, agriculture, logistics). The same playbook we build for clients, we run on ourselves.
 
 ## Key pages
-- [Home — AI implementation services + contact](https://castingkarmallc.com/): services, proof, and how to get in touch.
+- [Home — AI implementation services + contact](https://castingkarmallc.com/): services, proof, FAQ, and how to get in touch.
+- [AI Implementation & Automation Services](https://castingkarmallc.com/ai-implementation.html): done-with-you AI implementation and workflow automation — mapping the operation, automating repetitive work, guardrails, handover.
+- [AI Agents & App Integrations](https://castingkarmallc.com/ai-agents-integrations.html): task-scoped AI agents inside your tools, plus integrations connecting email, CRM, spreadsheets, storage and billing.
+- [Custom Software Development](https://castingkarmallc.com/custom-software.html): focused custom web apps and internal tools built around how a team actually works.
+- [AI Consulting](https://castingkarmallc.com/ai-consulting.html): mapping where AI actually fits, what it's worth, and what to do first — including when not to.
 - [Privacy Policy](https://castingkarmallc.com/privacy.html)
 - [Terms of Use](https://castingkarmallc.com/terms.html)
 

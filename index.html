@@ -178,6 +178,22 @@
   .need:hover .need-cta{color:var(--green)}
   .need:hover .need-cta svg{transform:translateX(3px)}
 
+  /* faq */
+  .faq{max-width:760px;margin:0 auto}
+  .faq details{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:0 24px;margin-bottom:12px;transition:.2s}
+  .faq details[open]{border-color:rgba(194,162,82,.5)}
+  .faq summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:500;font-size:16px;color:var(--green);
+    display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";color:var(--gold-2);font-size:20px;font-weight:400;flex:0 0 auto}
+  .faq details[open] summary::after{content:"\2013"}
+  .faq details p{margin:0 0 20px;color:var(--muted);font-size:15px;font-weight:300;line-height:1.7;text-align:left}
+  .xlinks{display:flex;flex-wrap:wrap;gap:10px 14px;justify-content:center;margin-top:38px}
+  .xlink{font-size:13.5px;font-weight:500;color:var(--green-2);border:1px solid var(--line-2);padding:9px 16px;border-radius:8px;transition:.2s}
+  .xlink:hover{border-color:var(--gold);color:var(--gold-2);background:var(--gold-soft)}
+  .foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:8px;font-size:12.5px;color:var(--muted)}
+  .foot-links a:hover{color:var(--gold-2)}
+
   /* footer */
   footer{border-top:1px solid var(--line);padding:40px 0;background:var(--cream-2)}
   footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
@@ -268,6 +284,42 @@
       "about": { "@id": "https://castingkarmallc.com/#organization" },
       "description": "Done-with-you AI implementation, automation, AI agents, and custom software.",
       "inLanguage": "en-US"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://castingkarmallc.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does \"done-with-you AI implementation\" actually mean?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It means we build the thing, in your tools, alongside your team — rather than handing over a strategy document and leaving. You end up with a working system and the understanding to run it yourself." }
+        },
+        {
+          "@type": "Question",
+          "name": "What kinds of work can you automate?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The repetitive, rules-shaped work that quietly eats hours: client follow-ups, recurring reporting, data entry between apps, reminders, routing and triage, summarizing inbound messages or documents, and keeping your numbers in one place." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do we need to know where AI fits before we start?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No — most teams don't. The first step is mapping how your operation runs today, and that's usually what surfaces the highest-leverage place to start. If a workflow isn't worth automating, we'll tell you that too." }
+        },
+        {
+          "@type": "Question",
+          "name": "How are engagements structured?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Fixed-scope and framed around a specific outcome — not open-ended retainers. Tell us the workflow, and we'll tell you what it takes." }
+        },
+        {
+          "@type": "Question",
+          "name": "What tools do you work with?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The common business stack — email, CRM, spreadsheets, cloud storage, billing — plus most apps with an API. If a tool you rely on can't be connected, we'll say so up front rather than promise around it." }
+        },
+        {
+          "@type": "Question",
+          "name": "Where are you based, and do you work remotely?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Casting Karma LLC is based in Texas and works with clients across the United States, remotely." }
+        }
+      ]
     }
   ]
 }
@@ -353,6 +405,12 @@
       </div>
     </div>
     <p class="svc-note">Fixed-scope engagements, framed around the outcome — not open-ended retainers. Tell us the workflow; we'll tell you what it takes.</p>
+    <div class="xlinks">
+      <a class="xlink" href="/ai-implementation.html" style="color:var(--cream);border-color:rgba(194,162,82,.4)">AI implementation &amp; automation</a>
+      <a class="xlink" href="/ai-agents-integrations.html" style="color:var(--cream);border-color:rgba(194,162,82,.4)">AI agents &amp; integrations</a>
+      <a class="xlink" href="/custom-software.html" style="color:var(--cream);border-color:rgba(194,162,82,.4)">Custom software</a>
+      <a class="xlink" href="/ai-consulting.html" style="color:var(--cream);border-color:rgba(194,162,82,.4)">AI consulting</a>
+    </div>
   </div>
 </section>
 
@@ -399,6 +457,47 @@
         <h3>Marketplace apps</h3>
         <p>Tools that work inside the platforms teams already rely on.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">FAQ</div>
+      <h2>Common questions</h2>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary>What does "done-with-you AI implementation" actually mean?</summary>
+        <p>It means we build the thing, in your tools, alongside your team — rather than handing over a strategy document and leaving. You end up with a working system and the understanding to run it yourself.</p>
+      </details>
+      <details>
+        <summary>What kinds of work can you automate?</summary>
+        <p>The repetitive, rules-shaped work that quietly eats hours: client follow-ups, recurring reporting, data entry between apps, reminders, routing and triage, summarizing inbound messages or documents, and keeping your numbers in one place.</p>
+      </details>
+      <details>
+        <summary>Do we need to know where AI fits before we start?</summary>
+        <p>No — most teams don't. The first step is mapping how your operation runs today, and that's usually what surfaces the highest-leverage place to start. If a workflow isn't worth automating, we'll tell you that too.</p>
+      </details>
+      <details>
+        <summary>How are engagements structured?</summary>
+        <p>Fixed-scope and framed around a specific outcome — not open-ended retainers. Tell us the workflow, and we'll tell you what it takes.</p>
+      </details>
+      <details>
+        <summary>What tools do you work with?</summary>
+        <p>The common business stack — email, CRM, spreadsheets, cloud storage, billing — plus most apps with an API. If a tool you rely on can't be connected, we'll say so up front rather than promise around it.</p>
+      </details>
+      <details>
+        <summary>Where are you based, and do you work remotely?</summary>
+        <p>Casting Karma LLC is based in Texas and works with clients across the United States, remotely.</p>
+      </details>
+    </div>
+    <div class="xlinks">
+      <a class="xlink" href="/ai-implementation.html">AI implementation &amp; automation</a>
+      <a class="xlink" href="/ai-agents-integrations.html">AI agents &amp; integrations</a>
+      <a class="xlink" href="/custom-software.html">Custom software</a>
+      <a class="xlink" href="/ai-consulting.html">AI consulting</a>
     </div>
   </div>
 </section>
@@ -451,6 +550,14 @@
       <span class="wm serif">Casting Karma <span style="color:var(--gold-2);font-size:11px;letter-spacing:3px">LLC</span></span>
     </div>
     <small>© <span id="yr"></span> Casting Karma LLC · United States</small>
+  </div>
+  <div class="wrap foot-links">
+    <a href="/ai-implementation.html">AI implementation &amp; automation</a>
+    <a href="/ai-agents-integrations.html">AI agents &amp; integrations</a>
+    <a href="/custom-software.html">Custom software</a>
+    <a href="/ai-consulting.html">AI consulting</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
   </div>
 </footer>
 
