@@ -68,9 +68,6 @@ h1{font-size:30px;line-height:1.16;letter-spacing:-.02em;font-weight:800}
 .dots button{width:8px;height:8px;border-radius:50%;border:0;background:#2c4b6a;cursor:pointer;padding:0}
 .dots button.on{background:var(--tealL);width:22px;border-radius:5px}
 .pvcap{text-align:center;color:#7a8da0;font-size:11px;font-family:'IBM Plex Mono',monospace;padding-top:4px}
-.drop{border:1.5px dashed #2c4b6a;border-radius:9px;padding:13px 12px;font-size:11.5px;color:#9fb2c4;text-align:center;margin-bottom:6px;background:rgba(12,166,120,.05)}
-.pvact{margin-top:12px;background:var(--teal);color:#fff;text-align:center;padding:10px;border-radius:8px;font-size:12.5px;font-weight:700;font-family:'IBM Plex Mono',monospace}
-.brandlink{display:inline-flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer}
 section.blk{padding:56px 0}
 .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
 h2{font-size:29px;line-height:1.15;letter-spacing:-.02em;font-weight:800;max-width:22ch}
@@ -168,21 +165,26 @@ const CFG = {
   },
   preview:{
     screens:[
-      {role:"YOU UPLOAD", kind:"upload", t:"Add a home", cap:"Screen 1 — you add the home and drop in whatever you have. That's your whole part.",
-       prompt:"Drag in your title search, lot ledger, or prior notices — or just tell us what you have.",
+      {role:"THE FUNCTION", kind:"rows", t:"Packet builder · Texas", cap:"Screen 1 — the engine: your state's packet, assembled.",
        rows:[
-        {c:"o",id:"✓",a:"title-search_lot-14.pdf",b:"uploaded · read in",tag:"DONE",tt:"o"},
-        {c:"o",id:"✓",a:"prior-notice_2024.jpg",b:"uploaded · read in",tag:"DONE",tt:"o"},
-        {c:"n",id:"＋",a:"Add another document",b:"optional — we build from whatever you've got",tag:"ADD",tt:"n"}
-      ],
-       action:"Generate my Texas packet →"},
+        {c:"o",id:"1",a:"Notice of Abandonment",b:"served to last owner + lienholders · certified mail",tag:"READY",tt:"o"},
+        {c:"n",id:"2",a:"45-day cure clock",b:"deadline tracked · auto-reminded",tag:"DAY 12",tt:"n"},
+        {c:"o",id:"3",a:"Statutory affidavit + Form 130-U",b:"pre-filled from your inputs",tag:"READY",tt:"o"},
+        {c:"n",id:"4",a:"Bonded-title filing",b:"county + TxDMV steps, in order",tag:"NEXT",tt:"n"}
+      ]},
       {role:"OPERATOR PORTAL", kind:"stats", t:"Your dashboard", cap:"Screen 2 — where you run it: every park, every home, one view.",
        tiles:[{v:"4",k:"Parks"},{v:"6",k:"Homes titling"},{v:"11",k:"Cleared YTD"}],
        rows:[
         {c:"n",id:"A",a:"Oakwood MHP",b:"3 homes in progress · 1 ready to file",tag:"3 OPEN",tt:"n"},
         {c:"o",id:"B",a:"Riverside Estates",b:"2 cleared this quarter · lots re-rented",tag:"CLEAR",tt:"o"}
       ]},
-      {role:"YOUR DOCUMENTS", kind:"rows", t:"Generated documents", cap:"Screen 3 — pull your filing-ready packet: statute-cited, pre-filled.",
+      {role:"TRACKING", kind:"rows", t:"Deadline tracker", cap:"Screen 3 — never miss a statutory window.",
+       rows:[
+        {c:"n",id:"14",a:"Home #14 — Oakwood",b:"notice mailed · cure window running",tag:"DAY 12/45",tt:"n"},
+        {c:"n",id:"7",a:"Home #7 — Cedar Court",b:"waiting on certified-mail receipt",tag:"DAY 3/45",tt:"n"},
+        {c:"o",id:"22",a:"Home #22 — Riverside",b:"window cleared · file today",tag:"READY",tt:"o"}
+      ]},
+      {role:"OUTPUT", kind:"rows", t:"Generated documents", cap:"Screen 4 — filing-ready, statute-cited, pre-filled.",
        rows:[
         {c:"o",id:"§",a:"Affidavit of Abandonment",b:"cites your state statute · your park + home details",tag:"PDF",tt:"o"},
         {c:"o",id:"✓",a:"Proof-of-notice packet",b:"certified-mail log + timeline, court-ready",tag:"PDF",tt:"o"},
@@ -264,18 +266,15 @@ const CFG = {
 
 const C=CFG;
 const navHtml=`<header class="nav"><div class="wrap">
-  <a class="brandlink" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><span class="brand">${C.brandName.replace(/Clear/,'<b>Clear</b>')}</span> <span class="studioTag">a Casting Karma studio project</span></a>
+  <div><span class="brand">${C.brandName.replace(/Clear/,'<b>Clear</b>')}</span> <span class="studioTag">a Casting Karma studio project</span></div>
   <nav class="navlinks">${C.nav.map(n=>`<a href="${n.href}">${n.label}</a>`).join('')}</nav>
   <a class="navcta" href="#form">${C.navCta}</a>
 </div></header>`;
 
 function screenBody(s){
-  var rows = (s.rows||[]).map(r=>`<div class="row"><div class="rc ${r.c}">${r.id}</div><div class="rt"><div class="a">${r.a}</div><div class="b">${r.b}</div></div><div class="tag ${r.tt}">${r.tag}</div></div>`).join('');
-  if(s.kind==='upload'){
-    return `<div class="drop">${s.prompt}</div>${rows}<div class="pvact">${s.action}</div>`;
-  }
   var t = (s.kind==='stats' && s.tiles) ? `<div class="tiles">${s.tiles.map(x=>`<div class="tile"><div class="v">${x.v}</div><div class="k">${x.k}</div></div>`).join('')}</div>` : '';
-  return t+rows;
+  var r = (s.rows||[]).map(r=>`<div class="row"><div class="rc ${r.c}">${r.id}</div><div class="rt"><div class="a">${r.a}</div><div class="b">${r.b}</div></div><div class="tag ${r.tt}">${r.tag}</div></div>`).join('');
+  return t+r;
 }
 function previewHtml(){
   const scr=C.preview.screens.map((s,i)=>`<div class="screen" data-i="${i}">
