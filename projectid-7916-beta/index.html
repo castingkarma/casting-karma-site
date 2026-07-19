@@ -103,6 +103,9 @@ h2{font-size:29px;line-height:1.15;letter-spacing:-.02em;font-weight:800;max-wid
 .pricewrap{background:var(--navy);color:#fff}
 .pricewrap h2{color:#fff}
 .pricewrap .sub{color:#c3d0dc}
+#pricing .kicker{text-align:center}
+#pricing h2,#pricing .sub{margin-left:auto;margin-right:auto;text-align:center}
+#pricing .cards{margin-left:auto;margin-right:auto}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px;max-width:760px}
 .pc{background:var(--navy2);border:1px solid var(--navyline);border-radius:16px;padding:26px}
 .pc.feat{border:2px solid var(--teal);position:relative}
@@ -149,7 +152,7 @@ const CFG = {
   brandName:"TitleClear",
   statusPill:"Early access · now open",
   captureEndpoint:"/api/lead",
-  studio:{name:"Casting Karma LLC", city:"Denton, TX", url:"https://castingkarmallc.com"},
+  studio:{name:"Casting Karma LLC", city:"Denton, TX", url:"https://castingkarmallc.com", email:"contact@castingkarmallc.com"},
   nav:[{label:"The problem",href:"#problem"},{label:"How it works",href:"#how"},{label:"Pricing",href:"#pricing"}],
   navCta:"Get early access",
   hero:{
@@ -352,7 +355,7 @@ const formHtml=`<section class="blk" id="form" style="background:#fff;border-top
   </div>
 </div></section>`;
 
-const footHtml=`<footer><div class="wrap">A <a href="${C.studio.url}" target="_blank" rel="noopener">${C.studio.name}</a> studio project · ${C.studio.city}</div></footer>`;
+const footHtml=`<footer><div class="wrap">A <a href="${C.studio.url}" target="_blank" rel="noopener">${C.studio.name}</a> studio project · ${C.studio.city} · Contact <a href="mailto:${C.studio.email}">${C.studio.email}</a></div></footer>`;
 
 document.getElementById('app').innerHTML = navHtml+heroHtml+problemHtml+howHtml+valueHtml+priceHtml+formHtml+footHtml;
 
