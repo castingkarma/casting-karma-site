@@ -154,7 +154,7 @@ const CFG = {
   projectKey:"7916-abandoned-home-title",
   brandName:"TitleClear",
   statusPill:"Early access · now open",
-  captureEndpoint:"/api/lead",
+  captureEndpoint:"https://script.google.com/macros/s/AKfycbwHBF4kA0ZVp-ywrHp0S1McsXaP-CMyIfD1C3heUDABEy_FiW0_jT0z24-SsUhikaE3/exec",
   studio:{name:"Casting Karma LLC", city:"Denton, TX", url:"https://castingkarmallc.com", email:"contact@castingkarmallc.com"},
   nav:[{label:"The problem",href:"#problem"},{label:"How it works",href:"#how"},{label:"Pricing",href:"#pricing"}],
   navCta:"Get early access",
@@ -375,9 +375,9 @@ document.getElementById('ck-form').addEventListener('submit',async function(e){
   e.preventDefault();
   const btn=this.querySelector('.formsubmit'); btn.disabled=true; btn.textContent='Reserving…';
   const fd=Object.fromEntries(new FormData(this).entries());
-  fd.project=C.projectKey; fd.ref=location.pathname; fd.ts=new Date().toISOString();
+  fd.brand=C.brandName; fd.project=C.projectKey; fd.ref=location.pathname; fd.ts=new Date().toISOString();
   let ok=false;
-  try{ const r=await fetch(C.captureEndpoint||'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(fd)}); const j=await r.json().catch(()=>({})); ok=r.ok && j.ok!==false; }catch(err){ ok=false; }
+  try{ await fetch(C.captureEndpoint||'/api/lead',{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(fd)}); ok=true; }catch(err){ ok=false; }
   if(ok){ this.style.display='none'; document.getElementById('okmsg').style.display='block'; }
   else{ btn.disabled=false; btn.textContent=C.form.submit; const f=document.querySelector('.fine'); f.innerHTML='Something went wrong — email <a href="mailto:contact@castingkarmallc.com">contact@castingkarmallc.com</a> and we will add you.'; f.style.color='#c0442b'; }
 });
