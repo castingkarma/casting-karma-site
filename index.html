@@ -281,6 +281,19 @@
   .note textarea{width:100%;min-height:82px;resize:vertical;border-radius:12px;border:1px solid rgba(194,162,82,.28);
     background:rgba(251,248,241,.04);color:var(--cream);font-family:inherit;font-size:14.5px;font-weight:300;padding:13px 15px;line-height:1.6}
   .note textarea:focus{outline:none;border-color:var(--gold-hi)}
+  .note input{width:100%;border-radius:12px;border:1px solid rgba(194,162,82,.28);background:rgba(251,248,241,.04);
+    color:var(--cream);font-family:inherit;font-size:14.5px;font-weight:300;padding:13px 15px}
+  .note input:focus{outline:none;border-color:var(--gold-hi)}
+  .note+.note{margin-top:15px}
+  .methods{display:flex;gap:10px}
+  .methods button{flex:1;border-radius:12px;border:1px solid rgba(194,162,82,.28);background:rgba(251,248,241,.04);
+    color:var(--cream-dim);font-family:inherit;font-size:14px;font-weight:400;padding:12px 10px;cursor:pointer;transition:.2s;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px}
+  .methods button:hover{border-color:var(--gold-2);color:var(--cream)}
+  .methods button.sel{border-color:var(--gold-hi);background:rgba(231,206,134,.12);color:var(--gold-hi)}
+  .methods button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .rerr{color:#e6a6a6;font-size:13px;margin-top:12px;min-height:15px;text-align:center}
+  .reading .go[disabled]{opacity:.5;cursor:default;transform:none;box-shadow:none}
   .reading .go{margin-top:26px;display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:15px;padding:15px 32px;border-radius:12px;
     background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#221b07;cursor:pointer;border:0;transition:.25s}
   .reading .go:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(231,206,134,.45)}
@@ -710,7 +723,7 @@
       return open+" "+mid+echo+" "+close;
     }
 
-    // ── real-LLM hook → Cloudflare Pages Function. Generates live when ANTHROPIC_API_KEY is set
+    // ── real-LLM hook → Cloudflare Pages Function. Generates live when OPENAI_API_KEY is set
     //    in the Pages project; until then the function returns {ok:false} and we fall back locally. ──
     const AI_ENDPOINT = '/api/reading';
     async function aiRespond(payload){
@@ -797,31 +810,100 @@
         + '<button class="go" id="rTalk">Let\'s talk<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'
         + '<div class="sub" style="margin-top:16px">We read every message — and reply, usually within a day.</div>'
         + '</div>';
-      document.getElementById('rTalk').addEventListener('click', ()=>{
-        window.location.href = buildMailto();
-        if(typeof gtag==='function') gtag('event','generate_lead',{method:'reading'});
-        showFinal();
-      });
+      document.getElementById('rTalk').addEventListener('click', renderContact);
     }
 
-    function buildMailto(){
+    /* ── contact capture — name + how to reach them — BEFORE the confirmation ── */
+    let contactMethod = 'email';
+    function renderContact(){
+      step='contact';
+      setPetals(TOTAL, TOTAL);
+      back.classList.add('show');
+      body.innerHTML = '<div class="stage result">'
+        + '<div class="rk">Let\'s begin</div>'
+        + '<h3>Wonderful — let\'s start the <span class="accent">conversation</span>.</h3>'
+        + '<p style="margin-bottom:6px">Tell us who you are and the best way to reach you. A real person reads every one — usually replying within a day.</p>'
+        + '<div class="note"><label for="cName">Your name</label>'
+        + '<input id="cName" type="text" autocomplete="name" placeholder="First name is plenty"></div>'
+        + '<div class="note"><label>How should we reach you?</label>'
+        + '<div class="methods">'
+        + '<button type="button" class="mbtn sel" data-m="email"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>Email</button>'
+        + '<button type="button" class="mbtn" data-m="phone"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Phone</button>'
+        + '</div></div>'
+        + '<div class="note"><label id="cValLabel" for="cVal">Your email</label>'
+        + '<input id="cVal" type="email" autocomplete="email" placeholder="you@company.com"></div>'
+        + '<div class="rerr" id="cErr"></div>'
+        + '<button class="go" id="cSend">Send to Casting Karma<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'
+        + '</div>';
+      const nameEl=document.getElementById('cName');
+      const valEl=document.getElementById('cVal');
+      const valLabel=document.getElementById('cValLabel');
+      const err=document.getElementById('cErr');
+      contactMethod='email';
+      body.querySelectorAll('.mbtn').forEach(b=>b.addEventListener('click',()=>{
+        body.querySelectorAll('.mbtn').forEach(x=>x.classList.remove('sel'));
+        b.classList.add('sel');
+        contactMethod=b.dataset.m;
+        if(contactMethod==='phone'){ valLabel.textContent='Your phone number'; valEl.type='tel'; valEl.autocomplete='tel'; valEl.placeholder='(555) 123-4567'; }
+        else{ valLabel.textContent='Your email'; valEl.type='email'; valEl.autocomplete='email'; valEl.placeholder='you@company.com'; }
+        valEl.value=''; err.textContent='';
+      }));
+      nameEl.focus();
+      document.getElementById('cSend').addEventListener('click', ()=>submitLead(nameEl.value, valEl.value, err));
+    }
+
+    function validEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s); }
+    function validPhone(s){ return (s.replace(/[^0-9]/g,'').length>=7); }
+
+    async function submitLead(name, value, err){
+      name=(name||'').trim(); value=(value||'').trim();
+      if(!name){ err.textContent='A name helps us say hello properly.'; return; }
+      if(!value){ err.textContent = contactMethod==='phone' ? 'Add a number we can reach you on.' : 'Add an email we can reach you on.'; return; }
+      if(contactMethod==='email' && !validEmail(value)){ err.textContent='That email looks incomplete — mind a quick check?'; return; }
+      if(contactMethod==='phone' && !validPhone(value)){ err.textContent='That number looks a little short — mind a quick check?'; return; }
+      err.textContent='';
+      const btn=document.getElementById('cSend'); if(btn){ btn.disabled=true; btn.firstChild.textContent='Sending'; }
+      const payload={ name, contactMethod, contact:value,
+        track:answers[0].label, industry:answers[1].label, signal:answers[2].label,
+        details:note, reading:readingText };
+      let sent=false;
+      try{
+        const ctrl=new AbortController(), to=setTimeout(()=>ctrl.abort(),8000);
+        const r=await fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ctrl.signal});
+        clearTimeout(to);
+        if(r.ok){ const j=await r.json(); sent=!!(j&&j.ok); }
+      }catch(e){ sent=false; }
+      if(typeof gtag==='function') gtag('event','generate_lead',{method:'reading'});
+      if(!sent){ try{ window.location.href = buildMailto(name, value); }catch(e){} }
+      showFinal(sent);
+    }
+
+    const LEAD_ENDPOINT = '/api/discovery-lead';
+
+    function buildMailto(name, value){
+      const who = (name||'').trim();
+      const how = (value||'').trim() ? ('Reach me by '+contactMethod+': '+(value||'').trim()+'\n\n') : '';
       const lines = answers.map(a=>a.q+'\n  → '+a.label);
       if(note.trim()) lines.push('In their words:\n  '+note.trim());
-      const summary = readingText ? ('Their reading:\n'+readingText+'\n\n') : '';
-      const bodyTxt = 'Hi Casting Karma,\n\n'+summary+'From the discovery:\n\n'+lines.join('\n\n')+'\n\nI\'d love to set up a call.';
-      return 'mailto:contact@castingkarmallc.com?subject='+encodeURIComponent('Casting Karma reading — let\'s talk')
+      const summary = readingText ? ('My reading:\n'+readingText+'\n\n') : '';
+      const hi = who ? ('Hi Casting Karma, it\'s '+who+'.\n\n') : 'Hi Casting Karma,\n\n';
+      const bodyTxt = hi+how+summary+'From the discovery:\n\n'+lines.join('\n\n')+'\n\nI\'d love to set up a call.';
+      return 'mailto:contact@castingkarmallc.com?subject='+encodeURIComponent('Casting Karma reading — let\'s talk'+(who?(' ('+who+')'):''))
         + '&body='+encodeURIComponent(bodyTxt);
     }
 
-    function showFinal(){
+    function showFinal(sent){
       step='final';
       back.classList.remove('show');
       setPetals(TOTAL, TOTAL);
+      const firstLine = sent
+        ? 'Your details are on their way to us — the reading came along with them, so we already have the full picture.'
+        : 'We just opened a note with everything inside — give it a send and it lands with Jamin directly.';
       body.innerHTML = '<div class="stage final"><img class="spark" src="'+EMB+'" alt="">'
         + '<h3>We love your energy.</h3>'
         + '<div class="lede">Good energy in · good energy out</div>'
         + '<ul class="expect">'
-        + '<li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>We just opened a note with your reading already inside — give it a send and it lands with Jamin directly.</span></li>'
+        + '<li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>'+firstLine+'</span></li>'
         + '<li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>You’ll hear back within one business day — from a person, not a bot.</span></li>'
         + '<li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Then a short call, where we walk you through exactly how we’d help — no pressure, no jargon.</span></li>'
         + '</ul>'
@@ -837,6 +919,7 @@
     addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.classList.contains('open')) close(); });
     back.addEventListener('click', ()=>{
       if(step==='tell'){ step=TOTAL-1; if(answers.length>step) answers.length=step; render(); return; }
+      if(step==='contact'){ showConclusion(readingText); return; }
       if(step==='result'){ renderTell(); return; }
       if(typeof step==='number' && step>0){ step--; if(answers.length>step) answers.length=step; render(); }
     });
