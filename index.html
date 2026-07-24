@@ -968,6 +968,8 @@
     // wiring
     document.getElementById('beginReading').addEventListener('click', open);
     document.getElementById('rClose').addEventListener('click', close);
+    // sub-pages send visitors here to start the same discovery flow (?discover=1 or #discover)
+    try{ if(location.search.indexOf('discover=1')>-1 || location.hash==='#discover'){ open(); } }catch(e){}
     overlay.addEventListener('click', e=>{ if(e.target===overlay) close(); });
     addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.classList.contains('open')) close(); });
     back.addEventListener('click', ()=>{
