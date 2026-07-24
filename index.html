@@ -294,6 +294,18 @@
   .methods button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
   .rerr{color:#e6a6a6;font-size:13px;margin-top:12px;min-height:15px;text-align:center}
   .reading .go[disabled]{opacity:.5;cursor:default;transform:none;box-shadow:none}
+  /* contact-capture — compact so it fits vertically like the other steps */
+  .reading .contact h3{font-size:clamp(18px,2.4vw,23px);margin-bottom:8px}
+  .reading .contact .rk{margin-bottom:8px}
+  .reading .contact p{font-size:13.5px;line-height:1.5;margin-bottom:2px;max-width:40ch}
+  .reading .contact .note{margin-top:12px}
+  .reading .contact .note label{margin-bottom:5px}
+  .reading .contact .note input{padding:11px 15px}
+  .reading .contact .methods button{padding:10px}
+  .reading .contact .go{margin-top:15px}
+  /* 'Something else' describe field (question steps) */
+  .otherwrap:not(:empty){margin-top:16px}
+  .otherwrap .note{margin:0 auto;max-width:440px}
   .reading .go{margin-top:26px;display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:15px;padding:15px 32px;border-radius:12px;
     background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#221b07;cursor:pointer;border:0;transition:.25s}
   .reading .go:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(231,206,134,.45)}
@@ -749,6 +761,7 @@
     function open(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; step=0; answers.length=0; note=''; render(); }
     function close(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
 
+    function advance(){ if(step<TOTAL) render(); else renderTell(); }
     function render(){
       back.classList.toggle('show', (typeof step==='number' && step>0));
       if(typeof step==='number' && step<TOTAL){
@@ -757,13 +770,39 @@
         body.innerHTML = '<div class="stage">'
           + '<div class="step-kicker">'+item.k+'</div>'
           + '<div class="step-q">'+item.q+'</div>'
-          + '<div class="opts'+(item.grid?' grid':'')+'">'+ item.a.map((o)=>'<button class="opt" data-v="'+o.v+'">'+o.t+'</button>').join('') +'</div></div>';
+          + '<div class="opts'+(item.grid?' grid':'')+'">'+ item.a.map((o)=>'<button class="opt" data-v="'+o.v+'">'+o.t+'</button>').join('') +'</div>'
+          + '<div class="otherwrap" id="otherWrap"></div></div>';
         body.querySelectorAll('.opt').forEach(btn=>btn.addEventListener('click',()=>{
+          // "Something else" → reveal a small describe field + Next; every other option auto-advances
+          if(btn.dataset.v==='other'){
+            body.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+            btn.classList.add('sel');
+            showOther(item);
+            return;
+          }
           answers[step]={label:btn.textContent, v:btn.dataset.v, q:item.q};
           step++;
-          if(step<TOTAL) render(); else renderTell();
+          advance();
         }));
       }
+    }
+    function showOther(item){
+      const wrap=document.getElementById('otherWrap');
+      if(!wrap) return;
+      wrap.innerHTML = '<div class="note"><label for="otherIn">In a few words, what kind of business?</label>'
+        + '<input id="otherIn" type="text" maxlength="60" placeholder="e.g. nonprofit, logistics, education…"></div>'
+        + '<button class="go" id="otherNext" disabled>Next<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
+      const inp=document.getElementById('otherIn');
+      const next=document.getElementById('otherNext');
+      inp.addEventListener('input',()=>{ next.disabled=!inp.value.trim(); });
+      inp.addEventListener('keydown',e=>{ if(e.key==='Enter' && inp.value.trim()){ e.preventDefault(); next.click(); } });
+      next.addEventListener('click',()=>{
+        const v=inp.value.trim(); if(!v) return;
+        answers[step]={label:v, v:'other', q:item.q};
+        step++;
+        advance();
+      });
+      inp.focus();
     }
 
     /* one last, human step — free text — BEFORE any recommendation is revealed */
@@ -819,7 +858,7 @@
       step='contact';
       setPetals(TOTAL, TOTAL);
       back.classList.add('show');
-      body.innerHTML = '<div class="stage result">'
+      body.innerHTML = '<div class="stage result contact">'
         + '<div class="rk">Let\'s begin</div>'
         + '<h3>Wonderful — let\'s start the <span class="accent">conversation</span>.</h3>'
         + '<p style="margin-bottom:6px">Tell us who you are and the best way to reach you. A real person reads every one — usually replying within a day.</p>'
