@@ -710,8 +710,9 @@
       return open+" "+mid+echo+" "+close;
     }
 
-    // ── optional real-LLM hook. OFF until Ops sets AI_ENDPOINT to a Pages Function + key ──
-    const AI_ENDPOINT = null; // e.g. '/api/reading' once an LLM key is configured (see functions/api/reading.js)
+    // ── real-LLM hook → Cloudflare Pages Function. Generates live when ANTHROPIC_API_KEY is set
+    //    in the Pages project; until then the function returns {ok:false} and we fall back locally. ──
+    const AI_ENDPOINT = '/api/reading';
     async function aiRespond(payload){
       if(!AI_ENDPOINT) return null;
       try{
@@ -776,7 +777,7 @@
       back.classList.remove('show');
       body.innerHTML = '<div class="stage divining"><img src="'+EMB+'" alt="">'
         + '<div class="say">Reading your energy<span class="dots"><span>.</span><span>.</span><span>.</span></span></div></div>';
-      const payload={track:answers[0].v, industry:answers[1].v, signal:answers[2].v, details:note};
+      const payload={track:answers[0].label, industry:answers[1].label, signal:answers[2].label, details:note};
       const started=Date.now();
       aiRespond(payload).then(text=>{
         const wait=Math.max(0, 1500-(Date.now()-started));
