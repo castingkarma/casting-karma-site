@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Casting Karma — Portfolio (Admin)</title>
+<link rel="icon" href="https://castingkarmallc.com/emblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1410; --bg2:#0f1c15; --panel:rgba(24,38,29,.55); --panel2:rgba(30,46,35,.7);
+  --line:rgba(201,164,74,.18); --line2:rgba(201,164,74,.32);
+  --ink:#ECE6D6; --ink2:#9ba892; --mut:#79856f;
+  --gold:#D9B45B; --gold2:#C7A24A; --goldsoft:rgba(217,180,91,.14);
+  --green:#57b877; --red:#e07a7a; --violet:#b79be6;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(217,180,91,.10), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(87,184,119,.06), transparent 60%),
+    linear-gradient(180deg,#0c1611 0%, #0a120d 100%);
+  background-attachment:fixed;
+  color:var(--ink);font-family:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+/* subtle floating specks like the site */
+.specks{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.speck{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--gold);opacity:.35;box-shadow:0 0 6px 1px rgba(217,180,91,.5)}
+
+header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:18px 26px;border-bottom:1px solid var(--line);background:rgba(9,17,12,.6);backdrop-filter:blur(8px)}
+.brand{display:flex;align-items:center;gap:13px;cursor:pointer}
+.brand img{height:38px;width:auto;display:block}
+.brand h1{font-family:'Cinzel',Georgia,serif;font-size:15px;letter-spacing:2px;margin:0;font-weight:600;color:var(--ink)}
+.brand .sub{font-size:11px;color:var(--ink2);margin-top:2px;letter-spacing:.4px}
+.nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.nav a{font-size:12.5px;font-weight:600;color:var(--ink2);padding:7px 11px;border-radius:9px;transition:.15s;letter-spacing:.2px}
+.nav a:hover{color:var(--gold);background:var(--goldsoft)}
+.nav a.on{color:#12180f;background:linear-gradient(180deg,var(--gold),var(--gold2));font-weight:700}
+.chip{font-size:9.5px;font-weight:800;letter-spacing:1px;color:var(--gold);border:1px solid var(--line2);border-radius:6px;padding:4px 8px}
+.upd{font-size:11px;color:var(--mut)}
+
+.wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:26px 24px 60px}
+.tag{font-family:'Cinzel',serif;letter-spacing:3px;font-size:11px;color:var(--gold);text-transform:uppercase}
+h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2px;letter-spacing:.5px}
+.lead{color:var(--ink2);font-size:13px;margin:0 0 18px}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:14px 0 26px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px}
+.tile .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink2);font-weight:600}
+.tile .v{font-size:25px;font-weight:800;margin-top:7px;color:var(--gold)}
+.tile .v small{font-size:12px;color:var(--ink2);font-weight:600}
+.tile .s{font-size:11px;color:var(--mut);margin-top:3px}
+
+.tierhead{display:flex;align-items:baseline;gap:11px;margin:30px 0 4px}
+.tierhead h3{font-family:'Cinzel',serif;font-weight:600;font-size:17px;margin:0;letter-spacing:.5px}
+.tierhead .cnt{font-size:11px;font-weight:800;color:var(--gold);border:1px solid var(--line2);border-radius:999px;padding:2px 9px}
+.tierhead .dsc{font-size:12px;color:var(--ink2)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;margin-top:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px 18px;transition:.16s;position:relative;cursor:pointer;overflow:hidden}
+.card:hover{transform:translateY(-2px);border-color:var(--line2);box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.card.livecard{background:linear-gradient(180deg,rgba(87,184,119,.10),var(--panel));border-color:rgba(87,184,119,.3)}
+.ctop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.cname{font-size:16px;font-weight:800;letter-spacing:.2px}
+.ctag{font-size:10px;font-weight:700;color:var(--mut);margin-top:2px;letter-spacing:.4px}
+.pill{font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:4px 9px;border-radius:999px;white-space:nowrap;text-transform:uppercase}
+.pill.live{background:rgba(87,184,119,.16);color:var(--green);border:1px solid rgba(87,184,119,.35)}
+.pill.work{background:var(--goldsoft);color:var(--gold);border:1px solid var(--line2)}
+.pill.poss{background:rgba(183,155,230,.14);color:var(--violet);border:1px solid rgba(183,155,230,.3)}
+.cwhat{font-size:12.5px;color:var(--ink2);line-height:1.5;margin-top:11px}
+.cmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.mtag{font-size:10.5px;color:var(--ink2);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;padding:5px 9px}
+.mtag b{color:var(--ink)}
+.conf{color:var(--gold);border-color:var(--line2)}
+.kstrip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}
+.kbox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.kbox .kk{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
+.kbox .kv{font-size:16px;font-weight:800;margin-top:3px}
+.distband{margin-top:13px;padding:11px 12px;border:1px solid rgba(87,184,119,.28);background:rgba(87,184,119,.07);border-radius:12px}
+.distband .dl{font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--green);font-weight:700}
+.distband .dv{font-size:13px;font-weight:700;margin-top:3px}
+.distband .dd{font-size:11.5px;color:var(--ink2);margin-top:3px}
+.csite{display:inline-block;margin-top:12px;font-size:11.5px;color:var(--gold);font-weight:700}
+.csite:hover{text-decoration:underline}
+.hint{font-size:11px;color:var(--mut);margin-top:12px;font-style:italic}
+
+/* view sections */
+.view{display:none}
+.view.on{display:block}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-top:16px}
+.ftab{width:100%;border-collapse:collapse;font-size:13px}
+.ftab th{text-align:left;color:var(--ink2);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--line);padding:9px 8px}
+.ftab td{padding:9px 8px;border-bottom:1px solid rgba(201,164,74,.09)}
+.ftab td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.ftab tr:last-child td{border-bottom:none}
+.ftab .tot td{border-top:1px solid var(--line2);font-weight:800;color:var(--gold)}
+.note{font-size:12px;color:var(--ink2);line-height:1.6;border-left:3px solid var(--gold2);padding:2px 0 2px 12px;margin:14px 0}
+.bars{display:grid;gap:9px;margin-top:6px}
+.barrow{display:grid;grid-template-columns:120px 1fr 74px;align-items:center;gap:10px;font-size:12px}
+.barrow .lb{color:var(--ink2)}
+.bartrk{height:9px;background:rgba(255,255,255,.05);border-radius:6px;overflow:hidden}
+.barfl{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:6px}
+.barrow .vv{text-align:right;font-weight:700;color:var(--ink)}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(4,9,6,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:40}
+.ov.show{display:flex}
+.modal{background:linear-gradient(180deg,#13211a,#0f1a13);border:1px solid var(--line2);border-radius:18px;max-width:540px;width:100%;padding:24px;max-height:88vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.modal h3{font-family:'Cinzel',serif;margin:0;font-size:20px;font-weight:600}
+.modal .mp{font-size:12px;color:var(--ink2);margin-top:4px}
+.mclose{float:right;border:1px solid var(--line);background:rgba(255,255,255,.04);width:32px;height:32px;border-radius:9px;cursor:pointer;color:var(--ink2);font-size:16px}
+.mrow{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(201,164,74,.1);font-size:13px}
+.mrow .mk{color:var(--ink2);flex:0 0 42%}
+.mrow .mv{font-weight:600;text-align:right}
+.mlink{display:inline-block;margin-top:16px;padding:9px 14px;border:1px solid var(--line2);background:var(--goldsoft);border-radius:10px;color:var(--gold);font-weight:700;font-size:12.5px}
+/* lead tiers */
+.la{color:var(--green);font-weight:700}
+.lb{color:#7ca9e8;font-weight:700}
+.lc{color:var(--ink);font-weight:700}
+.leadcell{white-space:nowrap;font-variant-numeric:tabular-nums}
+.leadcell .sep{color:var(--mut);font-weight:400;margin:0 3px}
+.legend{font-size:11px;color:var(--ink2);margin-top:10px}
+.legend b.la,.legend b.lb,.legend b.lc{font-weight:700}
+/* calculator */
+.calc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:6px}
+.cfield{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.cfield .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
+.stepper{display:flex;align-items:center;gap:8px;margin-top:9px}
+.stepper button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:var(--goldsoft);color:var(--gold);font-size:17px;font-weight:800;cursor:pointer;line-height:1;flex:0 0 30px}
+.stepper button:hover{background:rgba(217,180,91,.24)}
+.stepper input{flex:1;min-width:0;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:16px;font-weight:800;text-align:center;padding:7px 4px;font-family:inherit}
+.stepper input:focus{outline:none;border-color:var(--gold2)}
+.cout{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.cbig{background:linear-gradient(180deg,rgba(217,180,91,.10),rgba(255,255,255,.02));border:1px solid var(--line2);border-radius:14px;padding:16px}
+.cbig .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
+.cbig .cv{font-size:27px;font-weight:800;color:var(--gold);margin-top:6px}
+.cbig .cs{font-size:11px;color:var(--mut);margin-top:3px}
+/* scenario */
+.scen{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+.scen-head{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);font-weight:700;margin-bottom:12px}
+.scen-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.9fr);gap:14px;align-items:stretch}
+.ctoggle{display:flex;gap:6px;margin-top:9px}
+.ctoggle button{flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--line2);background:rgba(0,0,0,.25);color:var(--ink2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
+.ctoggle button.on{background:var(--goldsoft);color:var(--gold);border-color:var(--gold2)}
+.scen-out{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}
+.cbig.hero{display:flex;flex-direction:column;justify-content:center}
+.cbig.hero .cv{font-size:34px}
+.scen-stats{display:grid;gap:10px;align-content:start}
+.sst{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sst .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
+.sst .sv{font-size:16px;font-weight:800;color:var(--ink);white-space:nowrap}
+.chelp{font-size:10px;color:var(--mut);margin-top:7px;font-weight:600}
+.reach{margin-top:12px;font-size:12.5px;border-radius:10px;padding:10px 13px;line-height:1.5}
+.reach:empty{display:none}
+.reach.ok{background:rgba(120,180,120,.10);border:1px solid rgba(120,180,120,.35);color:#a9d3a0}
+.reach.warn{background:rgba(210,130,60,.12);border:1px solid rgba(210,130,60,.42);color:#e7b98a}
+.ccap{font-size:11px;color:var(--mut);margin-top:8px}
+.drip{margin-top:18px}
+.drip-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.drip-head .scen-head{margin:0}
+.drip-steps{display:flex;align-items:center;gap:8px}
+.drip-steps .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
+.drip-steps .mini{display:flex;align-items:center;gap:6px}
+.drip-steps .mini button{width:26px;height:26px;border-radius:7px;border:1px solid var(--line2);background:var(--goldsoft);color:var(--gold);font-size:15px;font-weight:800;cursor:pointer;line-height:1}
+.drip-steps .mini input{width:46px;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:7px;color:var(--ink);font-size:14px;font-weight:800;text-align:center;padding:5px 2px;font-family:inherit}
+.dwrap{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.dtab{width:100%;border-collapse:collapse}
+.dtab th,.dtab td{text-align:left;padding:9px 12px;font-size:12.5px;border-bottom:1px solid var(--line)}
+.dtab th{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
+.dtab th.num,.dtab td.num{text-align:right;font-variant-numeric:tabular-nums}
+.dtab tr:last-child td{border-bottom:none}
+.dtab td.tlab{color:var(--ink)}
+.dtab tr.full td{color:var(--gold);font-weight:800}
+@media(max-width:720px){.calc{grid-template-columns:repeat(2,minmax(0,1fr))}.cout{grid-template-columns:1fr}.scen-body{grid-template-columns:1fr}.scen-out{grid-template-columns:1fr}}
+/* ── MOBILE ── */
+@media(max-width:640px){
+  header{padding:13px 15px;gap:9px}
+  .brand img{height:32px}.brand h1{font-size:13px;letter-spacing:1.5px}
+  .nav{gap:3px;width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:3px}
+  .nav a{white-space:nowrap;padding:6px 9px;font-size:12px}
+  .upd{display:none}
+  .wrap{padding:18px 13px 60px}
+  h2.sec{font-size:18px}
+  .lead{font-size:12.5px}
+  .tiles{gap:9px}.tile{padding:12px 13px}.tile .v{font-size:21px}
+  .grid{grid-template-columns:1fr}
+  .panel{padding:15px 14px}
+  .calc{grid-template-columns:1fr;gap:10px}
+  .stepper input{font-size:15px;padding:8px 4px}
+  .cout{gap:10px}.cbig .cv{font-size:23px}
+  /* collapse data tables → stacked cards (no side-scroll) */
+  .ftab tr:first-child{display:none}
+  .ftab,.ftab tbody,.ftab tr,.ftab td{display:block;width:100%}
+  .ftab tr{border:1px solid var(--line);border-radius:11px;margin-bottom:10px;background:rgba(255,255,255,.02);padding:3px 2px}
+  .ftab td{border:none;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:7px 12px;text-align:right}
+  .ftab td::before{content:attr(data-label);color:var(--ink2);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;text-align:left;flex:0 0 auto}
+  .ftab td:empty{display:none}
+  .ftab td.num{font-size:14px}
+  .ftab tr.tot{background:var(--goldsoft)}.ftab tr.tot td{color:var(--gold)}
+  .modal{padding:20px 17px}
+  .mrow{gap:12px}.mrow .mk{flex:0 0 44%}
+}
+footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 24px 40px;color:var(--mut);font-size:11px}
+@media(max-width:720px){.tiles{grid-template-columns:repeat(2,1fr)}.nav a{padding:6px 8px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="specks" id="specks"></div>
+
+<header>
+  <div class="brand" onclick="show('portfolio')">
+    <img src="https://castingkarmallc.com/emblem.png" alt="Casting Karma">
+    <div>
+      <h1>CASTING KARMA</h1>
+      <div class="sub">Portfolio · Admin</div>
+    </div>
+  </div>
+  <div class="nav" id="nav">
+    <a data-v="portfolio" onclick="show('portfolio')">Portfolio</a>
+    <a data-v="money" onclick="show('money')">Money</a>
+    <a data-v="email" onclick="show('email')">Email Engine</a>
+    <a data-v="ga" onclick="show('ga')">GA</a>
+    <a data-v="projections" onclick="show('projections')">Projections</a>
+    <a href="https://castingkarma.github.io/ck-timeline/" target="_blank" rel="noreferrer">Timeline ↗</a>
+    <span class="chip">PRIVATE</span>
+    <span class="upd" id="upd"></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="view on" id="v-portfolio">
+    <div class="tag">Live portfolio</div>
+    <h2 class="sec">What's actually going to market</h2>
+    <p class="lead">Three tiers, one glance: what's <b>live &amp; distributing</b>, what's <b>green-lit and in build</b>, and <b>discovery candidates</b> waiting on a decision.</p>
+
+    <div class="tiles" id="topTiles"></div>
+
+    <div class="tierhead">
+      <h3 style="color:var(--green)">🟢 Live</h3><span class="cnt" id="cLive">0</span>
+      <span class="dsc">Green-light distribution plan running. Real GTM KPIs.</span>
+    </div>
+    <div class="grid" id="gridLive"></div>
+
+    <div class="tierhead">
+      <h3 style="color:var(--gold)">🛠 In the works</h3><span class="cnt" id="cWork">0</span>
+      <span class="dsc">Green-lit, dev lane assigned — building toward launch. <b style="color:var(--green)">Rule:</b> a project's first real sub (even a random visitor) promotes it to Live.</span>
+    </div>
+    <div class="grid" id="gridWork"></div>
+
+    <div class="tierhead">
+      <h3 style="color:var(--violet)">🔮 Possible</h3><span class="cnt" id="cPoss">0</span>
+      <span class="dsc">From discovery. Click for market size, reachable leads, pricing &amp; confidence.</span>
+    </div>
+    <div class="grid" id="gridPoss"></div>
+  </section>
+
+  <!-- ============ MONEY ============ -->
+  <section class="view" id="v-money">
+    <div class="tag">Money</div>
+    <h2 class="sec">Revenue, burn &amp; P&amp;L</h2>
+    <p class="lead">The honest money picture — kept current. All products pre-revenue; the game is still first dollar in.</p>
+
+    <div class="tiles" id="moneyTiles"></div>
+
+    <div class="panel" id="pnlPanel"></div>
+
+    <div class="panel">
+      <div class="tag" style="color:var(--ink2)">Recurring monthly spend — current</div>
+      <table class="ftab" id="burnTab" style="margin-top:12px"></table>
+      <div class="note" id="burnNote"></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag" style="color:var(--ink2)">July 2026 — verified cash out on the LLC card</div>
+      <table class="ftab" id="cashTab" style="margin-top:12px"></table>
+    </div>
+  </section>
+
+  <!-- ============ EMAIL ENGINE ============ -->
+  <section class="view" id="v-email">
+    <div class="tag">CK Send Engine</div>
+    <h2 class="sec">Email engine — live status</h2>
+    <p class="lead">Owned harvester + dispatcher, rented mailboxes + warmup. Per-project pods, weighted daily send.</p>
+    <div class="tiles" id="emailTiles"></div>
+    <div class="panel" id="emailPods"></div>
+    <div class="note" id="emailNote"></div>
+    <div class="panel" id="emailCampaigns"></div>
+  </section>
+
+  <!-- ============ PROJECTIONS ============ -->
+  <section class="view" id="v-projections">
+    <div class="tag">Projections</div>
+    <h2 class="sec">Revenue calculator</h2>
+    <p class="lead">Set your sub price, per-touch conversion rate, list size, and daily send rate. Watch expected subs and revenue build touch by touch as the drip runs — then set a revenue goal to see how fast you'll reach it at your daily pace. It recomputes live.</p>
+    <div class="panel">
+      <div class="calc">
+        <div class="cfield"><div class="cl">Sub price ($/mo)</div>
+          <div class="stepper"><button onclick="calcStep('c_price',-5)">−</button><input id="c_price" type="number" value="225" oninput="calc()"><button onclick="calcStep('c_price',5)">+</button></div></div>
+        <div class="cfield"><div class="cl">Conversion / touch (%)</div>
+          <div class="stepper"><button onclick="calcStep('c_conv',-0.1)">−</button><input id="c_conv" type="number" step="0.05" value="0.1" oninput="calc()"><button onclick="calcStep('c_conv',0.1)">+</button></div>
+          <div class="chelp" id="conv_help">—</div></div>
+        <div class="cfield"><div class="cl">List size (contacts)</div>
+          <div class="stepper"><button onclick="calcStep('c_list',-1000)">−</button><input id="c_list" type="number" value="15000" oninput="calc()"><button onclick="calcStep('c_list',1000)">+</button></div></div>
+        <div class="cfield"><div class="cl">Daily sends</div>
+          <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="500" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
+      </div>
+      <div class="cout">
+        <div class="cbig"><div class="cl">Subs from full list</div><div class="cv" id="o_subs">—</div><div class="cs">contacts × full-drip conversion</div></div>
+        <div class="cbig"><div class="cl">MRR ceiling</div><div class="cv" id="o_mrr">—</div><div class="cs">whole list, full drip</div></div>
+        <div class="cbig"><div class="cl">ARR ceiling</div><div class="cv" id="o_arr">—</div><div class="cs">annual run-rate at full list</div></div>
+      </div>
+      <div class="ccap" id="o_ceilcap"></div>
+
+      <div class="drip">
+        <div class="drip-head">
+          <div class="scen-head">Expected results per touch — how the drip builds</div>
+          <div class="drip-steps"><span class="cl">Touches / contact</span>
+            <span class="mini"><button onclick="calcStep('c_touch',-1)">−</button><input id="c_touch" type="number" value="3" oninput="calc()"><button onclick="calcStep('c_touch',1)">+</button></span></div>
+        </div>
+        <div class="dwrap"><table class="dtab" id="dripTable"></table></div>
+      </div>
+
+      <div class="scen">
+        <div class="scen-head">Scenario 1 · How fast can I reach the goal?</div>
+        <div class="scen-body">
+          <div class="cfield"><div class="cl">Goal revenue ($)</div>
+            <div class="stepper"><button onclick="calcStep('c_target',-500)">−</button><input id="c_target" type="number" value="3000" oninput="calc()"><button onclick="calcStep('c_target',500)">+</button></div>
+            <div class="ctoggle"><button id="tg_mrr" class="on" onclick="setTgt('mrr')">as MRR</button><button id="tg_arr" onclick="setTgt('arr')">as ARR</button></div>
+          </div>
+          <div class="scen-out">
+            <div class="cbig hero"><div class="cl">Time to goal</div><div class="cv" id="o_weeks">—</div><div class="cs" id="o_weeks_sub">set price, conversion &amp; goal</div></div>
+            <div class="scen-stats">
+              <div class="sst"><div class="cl">Days to goal</div><div class="sv" id="o_days">—</div></div>
+              <div class="sst"><div class="cl">Contacts to reach</div><div class="sv" id="o_need_contacts">—</div></div>
+              <div class="sst"><div class="cl">Total sends</div><div class="sv" id="o_need_emails">—</div></div>
+              <div class="sst"><div class="cl">Subscribers needed</div><div class="sv" id="o_need_subs">—</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="reach" id="o_reach"></div>
+      </div>
+
+      <div class="note">Per-touch model: each touch converts your rate of the contacts not yet converted, so cumulative conversion after k touches = 1−(1−rate)^k. Subs = contacts × cumulative rate; MRR = subs × sub price. Time to goal = (contacts needed × touches) ÷ daily sends. Assumes no churn, steady sending, and ignores drip spacing — high-level planning math, not a forecast. Real reply/sub data anchors it once sending starts.</div>
+    </div>
+  </section>
+
+  <!-- ============ GA (Analytics) ============ -->
+  <section class="view" id="v-ga">
+    <div class="tag">Analytics</div>
+    <h2 class="sec">Site traffic — by project</h2>
+    <p class="lead">Visits per project: today, this week, this month, all‑time — plus portfolio totals. Real GA4 data connects here.</p>
+    <div class="tiles" id="gaTiles"></div>
+    <div class="panel">
+      <table class="ftab" id="gaTable"></table>
+      <div class="note" id="gaNote"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="ov" id="ov" onclick="if(event.target===this)closeM()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer>
+  Casting Karma LLC · Admin portfolio · <a href="https://castingkarmallc.com" target="_blank" style="color:var(--gold)">castingkarmallc.com ↗</a> · Private — not indexed.
+</footer>
+
+<script>
+/* ═══════════════ DATA (edit here — this is what "update the portfolio" means) ═══════════════ */
+const UPDATED = "2026-07-26";
+
+const LIVE = [{
+  id:"standbyproof", name:"StandbyProof", tag:"P-11 · standbyproof.com",
+  what:"NFPA 110 / CMS generator-compliance — inspection-ready standby-power records for healthcare & critical facilities.",
+  site:"https://www.standbyproof.com",
+  dist:{ v:"Cold email · CK Send Engine", d:"14 inboxes · 7 domains · 1,876 A-list leads queued · warming" },
+  k:{ sent:0, inbox:"—", opens:0, replies:0, subs:0, mrr:0 },
+  phase:"Warmup — day 0 of 14 · first real sends ≈ Aug 7–10",
+  note:"Product is live and ready for subscribers. The distribution engine is warming; no cold sends until the 14-day warmup completes (protects deliverability)."
+}];
+
+const WORK = [
+  {id:"tenderproof",name:"TenderProof",tag:"P-4",conf:"4.7",site:"https://tenderproof.io",
+   what:"Per-load ordinary-care defense file for freight brokers (post-Montgomery SCOTUS ruling).",
+   stage:"Multi-tenant API live (demo mode). Next: Stripe + measurement → GTM.",
+   next:"Cold-email pod warming — 6 inboxes / 3 domains / 2,858 leads → sends ≈ day 15",
+   market:"~120k FMCSA broker authorities · TIA ~1,700 core · ~$60M TAM (est.)",
+   pricing:"$149 solo / $399 team / $699 brokerage · annual = 2 mo free",
+   build:"4 / 5 — multi-tenant app, FMCSA data ingest, tamper-evident freeze/PDF, Chrome extension",
+   ux:"On each load tender, the broker snapshots the carrier's live FMCSA authority/insurance/safety, scores it against their written policy, and freezes a timestamped defense file proving ordinary care."},
+  {id:"hulldocs",name:"HullDocs",tag:"P-5",conf:"4.5",site:"https://hulldocs.com",
+   what:"Boat maintenance-history record — a PWA that follows the hull, not the owner.",
+   stage:"Live on Vercel; pre-GTM.",market:"~12M US recreational boats · owners/brokers/surveyors (est.)",pricing:"$5 / $12 per mo · 2 tiers (est.)",
+   build:"2 / 5 — PWA + document storage + AI receipt import",
+   ux:"Owner logs each service/repair with photos & receipts; the full maintenance history stays with the hull and transfers to the next owner at sale."},
+  {id:"rangenodes",name:"RangeNodes",tag:"P-6",conf:"4.3",
+   what:"Handload database — compounding reloading-data graph (firearms-adjacent PWA).",
+   stage:"Live, data public; GTM prep.",market:"~5–7M US handloaders (est.)",pricing:"Free + $6/mo Pro (est.)",
+   build:"3 / 5 — structured reloading-data graph + search, contributor model",
+   ux:"Reloaders search and save load recipes by cartridge/powder/bullet; the database compounds as the community contributes verified data."},
+  {id:"squawktrail",name:"SquawkTrail",tag:"P-7",conf:"4.3",site:"https://squawktrail.vercel.app",
+   what:"Aircraft title/lien change alerts for general aviation owners & buyers.",
+   stage:"Building.",market:"~210k US GA aircraft · owners/buyers/title-escrow (est.)",pricing:"$9 / $19 per mo alerts (est.)",
+   build:"3 / 5 — FAA data feed + change detection + alerting",
+   ux:"Owner or buyer watches an aircraft's FAA title/lien status and gets an instant alert the moment anything changes."},
+  {id:"stockshows",name:"StockShowsHQ",tag:"P-8",conf:"4.3",
+   what:"Junior-livestock show results aggregator (4-H / FFA).",
+   stage:"Building.",market:"~6M 4-H + ~1M FFA members (est.)",pricing:"$4/mo or $29/yr (est.)",
+   build:"3 / 5 — results aggregation + search across circuits",
+   ux:"4-H/FFA families look up junior-livestock show results, placings, and rankings across shows in one place."},
+  {id:"duebell",name:"DueBell",tag:"P-2",conf:"4.6",site:"https://getduebell.com",
+   what:"Auto 'your annual service is due' reminders for repeat-service trades on Jobber.",
+   stage:"In Jobber marketplace review.",market:"~80–120k repeat-service trades on Jobber (est.)",pricing:"$29 / $49 / $79 per mo by client count",
+   build:"2 / 5 — Jobber OAuth + daily cron + email",
+   ux:"Connects to the pro's Jobber account and auto-emails customers 'your annual service is due,' timed from last visit + service frequency."},
+  {id:"cert",name:"Cert & License Tracker",tag:"P-1",conf:"4.0",
+   what:"Employee certification & license-expiry tracker on monday.com; auto-reminders before lapse.",
+   stage:"In monday marketplace review.",market:"~63k monday accounts >10 users (regulated workforce, est.)",pricing:"Free / $19 / $49 / $99 per mo (monday billing)",
+   build:"2 / 5 — monday app hosted on monday Code (nothing for us to host)",
+   ux:"Inside monday, tracks each employee's certification/license expiry and auto-reminds managers before anything lapses."},
+  {id:"lastportal",name:"TheLastPortal",tag:"P-9",conf:"7.0",site:"https://thelastportal.com",
+   what:"AR-automation B2B SaaS.",
+   stage:"Phase 0 smoke test — product not yet green-lit.",market:"SMB accounts-receivable teams · large (to size at gate)",pricing:"$99+/mo (est.)",
+   build:"4 / 5 — AR automation engine + integrations",
+   ux:"Automates accounts-receivable follow-up so SMBs get paid faster; currently a smoke test to validate demand before green-light."}
+];
+
+const POSS = [
+  {id:"parcelscreen",name:"Parcel Screen",conf:"6.0",
+   what:"Bulk buildability screening for land investors (geodata / GIS join).",
+   market:"~90k US land investors/wholesalers · ~$100M TAM (est.)",
+   reach:"~8,000 reachable (est.) — county GIS + land-investor / REI lists",
+   pricing:"$49 / $99 / $199 per mo · 3 tiers (est.)",
+   build:"4 / 5 — parcel + GIS data pipeline, spatial joins, data licensing",
+   ux:"Upload or draw a batch of parcels → app auto-screens each for zoning, wetlands, slope, road & utility access → returns a ranked buildable-vs-not list with an exportable report."}
+];
+/* Re-screen bench (discovery candidates parked, not active): eBikeFit, LedgerPeppol, InvoiceIndex,
+   EquiTrail, AgentLedger, BurnLedger, FormDraft, DarkTower, OrphanWellRadar. Add to POSS when a lane green-lights one. */
+
+const MONEY = {
+  revenue:0,
+  julyCash:591.03,
+  burnNow:406,
+  burnAug:500,
+  burn:[
+    {k:"Claude Max (Anthropic) — runs the whole operation",v:213.20,c:"Monthly"},
+    {k:"InboxKit — 20 cold-email inboxes (new)",v:79.80,c:"Monthly"},
+    {k:"Supabase Pro base + 2× Micro",v:45.00,c:"Monthly"},
+    {k:"Vercel Pro",v:20.00,c:"Monthly"},
+    {k:"Resend Pro",v:20.00,c:"Monthly"},
+    {k:"Domains (8 live · billed annually)",v:9.39,c:"Yearly"},
+    {k:"Google Workspace",v:8.40,c:"Monthly"},
+    {k:"Twilio (SMS, pay-as-you-go, new)",v:7.00,c:"Monthly"},
+    {k:"TechSmith Snagit",v:3.47,c:"Yearly"}
+  ],
+  cash:[
+    {k:"Anthropic / Claude Max",v:229.93},
+    {k:"InboxKit — cold-email infra ($125 domains + $79.80 inboxes)",v:205.00},
+    {k:"HighLevel (cancelled 7/18 — drops off Aug)",v:103.40},
+    {k:"Serper credits — one-off prepaid, 50k credits / 6-mo",v:53.30}
+  ]
+};
+
+const EMAIL = {
+  phase:"Warmup", day:0, total:14,
+  tiles:[
+    {k:"Phase",v:"Warmup",s:"day 0 of 14"},
+    {k:"Inboxes active",v:"20",s:"7 SP · 3 TP domains"},
+    {k:"Leads queued",v:"4,734",s:"1,876 SP · 2,858 TP"},
+    {k:"Real sends",v:"0",s:"none until warm"}
+  ],
+  pods:[
+    {name:"StandbyProof pod",inboxes:14,domains:7,a:1876,b:46056,backlog:null,status:"Warming"},
+    {name:"TenderProof pod",inboxes:6,domains:3,a:2858,b:null,backlog:null,status:"Warming"}
+  ],
+  campaigns:[], // fills in when real sends begin: {name, sent, landed, opened, clicked, replied, failed}
+  note:"Sending platform: Smartlead (14-day free trial → decide Basic $39 / Pro $94 by ~Aug 9). Mailboxes: InboxKit. Personalizer + Dispatcher are owned ($0). Judged on replies + subs, not opens. First real sends ≈ Aug 7–10, ramping to ~500/day per pod."
+};
+
+const PROJ = [
+  {m:"Aug 2026",v:510},{m:"Sep",v:1220},{m:"Oct",v:2210},{m:"Nov",v:3380},
+  {m:"Dec",v:4730},{m:"Jan 2027",v:6310},{m:"Feb",v:7970},{m:"Mar",v:10140},
+  {m:"Apr",v:12540},{m:"May",v:15200},{m:"Jun",v:17950},{m:"Jul 2027",v:21300}
+];
+
+/* GA — set connected:true and fill d/w/m/t once a server-side GA4 reader is wired */
+const GA = {
+  connected:false,
+  projects:[
+    {name:"StandbyProof",site:"standbyproof.com",d:null,w:null,m:null,t:null},
+    {name:"TenderProof",site:"tenderproof.io",d:null,w:null,m:null,t:null},
+    {name:"HullDocs",site:"hulldocs.com",d:null,w:null,m:null,t:null},
+    {name:"RangeNodes",site:"rangenodes.com",d:null,w:null,m:null,t:null},
+    {name:"SquawkTrail",site:"squawktrail.com",d:null,w:null,m:null,t:null},
+    {name:"StockShowsHQ",site:"stockshowshq.com",d:null,w:null,m:null,t:null},
+    {name:"DueBell",site:"getduebell.com",d:null,w:null,m:null,t:null},
+    {name:"Casting Karma",site:"castingkarmallc.com",d:null,w:null,m:null,t:null}
+  ]
+};
+
+/* ═══════════════ RENDER ═══════════════ */
+const $=id=>document.getElementById(id);
+const money=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const money0=n=>'$'+Math.round(n).toLocaleString('en-US');
+
+function topTiles(){
+  const t=[
+    {k:"Live",v:LIVE.length,s:"distributing"},
+    {k:"In the works",v:WORK.length,s:"green-lit builds"},
+    {k:"Possible",v:POSS.length,s:"discovery"},
+    {k:"Revenue",v:money0(MONEY.revenue),s:"pre-revenue"}
+  ];
+  $('topTiles').innerHTML=t.map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">${x.s}</div></div>`).join('');
+  $('cLive').textContent=LIVE.length; $('cWork').textContent=WORK.length; $('cPoss').textContent=POSS.length;
+}
+
+function liveCard(p){
+  return `<div class="card livecard" onclick="openLive('${p.id}')">
+    <div class="ctop"><div><div class="cname">${p.name}</div><div class="ctag">${p.tag}</div></div><span class="pill live">Live</span></div>
+    <div class="cwhat">${p.what}</div>
+    <div class="distband"><div class="dl">Distribution plan</div><div class="dv">${p.dist.v}</div><div class="dd">${p.dist.d}</div></div>
+    <div class="kstrip">
+      <div class="kbox"><div class="kk">Emails sent</div><div class="kv">${p.k.sent.toLocaleString()}</div></div>
+      <div class="kbox"><div class="kk">Replies</div><div class="kv">${p.k.replies}</div></div>
+      <div class="kbox"><div class="kk">Total subs</div><div class="kv" style="color:var(--green)">${p.k.subs}</div></div>
+      <div class="kbox"><div class="kk">Monthly rev</div><div class="kv" style="color:var(--gold)">${money0(p.k.mrr||0)}</div></div>
+    </div>
+    <div class="hint">${p.phase}</div>
+  </div>`;
+}
+function workCard(p){
+  return `<div class="card" onclick="openWork('${p.id}')">
+    <div class="ctop"><div><div class="cname">${p.name}</div><div class="ctag">Lane ${p.tag}</div></div><span class="pill work">In build</span></div>
+    <div class="cwhat">${p.what}</div>
+    <div class="cmeta"><span class="mtag conf">Confidence <b>${p.conf}</b></span>${p.site?`<span class="mtag">has site</span>`:''}</div>
+    <div class="hint">${p.stage}</div>
+  </div>`;
+}
+function possCard(p){
+  return `<div class="card" onclick="openPoss('${p.id}')">
+    <div class="ctop"><div><div class="cname">${p.name}</div><div class="ctag">Discovery candidate</div></div><span class="pill poss">Possible</span></div>
+    <div class="cwhat">${p.what}</div>
+    <div class="cmeta"><span class="mtag conf">Confidence <b>${p.conf}</b></span></div>
+    <div class="hint">Click for market size · reachable leads · pricing</div>
+  </div>`;
+}
+function renderPortfolio(){
+  topTiles();
+  $('gridLive').innerHTML=LIVE.map(liveCard).join('');
+  $('gridWork').innerHTML=WORK.map(workCard).join('');
+  $('gridPoss').innerHTML=POSS.map(possCard).join('');
+}
+
+/* modals */
+function modal(html){$('modal').innerHTML=html;$('ov').classList.add('show');}
+function closeM(){$('ov').classList.remove('show');}
+function row(k,v){return `<div class="mrow"><span class="mk">${k}</span><span class="mv">${v}</span></div>`;}
+function openLive(id){const p=LIVE.find(x=>x.id===id);modal(
+  `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">${p.tag} · Live</div>
+   <div style="font-size:13px;color:var(--ink2);line-height:1.6;margin:14px 0">${p.note}</div>
+   ${row("Distribution",p.dist.v)}${row("Engine",p.dist.d)}
+   ${row("Emails sent",p.k.sent.toLocaleString())}${row("Inbox rate",p.k.inbox)}${row("Opens",p.k.opens)}${row("Replies",p.k.replies)}
+   ${row("Total subs",p.k.subs)}${row("Phase",p.phase)}
+   ${p.site?`<a class="mlink" href="${p.site}" target="_blank">Open site ↗</a>`:''}`);}
+function openWork(id){const p=WORK.find(x=>x.id===id);modal(
+  `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">Lane ${p.tag} · In build</div>
+   <div style="font-size:13px;color:var(--ink2);line-height:1.6;margin:14px 0">${p.what}</div>
+   ${row("Stage",p.stage)}${p.next?row("Next",p.next):''}${row("Market size",p.market)}${row("Pricing / sub plans",p.pricing)}${row("Build size (tech lift)",p.build)}${row("User experience",p.ux)}${row("Confidence",p.conf+" / 5")}
+   ${p.site?`<a class="mlink" href="${p.site}" target="_blank">Open site ↗</a>`:''}`);}
+function openPoss(id){const p=POSS.find(x=>x.id===id);modal(
+  `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">Discovery candidate · Possible</div>
+   <div style="font-size:13px;color:var(--ink2);line-height:1.6;margin:14px 0">${p.what}</div>
+   ${row("Market size",p.market)}${row("Reachable leads (Trawler)",p.reach)}${row("Pricing / sub plans",p.pricing)}${row("Build size (tech lift)",p.build)}${row("User experience",p.ux)}${row("Discovery confidence",p.conf+" / 10")}`);}
+
+/* money */
+function renderMoney(){
+  const m=MONEY;
+  $('moneyTiles').innerHTML=[
+    {k:"Revenue (MTD)",v:money0(m.revenue),s:"all pre-revenue"},
+    {k:"Burn — now",v:'≈'+money0(m.burnNow)+'/mo',s:"recurring"},
+    {k:"Burn — from Aug",v:'≈'+money0(m.burnAug)+'/mo',s:"+ Smartlead Pro"},
+    {k:"Cash out — July",v:money0(m.julyCash),s:"verified on LLC card"}
+  ].map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">${x.s}</div></div>`).join('');
+  let bt=`<tr><th>Item</th><th>Billed</th><th style="text-align:right">Monthly</th><th style="text-align:right">Yearly</th></tr>`;
+  m.burn.forEach(r=>bt+=`<tr><td data-label="Item">${r.k}</td><td data-label="Billed" style="color:var(--ink2)">${r.c}</td><td class="num" data-label="Monthly">${money(r.v)}</td><td class="num" data-label="Yearly">${money(r.v*12)}</td></tr>`);
+  const bsum=m.burn.reduce((a,b)=>a+b.v,0);
+  bt+=`<tr class="tot"><td data-label="Item">Total recurring</td><td></td><td class="num" data-label="Monthly">${money(bsum)}</td><td class="num" data-label="Yearly">${money(bsum*12)}</td></tr>`;
+  $('burnTab').innerHTML=bt;
+  $('burnNote').innerHTML=`Restated from a stale <b>~$329/mo</b> — InboxKit, Twilio & (from Aug) Smartlead are the new lines. Smartlead adds ~$94/mo once the trial converts ≈ Aug 9. Revenue is still the whole game: ${money0(m.revenue)} in, ≈${money0(bsum)} out.`;
+  // P&L — nets in today's email-engine costs
+  const oneTime=[
+    {k:"Email engine — InboxKit domains (10 lookalike, annual)",v:125.00},
+    {k:"Email engine — Serper credits (50k, 6-mo prepaid)",v:53.30}
+  ];
+  const otSum=oneTime.reduce((a,b)=>a+b.v,0);
+  const net=m.revenue-bsum-otSum;
+  let pt=`<div class="tag" style="color:var(--ink2)">July 2026 — P&L (month to date)</div><table class="ftab" style="margin-top:12px">`;
+  pt+=`<tr><td data-label="Line">Revenue</td><td class="num" data-label="Amount" style="color:var(--green)">${money(m.revenue)}</td></tr>`;
+  pt+=`<tr><td data-label="Line">Recurring operating (run-rate / mo) — incl. email engine InboxKit ${money(79.80)}</td><td class="num" data-label="Amount" style="color:var(--red)">−${money(bsum)}</td></tr>`;
+  oneTime.forEach(r=>pt+=`<tr><td data-label="Line">One-time: ${r.k}</td><td class="num" data-label="Amount" style="color:var(--red)">−${money(r.v)}</td></tr>`);
+  pt+=`<tr class="tot"><td data-label="Line">Net — July (accrual)</td><td class="num" data-label="Amount">−${money(Math.abs(net))}</td></tr></table>`;
+  pt+=`<div class="legend">Email-engine spend is now in the P&L: <b>InboxKit</b> ${money(79.80)}/mo (recurring) + ${money(125)} domains + <b>Serper</b> ${money(53.30)} one-time. <b>Smartlead</b> is $0 on trial → ~$94/mo from ~Aug 9 (lands in next month's recurring). Verified July cash out was ${money(m.julyCash)} (below) — the extra vs. accrual is a one-time Anthropic overage + the now-cancelled HighLevel.</div>`;
+  $('pnlPanel').innerHTML=pt;
+  let ct=`<tr><th>Charge</th><th style="text-align:right">Amount</th></tr>`;
+  m.cash.forEach(r=>ct+=`<tr><td data-label="Charge">${r.k}</td><td class="num" data-label="Amount">${money(r.v)}</td></tr>`);
+  ct+=`<tr class="tot"><td data-label="Charge">Total verified out — July</td><td class="num" data-label="Amount">${money(m.julyCash)}</td></tr>`;
+  $('cashTab').innerHTML=ct;
+}
+
+/* email */
+function renderEmail(){
+  const e=EMAIL;
+  const nn=v=>v==null?'—':v.toLocaleString();
+  $('emailTiles').innerHTML=e.tiles.map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">${x.s}</div></div>`).join('');
+  let ph=`<div class="tag" style="color:var(--ink2)">Pods</div><table class="ftab" style="margin-top:12px"><tr><th>Pod</th><th style="text-align:right">Inboxes</th><th style="text-align:right">Domains</th><th style="text-align:right">Leads we can send</th><th style="text-align:right">Status</th></tr>`;
+  e.pods.forEach(p=>ph+=`<tr><td data-label="Pod">${p.name}</td><td class="num" data-label="Inboxes">${p.inboxes}</td><td class="num" data-label="Domains">${p.domains}</td><td class="num" data-label="Leads (A/B/backlog)"><span class="leadcell"><span class="la">${nn(p.a)}</span><span class="sep">/</span><span class="lb">${nn(p.b)}</span><span class="sep">/</span><span class="lc">${nn(p.backlog)}</span></span></td><td class="num" data-label="Status" style="color:var(--gold)">${p.status}</td></tr>`);
+  ph+=`</table><div class="legend">Leads = <b class="la">A-list</b> / <b class="lb">B-list</b> / <b class="lc">backlog</b>. A = verified, send-ready · B = secondary verified pool · backlog = harvested, pending verify/tier (firms up as the master doc tiers TP + SP backlogs).</div>`;
+  $('emailPods').innerHTML=ph;
+  $('emailNote').innerHTML=e.note;
+  // Active campaigns
+  const cols=`<th>Campaign</th><th style="text-align:right">Sent</th><th style="text-align:right">Landed</th><th style="text-align:right">Opened</th><th style="text-align:right">Clicked</th><th style="text-align:right">Replied</th><th style="text-align:right">Failed</th>`;
+  let ct=`<div class="tag" style="color:var(--ink2)">Active campaigns</div>`;
+  if(!e.campaigns.length){
+    ct+=`<div style="font-size:12.5px;color:var(--ink2);margin:10px 0">No active campaigns yet — warmup in progress. This section goes live when the first real sends begin (≈ Aug 7–10), tracking each campaign's <b>sent · landed · opened · clicked · replied · failed</b>.</div>`;
+    ct+=`<table class="ftab" style="opacity:.45"><tr>${cols}</tr><tr><td data-label="Campaign">— awaiting first send —</td><td class="num" data-label="Sent">0</td><td class="num" data-label="Landed">0</td><td class="num" data-label="Opened">0</td><td class="num" data-label="Clicked">0</td><td class="num" data-label="Replied">0</td><td class="num" data-label="Failed">0</td></tr></table>`;
+  }else{
+    ct+=`<table class="ftab" style="margin-top:12px"><tr>${cols}</tr>`;
+    e.campaigns.forEach(c=>ct+=`<tr><td data-label="Campaign">${c.name}</td><td class="num" data-label="Sent">${nn(c.sent)}</td><td class="num" data-label="Landed" style="color:var(--green)">${nn(c.landed)}</td><td class="num" data-label="Opened">${nn(c.opened)}</td><td class="num" data-label="Clicked">${nn(c.clicked)}</td><td class="num" data-label="Replied" style="color:var(--gold)">${nn(c.replied)}</td><td class="num" data-label="Failed" style="color:var(--red)">${nn(c.failed)}</td></tr>`);
+    ct+=`</table>`;
+  }
+  $('emailCampaigns').innerHTML=ct;
+}
+
+/* projections calculator */
+let TGT='mrr';
+function setTgt(m){TGT=m;$('tg_mrr').classList.toggle('on',m==='mrr');$('tg_arr').classList.toggle('on',m==='arr');calc();}
+function calcStep(id,d){
+  const el=$(id);
+  let v=(parseFloat(el.value)||0)+d;
+  if(id==='c_conv') v=Math.max(0,Math.round(v*100)/100); else v=Math.max(0,Math.round(v));
+  el.value=v; calc();
+}
+function calc(){
+  const price=parseFloat($('c_price').value)||0;
+  const conv=parseFloat($('c_conv').value)||0;                       // per-touch %
+  const list=parseFloat($('c_list').value)||0;                       // contacts
+  const daily=parseFloat($('c_daily').value)||0;                     // sends/day
+  const touches=Math.max(1,Math.round(parseFloat($('c_touch').value)||1));
+  const goal=parseFloat($('c_target').value)||0;
+  const r=conv/100;                                                   // per-touch fraction
+  const Rfull=1-Math.pow(1-r,touches);                               // cumulative full-drip conversion
+  /* plain-language conversion helper */
+  $('conv_help').textContent = r>0 ? '≈ 1 sub per '+Math.round(1/r).toLocaleString()+' sends' : 'set a rate';
+  /* ceiling — whole list, full drip */
+  const listSubs=list*Rfull, listMRR=listSubs*price;
+  $('o_subs').textContent=Math.round(listSubs).toLocaleString();
+  $('o_mrr').textContent=money0(listMRR);
+  $('o_arr').textContent=money0(listMRR*12);
+  $('o_ceilcap').textContent='Ceiling = your whole '+Math.round(list).toLocaleString()+'-contact list run through a full '+touches+'-touch drip ('+(Rfull*100).toFixed(2)+'% cumulative conversion).';
+  /* per-touch breakdown — touch 1 = single email, last row = full drip */
+  let rows='<tr><th>Touch</th><th class="num">Subs added</th><th class="num">Total subs</th><th class="num">Total MRR</th></tr>';
+  let prev=0;
+  for(let k=1;k<=touches;k++){
+    const subsK=list*(1-Math.pow(1-r,k));
+    const add=subsK-prev; prev=subsK;
+    const cls=k===touches?' class="full"':'';
+    rows+='<tr'+cls+'><td class="tlab">Touch '+k+(k===touches?' · full drip':'')+'</td><td class="num">'+Math.round(add).toLocaleString()+'</td><td class="num">'+Math.round(subsK).toLocaleString()+'</td><td class="num">'+money0(subsK*price)+'</td></tr>';
+  }
+  $('dripTable').innerHTML=rows;
+  /* scenario 1 — reach the goal (uses full-drip conversion) */
+  const goalMRR = TGT==='arr' ? goal/12 : goal;
+  if(price>0 && Rfull>0 && goalMRR>0){
+    const needSubs=goalMRR/price;
+    const needContacts=needSubs/Rfull;
+    const needSends=needContacts*touches;
+    $('o_need_subs').textContent=Math.ceil(needSubs).toLocaleString();
+    $('o_need_contacts').textContent=Math.ceil(needContacts).toLocaleString();
+    $('o_need_emails').textContent=Math.ceil(needSends).toLocaleString();
+    if(daily>0){
+      const days=needSends/daily, weeks=days/7;
+      $('o_weeks').textContent=Math.ceil(weeks).toLocaleString()+(Math.ceil(weeks)===1?' wk':' wks');
+      $('o_days').textContent=Math.ceil(days).toLocaleString();
+      $('o_weeks_sub').textContent='sending '+Math.round(daily).toLocaleString()+' emails/day';
+    } else {
+      $('o_weeks').textContent='—'; $('o_days').textContent='—';
+      $('o_weeks_sub').textContent='set a daily send rate';
+    }
+    /* reachability vs the contacts you actually have */
+    if(needContacts>list){
+      const short=Math.ceil(needContacts-list);
+      $('o_reach').className='reach warn';
+      $('o_reach').innerHTML='⚠️ Your list of '+Math.round(list).toLocaleString()+' contacts tops out at '+money0(listMRR)+' MRR. Reaching '+money0(goalMRR)+'/mo needs ~'+Math.ceil(needContacts).toLocaleString()+' contacts — about '+short.toLocaleString()+' more than you have. Grow the list, add touches, or raise price/conversion.';
+    } else {
+      $('o_reach').className='reach ok';
+      $('o_reach').innerHTML='✅ Reachable within your list — needs ~'+Math.ceil(needContacts).toLocaleString()+' of your '+Math.round(list).toLocaleString()+' contacts ('+Math.ceil(needSends).toLocaleString()+' sends).';
+    }
+  } else {
+    ['o_weeks','o_days','o_need_emails','o_need_subs','o_need_contacts'].forEach(id=>$(id).textContent='—');
+    $('o_weeks_sub').textContent='set price, conversion & goal';
+    $('o_reach').className='reach'; $('o_reach').innerHTML='';
+  }
+}
+
+/* GA analytics */
+function renderGA(){
+  const nn=v=>v==null?'—':v.toLocaleString();
+  const sum=k=>GA.projects.reduce((a,p)=>a+(p[k]||0),0);
+  const tot=k=>GA.connected?sum(k).toLocaleString():'—';
+  $('gaTiles').innerHTML=[
+    {k:"Visits today",v:tot('d')},{k:"This week",v:tot('w')},
+    {k:"This month",v:tot('m')},{k:"All-time",v:tot('t')}
+  ].map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">portfolio</div></div>`).join('');
+  let t=`<tr><th>Project</th><th style="text-align:right">Today</th><th style="text-align:right">7 days</th><th style="text-align:right">30 days</th><th style="text-align:right">Total</th></tr>`;
+  GA.projects.forEach(p=>t+=`<tr><td data-label="Project">${p.name} <span style="color:var(--mut)">· ${p.site}</span></td><td class="num" data-label="Today">${nn(p.d)}</td><td class="num" data-label="7 days">${nn(p.w)}</td><td class="num" data-label="30 days">${nn(p.m)}</td><td class="num" data-label="Total">${nn(p.t)}</td></tr>`);
+  $('gaTable').innerHTML=t;
+  $('gaNote').innerHTML = GA.connected ? 'Live GA4 data.' : '⏳ Awaiting GA4 connection — the table is scaffolded and ready. Real numbers fill in once a server-side reader is wired (each project\'s GA4 property ID + a service-account key that stays on the server — never in this page).';
+}
+
+/* nav */
+function show(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
+  $('v-'+v).classList.add('on');
+  document.querySelectorAll('#nav a[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  window.scrollTo(0,0);
+}
+
+/* specks */
+(function(){let h='';for(let i=0;i<26;i++){h+=`<div class="speck" style="left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${(.15+Math.random()*.35).toFixed(2)}"></div>`;}$('specks').innerHTML=h;})();
+
+$('upd').textContent='Updated '+UPDATED;
+renderPortfolio();renderMoney();renderEmail();renderGA();calc();
+addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+</script>
+<a href="/portal/?logout=1" title="Sign out" style="position:fixed;bottom:14px;right:14px;z-index:200;font-size:12px;font-weight:600;color:#9fb0a4;text-decoration:none;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.14);padding:7px 12px;border-radius:9px;backdrop-filter:blur(4px)">Sign out</a>
+</body>
+</html>
