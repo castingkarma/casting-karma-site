@@ -79,7 +79,7 @@ export async function onRequest(context) {
       status: 302,
       headers: {
         "Location": "/portal/",
-        "Set-Cookie": `${COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/portal; Max-Age=0`,
+        "Set-Cookie": `${COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`,
       },
     });
   }
@@ -102,7 +102,7 @@ export async function onRequest(context) {
       status: 302,
       headers: {
         "Location": "/portal/",
-        "Set-Cookie": `${COOKIE}=${token}; HttpOnly; Secure; SameSite=Lax; Path=/portal; Max-Age=${MAX_AGE}`,
+        "Set-Cookie": `${COOKIE}=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${MAX_AGE}`,
       },
     });
   }

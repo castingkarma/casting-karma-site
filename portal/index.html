@@ -491,20 +491,35 @@ const PROJ = [
   {m:"Apr",v:12540},{m:"May",v:15200},{m:"Jun",v:17950},{m:"Jul 2027",v:21300}
 ];
 
-/* GA — set connected:true and fill d/w/m/t once a server-side GA4 reader is wired */
+/* GA — live from /api/ga (server-side GA4 reader). Fields fill once the service
+   account + property IDs are set in Cloudflare; until then everything shows "—". */
 const GA = {
-  connected:false,
+  connected:false, updatedAt:null,
   projects:[
-    {name:"StandbyProof",site:"standbyproof.com",d:null,w:null,m:null,t:null},
-    {name:"TenderProof",site:"tenderproof.io",d:null,w:null,m:null,t:null},
-    {name:"HullDocs",site:"hulldocs.com",d:null,w:null,m:null,t:null},
-    {name:"RangeNodes",site:"rangenodes.com",d:null,w:null,m:null,t:null},
-    {name:"SquawkTrail",site:"squawktrail.com",d:null,w:null,m:null,t:null},
-    {name:"StockShowsHQ",site:"stockshowshq.com",d:null,w:null,m:null,t:null},
-    {name:"DueBell",site:"getduebell.com",d:null,w:null,m:null,t:null},
-    {name:"Casting Karma",site:"castingkarmallc.com",d:null,w:null,m:null,t:null}
+    {name:"StandbyProof",slug:"standbyproof",site:"standbyproof.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"TenderProof",slug:"tenderproof",site:"tenderproof.io",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"HullDocs",slug:"hulldocs",site:"hulldocs.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"RangeNodes",slug:"rangenodes",site:"rangenodes.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"SquawkTrail",slug:"squawktrail",site:"squawktrail.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"StockShowsHQ",slug:"stockshowshq",site:"stockshowshq.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"DueBell",slug:"duebell",site:"getduebell.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"Casting Karma",slug:"castingkarma",site:"castingkarmallc.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null}
   ]
 };
+async function loadGA(){
+  try{
+    const r = await fetch('/api/ga',{credentials:'same-origin'});
+    if(!r.ok) return;
+    const j = await r.json();
+    if(!j || !j.connected || !j.projects) return;
+    GA.projects.forEach(p=>{
+      const m = j.projects[p.slug];
+      if(m){ p.d=m.d; p.w=m.w; p.m=m.m; p.t=m.t; p.aiM=m.aiM; p.aiT=m.aiT; }
+    });
+    GA.connected = true; GA.updatedAt = j.updatedAt;
+    renderGA();
+  }catch(_){ /* stays in the awaiting state — no fabricated numbers */ }
+}
 
 /* ═══════════════ RENDER ═══════════════ */
 const $=id=>document.getElementById(id);
@@ -716,12 +731,13 @@ function renderGA(){
   const tot=k=>GA.connected?sum(k).toLocaleString():'—';
   $('gaTiles').innerHTML=[
     {k:"Visits today",v:tot('d')},{k:"This week",v:tot('w')},
-    {k:"This month",v:tot('m')},{k:"All-time",v:tot('t')}
+    {k:"This month",v:tot('m')},{k:"All-time",v:tot('t')},
+    {k:"AI referrals · 30d",v:tot('aiM')}
   ].map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">portfolio</div></div>`).join('');
-  let t=`<tr><th>Project</th><th style="text-align:right">Today</th><th style="text-align:right">7 days</th><th style="text-align:right">30 days</th><th style="text-align:right">Total</th></tr>`;
-  GA.projects.forEach(p=>t+=`<tr><td data-label="Project">${p.name} <span style="color:var(--mut)">· ${p.site}</span></td><td class="num" data-label="Today">${nn(p.d)}</td><td class="num" data-label="7 days">${nn(p.w)}</td><td class="num" data-label="30 days">${nn(p.m)}</td><td class="num" data-label="Total">${nn(p.t)}</td></tr>`);
+  let t=`<tr><th>Project</th><th style="text-align:right">Today</th><th style="text-align:right">7 days</th><th style="text-align:right">30 days</th><th style="text-align:right">Total</th><th style="text-align:right">AI · 30d</th></tr>`;
+  GA.projects.forEach(p=>t+=`<tr><td data-label="Project">${p.name} <span style="color:var(--mut)">· ${p.site}</span></td><td class="num" data-label="Today">${nn(p.d)}</td><td class="num" data-label="7 days">${nn(p.w)}</td><td class="num" data-label="30 days">${nn(p.m)}</td><td class="num" data-label="Total">${nn(p.t)}</td><td class="num" data-label="AI · 30d">${nn(p.aiM)}</td></tr>`);
   $('gaTable').innerHTML=t;
-  $('gaNote').innerHTML = GA.connected ? 'Live GA4 data.' : '⏳ Awaiting GA4 connection — the table is scaffolded and ready. Real numbers fill in once a server-side reader is wired (each project\'s GA4 property ID + a service-account key that stays on the server — never in this page).';
+  $('gaNote').innerHTML = GA.connected ? ('Live GA4 data'+(GA.updatedAt?' · updated '+new Date(GA.updatedAt).toLocaleString():'')+'. <b>AI · 30d</b> = sessions referred from AI answer engines (ChatGPT, Perplexity, Copilot, Gemini, Claude, etc.) in the last 30 days.') : '⏳ Awaiting GA4 connection — the table is scaffolded and ready. Real numbers fill in once the GA4 service account + property IDs are set in Cloudflare (the key stays on the server — never in this page).';
 }
 
 /* nav */
@@ -736,7 +752,7 @@ function show(v){
 (function(){let h='';for(let i=0;i<26;i++){h+=`<div class="speck" style="left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${(.15+Math.random()*.35).toFixed(2)}"></div>`;}$('specks').innerHTML=h;})();
 
 $('upd').textContent='Updated '+UPDATED;
-renderPortfolio();renderMoney();renderEmail();renderGA();calc();
+renderPortfolio();renderMoney();renderEmail();renderGA();calc();loadGA();
 addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
 </script>
 <a href="/portal/?logout=1" title="Sign out" style="position:fixed;bottom:14px;right:14px;z-index:200;font-size:12px;font-weight:600;color:#9fb0a4;text-decoration:none;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.14);padding:7px 12px;border-radius:9px;backdrop-filter:blur(4px)">Sign out</a>
