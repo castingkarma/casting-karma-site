@@ -148,7 +148,7 @@ const LOGIN_HTML = `<!doctype html><html lang="en"><head>
 </style></head>
 <body>
   <div class="card">
-    <img class="emblem" src="https://castingkarmallc.com/emblem.png" alt="Casting Karma">
+    <a href="/" title="Go to castingkarmallc.com"><img class="emblem" src="https://castingkarmallc.com/emblem.png" alt="Casting Karma"></a>
     <h1>Casting Karma LLC</h1>
     <div class="sub">Admin Portal</div>
     {{MSG}}
