@@ -175,37 +175,55 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .dtab tr:last-child td{border-bottom:none}
 .dtab td.tlab{color:var(--ink)}
 .dtab tr.full td{color:var(--gold);font-weight:800}
-/* build timeline */
-.tlwrap{position:relative;margin-top:18px;padding-left:32px}
-.tlspine{position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:rgba(217,180,91,.14);border-radius:2px}
-.tlfill{position:absolute;top:0;left:0;width:100%;height:0;border-radius:2px;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 0 12px rgba(217,180,91,.55);transition:height .12s linear}
-.tlrow{position:relative;margin-bottom:14px;opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
-.tlrow.show{opacity:1;transform:none}
-.tlnode{position:absolute;left:-30px;top:15px;width:13px;height:13px;border-radius:50%;background:var(--bg2);border:2px solid var(--tlc,var(--gold));box-shadow:0 0 10px -1px var(--tlc,var(--gold));z-index:2}
-.tlnode::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--tlc,var(--gold))}
-.tlrow.show .tlnode{animation:tlpop .55s cubic-bezier(.2,.9,.3,1.4) both}
-@keyframes tlpop{0%{transform:scale(.3)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
-.tlaura{position:absolute;inset:-4px;border-radius:50%;pointer-events:none;opacity:0}
-.tlrow.fx-ring.show .tlaura{border:2px solid var(--tlc);animation:auraRing 1.1s ease-out .06s both}
-.tlrow.fx-ripple.show .tlaura{border:2px solid var(--tlc);animation:auraRing 1s ease-out both;animation-iteration-count:2}
-@keyframes auraRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3.6)}}
-.tlrow.fx-bloom.show .tlaura{background:radial-gradient(circle,var(--tlc),transparent 70%);animation:auraBloom 1.1s ease-out both}
-@keyframes auraBloom{0%{opacity:.7;transform:scale(.4)}60%{opacity:.45}100%{opacity:0;transform:scale(3)}}
-.tlrow.fx-spark.show .tlaura{background:radial-gradient(circle,#fff,var(--tlc) 40%,transparent 66%);animation:auraSpark .9s ease-out both}
-@keyframes auraSpark{0%{opacity:0;transform:scale(.2)}22%{opacity:1;transform:scale(1.25)}100%{opacity:0;transform:scale(2.5)}}
-.tlrow.fx-halo.show .tlaura{background:conic-gradient(from 0deg,transparent,var(--tlc),transparent 60%);animation:auraHalo 1.2s ease-out both}
-@keyframes auraHalo{0%{opacity:.9;transform:scale(1.2) rotate(0)}100%{opacity:0;transform:scale(2.9) rotate(210deg)}}
-.tlcard{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 16px 13px 18px;overflow:hidden}
-.tlcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tlc,var(--gold));z-index:1}
-.tlrow.fx-sweep.show .tlcard::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 32%,color-mix(in srgb,var(--tlc,#d9b45b) 22%,transparent) 50%,transparent 68%);transform:translateX(-120%);animation:cardSweep 1.1s ease-out .1s both}
-@keyframes cardSweep{0%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
-.tlmeta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:5px}
-.tldate{font-size:12px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
-.tlpill{font-size:9px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:999px;color:var(--tlc,var(--gold));border:1px solid color-mix(in srgb,var(--tlc,#d9b45b) 45%,transparent);background:color-mix(in srgb,var(--tlc,#d9b45b) 12%,transparent)}
-.tltitle{font-size:15px;font-weight:800;margin:1px 0 5px;display:flex;gap:8px;align-items:baseline;color:var(--ink)}
-.tltitle .ic{font-size:16px}
-.tldesc{font-size:12.5px;color:var(--ink2);line-height:1.55;margin:0}
-@media(prefers-reduced-motion:reduce){.tlrow{transition:none;opacity:1;transform:none}.tlaura{display:none}}
+/* build timeline — cinematic energy journey */
+.tlcue{text-align:center;font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--mut);margin:16px 0 2px}
+.tlcue .cbar{display:block;width:1px;height:42px;margin:12px auto 0;background:linear-gradient(var(--gold),transparent);animation:tlcue 2.4s ease-in-out infinite}
+@keyframes tlcue{0%,100%{opacity:.3;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+.tlwrap{position:relative;margin-top:6px;padding:3vh 0 8vh}
+.tlspine{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:rgba(217,180,91,.14);border-radius:2px}
+.tlfill{position:absolute;top:0;left:0;width:100%;height:0;border-radius:2px;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 0 14px rgba(217,180,91,.6),0 0 30px rgba(217,180,91,.32);transition:height .12s linear}
+.tlhead{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#f0d998;opacity:0;box-shadow:0 0 12px 3px rgba(230,200,118,.9),0 0 34px 10px rgba(217,180,91,.4);z-index:6;pointer-events:none;transition:opacity .3s}
+.tlrow{position:relative;min-height:clamp(200px,36vh,340px);display:grid;grid-template-columns:1fr 1fr;align-items:center}
+.tlnode{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:17px;height:17px;border-radius:50%;background:var(--bg2);border:2px solid var(--tlc,var(--gold2));z-index:4;transition:.5s ease}
+.tlnode::after{content:"";position:absolute;inset:3px;border-radius:50%;background:rgba(217,180,91,.35);transition:.5s ease}
+.tlrow.in .tlnode{border-color:var(--tlc);box-shadow:0 0 0 6px color-mix(in srgb,var(--tlc) 10%,transparent),0 0 22px 6px color-mix(in srgb,var(--tlc) 55%,transparent)}
+.tlrow.in .tlnode::after{background:var(--tlc);box-shadow:0 0 10px var(--tlc)}
+.tlaura{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;pointer-events:none;opacity:0;z-index:3}
+.tlrow.fx-ring.in .tlaura{border:2px solid var(--tlc);animation:auraRing 1.2s ease-out .05s both}
+.tlrow.fx-ripple.in .tlaura{border:2px solid var(--tlc);animation:auraRing 1s ease-out both;animation-iteration-count:2}
+@keyframes auraRing{0%{opacity:.85;transform:scale(.4)}100%{opacity:0;transform:scale(4)}}
+.tlrow.fx-bloom.in .tlaura{background:radial-gradient(circle,var(--tlc),transparent 70%);animation:auraBloom 1.2s ease-out both}
+@keyframes auraBloom{0%{opacity:.7;transform:scale(.35)}60%{opacity:.45}100%{opacity:0;transform:scale(3.4)}}
+.tlrow.fx-spark.in .tlaura{background:radial-gradient(circle,#fff,var(--tlc) 40%,transparent 66%);animation:auraSpark 1s ease-out both}
+@keyframes auraSpark{0%{opacity:0;transform:scale(.2)}22%{opacity:1;transform:scale(1.3)}100%{opacity:0;transform:scale(2.8)}}
+.tlrow.fx-halo.in .tlaura{background:conic-gradient(from 0deg,transparent,var(--tlc),transparent 60%);animation:auraHalo 1.3s ease-out both}
+@keyframes auraHalo{0%{opacity:.9;transform:scale(1.1) rotate(0)}100%{opacity:0;transform:scale(3.2) rotate(220deg)}}
+.tlrow.fx-orbit .tlaura::before{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:var(--tlc);box-shadow:0 0 10px var(--tlc);opacity:0}
+.tlrow.fx-orbit.in .tlaura{opacity:1}
+.tlrow.fx-orbit.in .tlaura::before{animation:auraOrbit 1.9s cubic-bezier(.4,0,.3,1) both}
+@keyframes auraOrbit{0%{opacity:0;transform:rotate(0) translateX(18px)}12%{opacity:1}88%{opacity:1}100%{opacity:0;transform:rotate(560deg) translateX(18px)}}
+.tlcard{position:relative;max-width:400px;opacity:0;transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.tlrow:nth-child(odd) .tlcard{grid-column:1;justify-self:end;text-align:right;padding-right:50px;transform:translateX(-38px)}
+.tlrow:nth-child(even) .tlcard{grid-column:2;justify-self:start;text-align:left;padding-left:50px;transform:translateX(38px)}
+.tlrow.in .tlcard{opacity:1;transform:none}
+.tlcard::before{content:"";position:absolute;top:50%;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--tlc) 13%,transparent),transparent 62%);transform:translateY(-50%) scale(.6);opacity:0;transition:1.1s ease;z-index:-1}
+.tlrow:nth-child(odd) .tlcard::before{right:-24px}
+.tlrow:nth-child(even) .tlcard::before{left:-24px}
+.tlrow.in .tlcard::before{opacity:1;transform:translateY(-50%) scale(1)}
+.tlstep{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--tlc,var(--gold));margin-bottom:9px}
+.tltitle{font-family:'Cinzel',serif;font-weight:600;letter-spacing:.02em;color:var(--ink);font-size:clamp(19px,2.5vw,29px);line-height:1.2;margin:0;display:flex;gap:10px;align-items:baseline}
+.tlrow:nth-child(odd) .tltitle{flex-direction:row-reverse}
+.tltitle .ic{font-size:.8em}
+.tldesc{margin:12px 0 0;color:var(--ink2);font-size:13.5px;line-height:1.6}
+@media(max-width:760px){
+  .tlspine,.tlhead{left:20px}
+  .tlrow{grid-template-columns:1fr;min-height:auto;margin-bottom:6px;padding:12px 0}
+  .tlnode,.tlaura{left:20px}
+  .tlrow:nth-child(odd) .tlcard,.tlrow:nth-child(even) .tlcard{grid-column:1;justify-self:start;text-align:left;padding:0 0 0 44px;transform:none;opacity:1}
+  .tlrow:nth-child(odd) .tltitle{flex-direction:row}
+  .tlcard::before{display:none}
+}
+@media(prefers-reduced-motion:reduce){.tlcard{opacity:1;transform:none}.tlaura{display:none}.tlcue .cbar{animation:none}}
 @media(max-width:720px){.calc{grid-template-columns:repeat(2,minmax(0,1fr))}.cout{grid-template-columns:1fr}.scen-body{grid-template-columns:1fr}.scen-out{grid-template-columns:1fr}}
 /* ── MOBILE ── */
 @media(max-width:640px){
@@ -397,9 +415,10 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
   <!-- ============ TIMELINE ============ -->
   <section class="view" id="v-timeline">
     <div class="tag">Journal</div>
-    <h2 class="sec">Build timeline</h2>
+    <h2 class="sec">The build journey</h2>
     <p class="lead">From first prompt to a running fleet — every real milestone from the Ops brain. Good energy in · good energy out.</p>
-    <div class="tlwrap"><div class="tlspine"><span class="tlfill"></span></div><div id="tlList"></div></div>
+    <div class="tlcue">Scroll to begin<span class="cbar"></span></div>
+    <div class="tlwrap"><div class="tlspine"><span class="tlfill"></span></div><span class="tlhead"></span><div id="tlList"></div></div>
   </section>
 
 </div>
@@ -799,7 +818,7 @@ function renderGA(){
 }
 
 /* build timeline (was the public GitHub Pages site; now a private in-portal tab) */
-const TLCATS={found:{n:"Founding",c:"#d9b45b"},lane:{n:"Lane",c:"#57b877"},conn:{n:"Connection",c:"#7fb0e6"},tool:{n:"Tool",c:"#b79be6"},prod:{n:"Product",c:"#57b877"},strat:{n:"Strategy",c:"#e0a45e"},now:{n:"Now",c:"#e6c876"}};
+const TLCATS={found:{n:"Founding",c:"#d9b45b"},lane:{n:"Lane",c:"#57b877"},conn:{n:"Connection",c:"#7fb0e6"},tool:{n:"Tool",c:"#b79be6"},prod:{n:"Product",c:"#57b877"},strat:{n:"Strategy",c:"#e0a45e"},now:{n:"Now",c:"#e6c876"},spirit:{n:"Personal",c:"#c9a0f0"}};
 const TLEVENTS=[
   {d:"18 Jun 2026",cat:"found",ic:"🌱",t:"The operation begins",x:"Casting Karma LLC is set up as a project on Claude. The founding call: build the business to live on disk as living documents — never trapped inside the Claude account. Everything after inherits that resilience."},
   {d:"21 Jun 2026",cat:"lane",ic:"🔭",t:"Discovery lane is born",x:"The idea-hunting engine — it scans thousands of niches for AI-proof, enumerable-market SaaS bets and kills the weak ones fast. The front door of the whole studio."},
@@ -824,41 +843,36 @@ const TLEVENTS=[
   {d:"23 Jul 2026",cat:"prod",ic:"🌐",t:"castingkarmallc.com goes live",x:"The official Casting Karma LLC website is deployed — the company's public front door, from a folder of living docs to a real presence on the web."},
   {d:"24 Jul 2026",cat:"tool",ic:"📬",t:"Trawler's first big harvest lands",x:"Trawler proves itself: ~25,600 clean, deduped, deliverability-checked leads for StandbyProof — for $0 and one night. Then merged with the proven-fit healthcare core, MX-cleaned, and ranked best-buyer-first — real decision-makers on top."},
   {d:"26 Jul 2026",cat:"tool",ic:"📧",t:"The Send Engine is built",x:"Trawler's twin: a cold-email machine that turns a harvested list into a landed inbox. An owned Dispatcher splits daily volume across projects and self-optimizes; a local-AI personalizer writes a fact-only opener for every lead — the parts other teams rent, owned for near-$0. 20 real inboxes provisioned, connected and set to warm — under a hard rule that not one real email sends until the reputation is earned."},
-  {d:"27 Jul 2026",cat:"now",ic:"🌟",t:"Where things stand",x:"Eleven product lanes, a dozen recoverable accounts, the whole business on disk. A private admin portal now fronts it all — live GA analytics with AI-referral tracking, the revenue calculator, and this timeline — behind one password on castingkarmallc.com. The Send Engine is warming its first inboxes toward StandbyProof and TenderProof. Good energy in · good energy out."}
+  {d:"27 Jul 2026",cat:"now",ic:"🌟",t:"Where things stand",x:"Eleven product lanes, a dozen recoverable accounts, the whole business on disk. A private admin portal now fronts it all — live GA analytics with AI-referral tracking, the revenue calculator, and this timeline — behind one password on castingkarmallc.com. The Send Engine is warming its first inboxes toward StandbyProof and TenderProof. Good energy in · good energy out."},
+  {d:"28 Jul 2026",cat:"spirit",ic:"🕯️",t:"A thread worth following",x:"A personal note on the private record: Jamin may have surfaced a spiritual meaning in two recurring signs — tires, and the smell just after a struck match — through interactions with his spiritual guides. Kept here to follow where it leads."}
 ];
-const TLFX=["ring","bloom","sweep","ripple","halo","spark"];
+const TLFX=["ring","bloom","orbit","ripple","halo","spark"];
 function renderTL(){
   const el=$('tlList'); if(!el) return;
   el.innerHTML=TLEVENTS.map((e,i)=>{
     const c=TLCATS[e.cat]||TLCATS.now; const fx=TLFX[i%TLFX.length];
-    return `<div class="tlrow fx-${fx}" style="--tlc:${c.c}"><span class="tlnode"><i class="tlaura"></i></span><div class="tlcard"><div class="tlmeta"><span class="tldate">${e.d}</span><span class="tlpill">${c.n}</span></div><div class="tltitle"><span class="ic">${e.ic}</span><span>${e.t}</span></div><p class="tldesc">${e.x}</p></div></div>`;
+    return `<div class="tlrow fx-${fx}" style="--tlc:${c.c}"><span class="tlnode"></span><span class="tlaura"></span><div class="tlcard"><div class="tlstep">${e.d} · ${c.n}</div><h3 class="tltitle"><span class="ic">${e.ic}</span><span>${e.t}</span></h3><p class="tldesc">${e.x}</p></div></div>`;
   }).join('');
 }
 let tlIO=null;
-function tlFill(){
-  const sp=document.querySelector('#v-timeline .tlspine'), fl=document.querySelector('#v-timeline .tlfill');
-  if(!sp||!fl) return;
-  const r=sp.getBoundingClientRect(), mid=innerHeight*0.5;
-  const done=Math.min(Math.max(mid-r.top,0),r.height);
-  fl.style.height=(r.height? done/r.height*100:0)+'%';
+function tlDraw(){
+  const w=document.querySelector('#v-timeline .tlwrap'),fl=document.querySelector('#v-timeline .tlfill'),hd=document.querySelector('#v-timeline .tlhead');
+  if(!w||!fl||!hd) return;
+  const r=w.getBoundingClientRect(),total=r.height;
+  const seen=Math.min(Math.max(innerHeight*0.5-r.top,0),total);
+  const pct=total>0? seen/total*100:0;
+  fl.style.height=pct+'%'; hd.style.top=pct+'%';
+  hd.style.opacity=(pct>0.5&&pct<99.5)?1:0;
 }
 function initTL(){
-  const rows=[...document.querySelectorAll('#v-timeline .tlrow')];
-  if(!rows.length) return;
-  rows.forEach(r=>r.classList.remove('show'));
+  const rows=[...document.querySelectorAll('#v-timeline .tlrow')]; if(!rows.length) return;
   if(tlIO) tlIO.disconnect();
-  tlIO=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('show');tlIO.unobserve(en.target);}});},{threshold:.15,rootMargin:"0px 0px -6% 0px"});
-  requestAnimationFrame(()=>{
-    let n=0;
-    rows.forEach(r=>{
-      const rc=r.getBoundingClientRect();
-      if(rc.top<innerHeight*0.92 && rc.bottom>0){ setTimeout(()=>r.classList.add('show'), n*90); n++; }
-      else tlIO.observe(r);
-    });
-    tlFill();
-  });
+  tlIO=new IntersectionObserver((es)=>{es.forEach(e=>e.target.classList.toggle('in',e.isIntersecting));},{rootMargin:"-45% 0px -45% 0px",threshold:0});
+  rows.forEach(r=>tlIO.observe(r));
+  requestAnimationFrame(tlDraw);
 }
-addEventListener('scroll',()=>{ const t=$('v-timeline'); if(t&&t.classList.contains('on')) tlFill(); },{passive:true});
+addEventListener('scroll',()=>{ const t=$('v-timeline'); if(t&&t.classList.contains('on')) tlDraw(); },{passive:true});
+addEventListener('resize',()=>{ const t=$('v-timeline'); if(t&&t.classList.contains('on')) tlDraw(); });
 
 /* nav */
 function show(v){
