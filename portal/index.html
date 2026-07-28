@@ -177,18 +177,35 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .dtab tr.full td{color:var(--gold);font-weight:800}
 /* build timeline */
 .tlwrap{position:relative;margin-top:18px;padding-left:32px}
-.tlspine{position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--gold2),rgba(217,180,91,.12));border-radius:2px}
-.tlrow{position:relative;margin-bottom:14px}
-.tlnode{position:absolute;left:-30px;top:15px;width:13px;height:13px;border-radius:50%;background:var(--bg2);border:2px solid var(--tlc,var(--gold));box-shadow:0 0 10px -1px var(--tlc,var(--gold))}
+.tlspine{position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:rgba(217,180,91,.14);border-radius:2px}
+.tlfill{position:absolute;top:0;left:0;width:100%;height:0;border-radius:2px;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 0 12px rgba(217,180,91,.55);transition:height .12s linear}
+.tlrow{position:relative;margin-bottom:14px;opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.tlrow.show{opacity:1;transform:none}
+.tlnode{position:absolute;left:-30px;top:15px;width:13px;height:13px;border-radius:50%;background:var(--bg2);border:2px solid var(--tlc,var(--gold));box-shadow:0 0 10px -1px var(--tlc,var(--gold));z-index:2}
 .tlnode::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--tlc,var(--gold))}
+.tlrow.show .tlnode{animation:tlpop .55s cubic-bezier(.2,.9,.3,1.4) both}
+@keyframes tlpop{0%{transform:scale(.3)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+.tlaura{position:absolute;inset:-4px;border-radius:50%;pointer-events:none;opacity:0}
+.tlrow.fx-ring.show .tlaura{border:2px solid var(--tlc);animation:auraRing 1.1s ease-out .06s both}
+.tlrow.fx-ripple.show .tlaura{border:2px solid var(--tlc);animation:auraRing 1s ease-out both;animation-iteration-count:2}
+@keyframes auraRing{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(3.6)}}
+.tlrow.fx-bloom.show .tlaura{background:radial-gradient(circle,var(--tlc),transparent 70%);animation:auraBloom 1.1s ease-out both}
+@keyframes auraBloom{0%{opacity:.7;transform:scale(.4)}60%{opacity:.45}100%{opacity:0;transform:scale(3)}}
+.tlrow.fx-spark.show .tlaura{background:radial-gradient(circle,#fff,var(--tlc) 40%,transparent 66%);animation:auraSpark .9s ease-out both}
+@keyframes auraSpark{0%{opacity:0;transform:scale(.2)}22%{opacity:1;transform:scale(1.25)}100%{opacity:0;transform:scale(2.5)}}
+.tlrow.fx-halo.show .tlaura{background:conic-gradient(from 0deg,transparent,var(--tlc),transparent 60%);animation:auraHalo 1.2s ease-out both}
+@keyframes auraHalo{0%{opacity:.9;transform:scale(1.2) rotate(0)}100%{opacity:0;transform:scale(2.9) rotate(210deg)}}
 .tlcard{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 16px 13px 18px;overflow:hidden}
-.tlcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tlc,var(--gold))}
+.tlcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tlc,var(--gold));z-index:1}
+.tlrow.fx-sweep.show .tlcard::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 32%,color-mix(in srgb,var(--tlc,#d9b45b) 22%,transparent) 50%,transparent 68%);transform:translateX(-120%);animation:cardSweep 1.1s ease-out .1s both}
+@keyframes cardSweep{0%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
 .tlmeta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:5px}
 .tldate{font-size:12px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
 .tlpill{font-size:9px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:999px;color:var(--tlc,var(--gold));border:1px solid color-mix(in srgb,var(--tlc,#d9b45b) 45%,transparent);background:color-mix(in srgb,var(--tlc,#d9b45b) 12%,transparent)}
 .tltitle{font-size:15px;font-weight:800;margin:1px 0 5px;display:flex;gap:8px;align-items:baseline;color:var(--ink)}
 .tltitle .ic{font-size:16px}
 .tldesc{font-size:12.5px;color:var(--ink2);line-height:1.55;margin:0}
+@media(prefers-reduced-motion:reduce){.tlrow{transition:none;opacity:1;transform:none}.tlaura{display:none}}
 @media(max-width:720px){.calc{grid-template-columns:repeat(2,minmax(0,1fr))}.cout{grid-template-columns:1fr}.scen-body{grid-template-columns:1fr}.scen-out{grid-template-columns:1fr}}
 /* ── MOBILE ── */
 @media(max-width:640px){
@@ -382,7 +399,7 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
     <div class="tag">Journal</div>
     <h2 class="sec">Build timeline</h2>
     <p class="lead">From first prompt to a running fleet — every real milestone from the Ops brain. Good energy in · good energy out.</p>
-    <div class="tlwrap"><div class="tlspine"></div><div id="tlList"></div></div>
+    <div class="tlwrap"><div class="tlspine"><span class="tlfill"></span></div><div id="tlList"></div></div>
   </section>
 
 </div>
@@ -809,13 +826,39 @@ const TLEVENTS=[
   {d:"26 Jul 2026",cat:"tool",ic:"📧",t:"The Send Engine is built",x:"Trawler's twin: a cold-email machine that turns a harvested list into a landed inbox. An owned Dispatcher splits daily volume across projects and self-optimizes; a local-AI personalizer writes a fact-only opener for every lead — the parts other teams rent, owned for near-$0. 20 real inboxes provisioned, connected and set to warm — under a hard rule that not one real email sends until the reputation is earned."},
   {d:"27 Jul 2026",cat:"now",ic:"🌟",t:"Where things stand",x:"Eleven product lanes, a dozen recoverable accounts, the whole business on disk. A private admin portal now fronts it all — live GA analytics with AI-referral tracking, the revenue calculator, and this timeline — behind one password on castingkarmallc.com. The Send Engine is warming its first inboxes toward StandbyProof and TenderProof. Good energy in · good energy out."}
 ];
+const TLFX=["ring","bloom","sweep","ripple","halo","spark"];
 function renderTL(){
   const el=$('tlList'); if(!el) return;
-  el.innerHTML=TLEVENTS.map(e=>{
-    const c=TLCATS[e.cat]||TLCATS.now;
-    return `<div class="tlrow" style="--tlc:${c.c}"><span class="tlnode"></span><div class="tlcard"><div class="tlmeta"><span class="tldate">${e.d}</span><span class="tlpill">${c.n}</span></div><div class="tltitle"><span class="ic">${e.ic}</span><span>${e.t}</span></div><p class="tldesc">${e.x}</p></div></div>`;
+  el.innerHTML=TLEVENTS.map((e,i)=>{
+    const c=TLCATS[e.cat]||TLCATS.now; const fx=TLFX[i%TLFX.length];
+    return `<div class="tlrow fx-${fx}" style="--tlc:${c.c}"><span class="tlnode"><i class="tlaura"></i></span><div class="tlcard"><div class="tlmeta"><span class="tldate">${e.d}</span><span class="tlpill">${c.n}</span></div><div class="tltitle"><span class="ic">${e.ic}</span><span>${e.t}</span></div><p class="tldesc">${e.x}</p></div></div>`;
   }).join('');
 }
+let tlIO=null;
+function tlFill(){
+  const sp=document.querySelector('#v-timeline .tlspine'), fl=document.querySelector('#v-timeline .tlfill');
+  if(!sp||!fl) return;
+  const r=sp.getBoundingClientRect(), mid=innerHeight*0.5;
+  const done=Math.min(Math.max(mid-r.top,0),r.height);
+  fl.style.height=(r.height? done/r.height*100:0)+'%';
+}
+function initTL(){
+  const rows=[...document.querySelectorAll('#v-timeline .tlrow')];
+  if(!rows.length) return;
+  rows.forEach(r=>r.classList.remove('show'));
+  if(tlIO) tlIO.disconnect();
+  tlIO=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('show');tlIO.unobserve(en.target);}});},{threshold:.15,rootMargin:"0px 0px -6% 0px"});
+  requestAnimationFrame(()=>{
+    let n=0;
+    rows.forEach(r=>{
+      const rc=r.getBoundingClientRect();
+      if(rc.top<innerHeight*0.92 && rc.bottom>0){ setTimeout(()=>r.classList.add('show'), n*90); n++; }
+      else tlIO.observe(r);
+    });
+    tlFill();
+  });
+}
+addEventListener('scroll',()=>{ const t=$('v-timeline'); if(t&&t.classList.contains('on')) tlFill(); },{passive:true});
 
 /* nav */
 function show(v){
@@ -823,6 +866,7 @@ function show(v){
   $('v-'+v).classList.add('on');
   document.querySelectorAll('#nav a[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
   window.scrollTo(0,0);
+  if(v==='timeline') initTL();
 }
 
 /* specks */
