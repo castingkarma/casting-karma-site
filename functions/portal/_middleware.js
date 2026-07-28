@@ -73,15 +73,12 @@ export async function onRequest(context) {
   const secret = env.SESSION_SECRET || "";
   const password = env.ADMIN_PASSWORD || "";
 
-  // Sign out
+  // Sign out — clear the cookie on BOTH paths (new "/" and any legacy "/portal")
   if (url.searchParams.has("logout")) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        "Location": "/portal/",
-        "Set-Cookie": `${COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`,
-      },
-    });
+    const h = new Headers({ "Location": "/portal/" });
+    h.append("Set-Cookie", `${COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`);
+    h.append("Set-Cookie", `${COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/portal; Max-Age=0`);
+    return new Response(null, { status: 302, headers: h });
   }
 
   // Login submit
