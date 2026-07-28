@@ -175,6 +175,20 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .dtab tr:last-child td{border-bottom:none}
 .dtab td.tlab{color:var(--ink)}
 .dtab tr.full td{color:var(--gold);font-weight:800}
+/* build timeline */
+.tlwrap{position:relative;margin-top:18px;padding-left:32px}
+.tlspine{position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--gold2),rgba(217,180,91,.12));border-radius:2px}
+.tlrow{position:relative;margin-bottom:14px}
+.tlnode{position:absolute;left:-30px;top:15px;width:13px;height:13px;border-radius:50%;background:var(--bg2);border:2px solid var(--tlc,var(--gold));box-shadow:0 0 10px -1px var(--tlc,var(--gold))}
+.tlnode::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--tlc,var(--gold))}
+.tlcard{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 16px 13px 18px;overflow:hidden}
+.tlcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tlc,var(--gold))}
+.tlmeta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:5px}
+.tldate{font-size:12px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
+.tlpill{font-size:9px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:999px;color:var(--tlc,var(--gold));border:1px solid color-mix(in srgb,var(--tlc,#d9b45b) 45%,transparent);background:color-mix(in srgb,var(--tlc,#d9b45b) 12%,transparent)}
+.tltitle{font-size:15px;font-weight:800;margin:1px 0 5px;display:flex;gap:8px;align-items:baseline;color:var(--ink)}
+.tltitle .ic{font-size:16px}
+.tldesc{font-size:12.5px;color:var(--ink2);line-height:1.55;margin:0}
 @media(max-width:720px){.calc{grid-template-columns:repeat(2,minmax(0,1fr))}.cout{grid-template-columns:1fr}.scen-body{grid-template-columns:1fr}.scen-out{grid-template-columns:1fr}}
 /* ── MOBILE ── */
 @media(max-width:640px){
@@ -225,7 +239,7 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
     <a data-v="email" onclick="show('email')">Email Engine</a>
     <a data-v="ga" onclick="show('ga')">GA</a>
     <a data-v="projections" onclick="show('projections')">Projections</a>
-    <a href="https://castingkarma.github.io/ck-timeline/" target="_blank" rel="noreferrer">Timeline ↗</a>
+    <a data-v="timeline" onclick="show('timeline')">Timeline</a>
     <span class="chip">PRIVATE</span>
     <a href="https://castingkarmallc.com/" title="Leave the admin portal and go to the website" style="text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.4px;color:#0e1a13;background:linear-gradient(180deg,#e7c777,#c69f45);padding:6px 12px;border-radius:8px">Exit ↗</a>
     <span class="upd" id="upd"></span>
@@ -361,6 +375,14 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
       <table class="ftab" id="gaTable"></table>
       <div class="note" id="gaNote"></div>
     </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="view" id="v-timeline">
+    <div class="tag">Journal</div>
+    <h2 class="sec">Build timeline</h2>
+    <p class="lead">From first prompt to a running fleet — every real milestone from the Ops brain. Good energy in · good energy out.</p>
+    <div class="tlwrap"><div class="tlspine"></div><div id="tlList"></div></div>
   </section>
 
 </div>
@@ -759,6 +781,42 @@ function renderGA(){
   $('gaNote').innerHTML='Live numbers open in Google Analytics — click a project to jump straight to its traffic (the <b>source / medium</b> view there shows AI-engine referrals). Want these charts rendered right inside the portal instead of a link-out? That\'s a Looker Studio embed we can add next — no keys involved.';
 }
 
+/* build timeline (was the public GitHub Pages site; now a private in-portal tab) */
+const TLCATS={found:{n:"Founding",c:"#d9b45b"},lane:{n:"Lane",c:"#57b877"},conn:{n:"Connection",c:"#7fb0e6"},tool:{n:"Tool",c:"#b79be6"},prod:{n:"Product",c:"#57b877"},strat:{n:"Strategy",c:"#e0a45e"},now:{n:"Now",c:"#e6c876"}};
+const TLEVENTS=[
+  {d:"18 Jun 2026",cat:"found",ic:"🌱",t:"The operation begins",x:"Casting Karma LLC is set up as a project on Claude. The founding call: build the business to live on disk as living documents — never trapped inside the Claude account. Everything after inherits that resilience."},
+  {d:"21 Jun 2026",cat:"lane",ic:"🔭",t:"Discovery lane is born",x:"The idea-hunting engine — it scans thousands of niches for AI-proof, enumerable-market SaaS bets and kills the weak ones fast. The front door of the whole studio."},
+  {d:"24 Jun 2026",cat:"prod",ic:"🛡️",t:"P-4 TenderProof — first product",x:"The portfolio's first build lane: freight-broker verification. The studio ships its first real product surface and the many-small-bets model takes shape."},
+  {d:"25 Jun 2026",cat:"prod",ic:"🚢",t:"P-5 HullDocs joins",x:"A living maintenance record for boats — the 'record that follows the hull to resale.' Second product; the portfolio is now a portfolio."},
+  {d:"28 Jun 2026",cat:"conn",ic:"✉️",t:"Gmail + Google Workspace wired",x:"jamin@castingkarmallc.com becomes the ops mailbox — a branded, recoverable inbox that is the outward face of the LLC, independent of any single tool."},
+  {d:"30 Jun 2026",cat:"conn",ic:"🐙",t:"GitHub · Stripe · Vercel · Cloudflare",x:"Every product gets its own repo under the castingkarma org; code, payments, hosting and DNS all live in accounts CK fully controls. The infrastructure spine — owned, not rented from the chat."},
+  {d:"03 Jul 2026",cat:"tool",ic:"💳",t:"Payments hardened",x:"Stripe webhooks plus a cross-project cross-talk guard — one LLC Stripe account safely fanning events to every product without a paid customer ever silently falling through."},
+  {d:"07 Jul 2026",cat:"strat",ic:"🧯",t:"Business Continuity Kit",x:"The fail-safe, written down: losing the Claude account would cost chat history, not the business — because the work is on disk and across a dozen recoverable accounts. A login problem, never a data problem."},
+  {d:"11 Jul 2026",cat:"tool",ic:"📚",t:"The Discovery Engine + _INTEL library",x:"The creed is codified: 'failure does not announce itself — it returns a plausible number.' Free-incumbent kill test; every claim must carry a source URL the agent actually fetched."},
+  {d:"11 Jul 2026",cat:"tool",ic:"💓",t:"Metrics dashboard + heartbeat",x:"A central new-subscription alerter (Stripe → Resend), the fabricated-zero bug killed, and a heartbeat added — so that silence itself becomes trustworthy instead of ambiguous."},
+  {d:"12 Jul 2026",cat:"conn",ic:"🖥️",t:"Chrome + PC control",x:"Claude gains hands: driving the Mac and the browser directly to set up GA4, create Stripe prices, and run deploys — doing the work, not just describing it."},
+  {d:"15 Jul 2026",cat:"prod",ic:"📡",t:"P-6 RangeNodes + P-7 SquawkTrail",x:"Reloading-data and aircraft-record products built and taken to market in parallel. The studio is now running many lanes at once, each with its own build, GTM, and legal review."},
+  {d:"16 Jul 2026",cat:"prod",ic:"🚀",t:"SquawkTrail cleared for market",x:"Product, payments, legal and SEO all live-verified in production as a real subscriber — the first full 'cleared for go-to-market' greenlight in the portfolio."},
+  {d:"16 Jul 2026",cat:"lane",ic:"🧭",t:"The Evolution Loop + lane charters",x:"Discovery, GTM, Distribution, Marketing, CK-Finance and CK-Legal are formalized as lanes with charters and a nightly improvement loop — the org becomes a system, not a to-do list."},
+  {d:"18 Jul 2026",cat:"lane",ic:"💵",t:"Finance lane + portfolio dashboard",x:"Monthly P&L and a live portfolio tracker — real revenue, MRR and the north-star numbers finally get their own home and owner."},
+  {d:"21 Jul 2026",cat:"strat",ic:"🧠",t:"The AI-Proof Moat thesis",x:"The strategic spine is named: build where compounding data, earned trust, unownable networks and held distribution make the big-AI labs irrelevant — and it's wired into how Discovery scores every bet."},
+  {d:"22 Jul 2026",cat:"prod",ic:"⚡",t:"StandbyProof (P-11) greenlit + built",x:"The reference build of the repeatable engine — public registry → recurring compliance cadence — starting with emergency-generator (NFPA 110 / CMS) compliance for healthcare facilities."},
+  {d:"22 Jul 2026",cat:"strat",ic:"🛣️",t:"Two paved-road stacks",x:"A ruling recorded: Cloudflare-native as the default stack for new standalone apps. Fewer decisions per build, faster from idea to live URL."},
+  {d:"23 Jul 2026",cat:"tool",ic:"🎣",t:"Trawler is born",x:"A precision, zero-paid-dependency contact-harvest engine — built, then debugged live (caught it grabbing the wrong companies, added a phone-number proof gate), sped up to 30 workers, and turned into a nightly fleet that sweeps vertical after vertical."},
+  {d:"23 Jul 2026",cat:"lane",ic:"🎧",t:"The Support lane is born",x:"A new lane that gives every product its own hardened AI support specialist — scope-locked, read-only, and impossible to hijack — plus a universal feedback board across the whole portfolio, governed by an 11-rule standard and a 10-point ship-gate."},
+  {d:"23 Jul 2026",cat:"prod",ic:"🌐",t:"castingkarmallc.com goes live",x:"The official Casting Karma LLC website is deployed — the company's public front door, from a folder of living docs to a real presence on the web."},
+  {d:"24 Jul 2026",cat:"tool",ic:"📬",t:"Trawler's first big harvest lands",x:"Trawler proves itself: ~25,600 clean, deduped, deliverability-checked leads for StandbyProof — for $0 and one night. Then merged with the proven-fit healthcare core, MX-cleaned, and ranked best-buyer-first — real decision-makers on top."},
+  {d:"26 Jul 2026",cat:"tool",ic:"📧",t:"The Send Engine is built",x:"Trawler's twin: a cold-email machine that turns a harvested list into a landed inbox. An owned Dispatcher splits daily volume across projects and self-optimizes; a local-AI personalizer writes a fact-only opener for every lead — the parts other teams rent, owned for near-$0. 20 real inboxes provisioned, connected and set to warm — under a hard rule that not one real email sends until the reputation is earned."},
+  {d:"27 Jul 2026",cat:"now",ic:"🌟",t:"Where things stand",x:"Eleven product lanes, a dozen recoverable accounts, the whole business on disk. A private admin portal now fronts it all — live GA analytics with AI-referral tracking, the revenue calculator, and this timeline — behind one password on castingkarmallc.com. The Send Engine is warming its first inboxes toward StandbyProof and TenderProof. Good energy in · good energy out."}
+];
+function renderTL(){
+  const el=$('tlList'); if(!el) return;
+  el.innerHTML=TLEVENTS.map(e=>{
+    const c=TLCATS[e.cat]||TLCATS.now;
+    return `<div class="tlrow" style="--tlc:${c.c}"><span class="tlnode"></span><div class="tlcard"><div class="tlmeta"><span class="tldate">${e.d}</span><span class="tlpill">${c.n}</span></div><div class="tltitle"><span class="ic">${e.ic}</span><span>${e.t}</span></div><p class="tldesc">${e.x}</p></div></div>`;
+  }).join('');
+}
+
 /* nav */
 function show(v){
   document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
@@ -771,7 +829,7 @@ function show(v){
 (function(){let h='';for(let i=0;i<26;i++){h+=`<div class="speck" style="left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${(.15+Math.random()*.35).toFixed(2)}"></div>`;}$('specks').innerHTML=h;})();
 
 $('upd').textContent='Updated '+UPDATED;
-renderPortfolio();renderMoney();renderEmail();renderGA();calc();loadGA();
+renderPortfolio();renderMoney();renderEmail();renderGA();calc();loadGA();renderTL();
 addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
 </script>
 <a href="/portal/?logout=1" title="Sign out" style="position:fixed;bottom:14px;right:14px;z-index:200;font-size:12px;font-weight:600;color:#9fb0a4;text-decoration:none;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.14);padding:7px 12px;border-radius:9px;backdrop-filter:blur(4px)">Sign out</a>
