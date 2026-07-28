@@ -112,6 +112,22 @@ async function getAccessToken(email, privateKeyPem) {
   return j.access_token;
 }
 
+// ---- OAuth refresh-token → access token (runs as the user; no service-account key) ----
+async function getAccessTokenOAuth(clientId, clientSecret, refreshToken) {
+  const r = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+    }),
+  });
+  if (!r.ok) throw new Error("oauth " + r.status + " " + (await r.text()).slice(0, 180));
+  return (await r.json()).access_token;
+}
+
 // ---- GA4 Data API: one batch per property (sessions x4 ranges + AI-source report) ----
 async function propertyMetrics(token, propertyId) {
   const sess = (startDate) => ({ dateRanges: [{ startDate, endDate: "today" }], metrics: [{ name: "sessions" }] });
@@ -177,24 +193,34 @@ export async function onRequestGet(context) {
     return json({ error: "unauthorized" }, 401);
   }
 
-  const email = env.GA4_CLIENT_EMAIL || "";
-  const pk = (env.GA4_PRIVATE_KEY || "").replace(/\\n/g, "\n");
   let props = {};
   try { props = JSON.parse(env.GA4_PROPERTIES || "{}"); } catch (_) { props = {}; }
   const slugs = Object.keys(props);
 
-  if (!email || !pk || slugs.length === 0) {
+  // Prefer OAuth (runs as the user, no service-account key). Fall back to a
+  // service-account key only if one is ever configured.
+  const oClientId = env.GA4_OAUTH_CLIENT_ID || "";
+  const oClientSecret = env.GA4_OAUTH_CLIENT_SECRET || "";
+  const oRefresh = env.GA4_REFRESH_TOKEN || "";
+  const saEmail = env.GA4_CLIENT_EMAIL || "";
+  const saKey = (env.GA4_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+  const haveOAuth = oClientId && oClientSecret && oRefresh;
+  const haveSA = saEmail && saKey;
+
+  if ((!haveOAuth && !haveSA) || slugs.length === 0) {
     return json({
       updatedAt: new Date().toISOString(),
       connected: false,
       projects: {},
-      note: "GA4 not configured yet — set GA4_CLIENT_EMAIL, GA4_PRIVATE_KEY and GA4_PROPERTIES.",
+      note: "GA4 not connected yet — set the OAuth vars (GA4_OAUTH_CLIENT_ID, GA4_OAUTH_CLIENT_SECRET, GA4_REFRESH_TOKEN) and GA4_PROPERTIES.",
     });
   }
 
   let token;
   try {
-    token = await getAccessToken(email, pk);
+    token = haveOAuth
+      ? await getAccessTokenOAuth(oClientId, oClientSecret, oRefresh)
+      : await getAccessToken(saEmail, saKey);
   } catch (e) {
     return json({ updatedAt: new Date().toISOString(), connected: false, projects: {}, error: "auth: " + String(e.message || e) });
   }
