@@ -355,7 +355,7 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
   <section class="view" id="v-ga">
     <div class="tag">Analytics</div>
     <h2 class="sec">Site traffic — by project</h2>
-    <p class="lead">Visits per project: today, this week, this month, all‑time — plus portfolio totals. Real GA4 data connects here.</p>
+    <p class="lead">Live analytics for every project — jump straight into Google Analytics for real-time visits, traffic sources, and AI-referral traffic.</p>
     <div class="tiles" id="gaTiles"></div>
     <div class="panel">
       <table class="ftab" id="gaTable"></table>
@@ -493,17 +493,19 @@ const PROJ = [
 
 /* GA — live from /api/ga (server-side GA4 reader). Fields fill once the service
    account + property IDs are set in Cloudflare; until then everything shows "—". */
+const GA_ACCOUNT="400008078";
+const gaLink=pid=>`https://analytics.google.com/analytics/web/#/a${GA_ACCOUNT}p${pid}/reports/intelligenthome`;
 const GA = {
   connected:false, updatedAt:null,
   projects:[
-    {name:"StandbyProof",slug:"standbyproof",site:"standbyproof.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"TenderProof",slug:"tenderproof",site:"tenderproof.io",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"HullDocs",slug:"hulldocs",site:"hulldocs.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"RangeNodes",slug:"rangenodes",site:"rangenodes.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"SquawkTrail",slug:"squawktrail",site:"squawktrail.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"StockShowsHQ",slug:"stockshowshq",site:"stockshowshq.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"DueBell",slug:"duebell",site:"getduebell.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
-    {name:"Casting Karma",slug:"castingkarma",site:"castingkarmallc.com",d:null,w:null,m:null,t:null,aiM:null,aiT:null}
+    {name:"StandbyProof",slug:"standbyproof",site:"standbyproof.com",pid:"547079110",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"TenderProof",slug:"tenderproof",site:"tenderproof.io",pid:"547146611",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"HullDocs",slug:"hulldocs",site:"hulldocs.com",pid:"544611738",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"RangeNodes",slug:"rangenodes",site:"rangenodes.com",pid:"544187554",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"SquawkTrail",slug:"squawktrail",site:"squawktrail.com",pid:"545818275",d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"StockShowsHQ",slug:"stockshowshq",site:"stockshowshq.com",pid:null,d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"DueBell",slug:"duebell",site:"getduebell.com",pid:null,d:null,w:null,m:null,t:null,aiM:null,aiT:null},
+    {name:"Casting Karma",slug:"castingkarma",site:"castingkarmallc.com",pid:"545194081",d:null,w:null,m:null,t:null,aiM:null,aiT:null}
   ]
 };
 async function loadGA(){
@@ -727,17 +729,34 @@ function calc(){
 /* GA analytics */
 function renderGA(){
   const nn=v=>v==null?'—':v.toLocaleString();
-  const sum=k=>GA.projects.reduce((a,p)=>a+(p[k]||0),0);
-  const tot=k=>GA.connected?sum(k).toLocaleString():'—';
-  $('gaTiles').innerHTML=[
-    {k:"Visits today",v:tot('d')},{k:"This week",v:tot('w')},
-    {k:"This month",v:tot('m')},{k:"All-time",v:tot('t')},
-    {k:"AI referrals · 30d",v:tot('aiM')}
-  ].map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">portfolio</div></div>`).join('');
-  let t=`<tr><th>Project</th><th style="text-align:right">Today</th><th style="text-align:right">7 days</th><th style="text-align:right">30 days</th><th style="text-align:right">Total</th><th style="text-align:right">AI · 30d</th></tr>`;
-  GA.projects.forEach(p=>t+=`<tr><td data-label="Project">${p.name} <span style="color:var(--mut)">· ${p.site}</span></td><td class="num" data-label="Today">${nn(p.d)}</td><td class="num" data-label="7 days">${nn(p.w)}</td><td class="num" data-label="30 days">${nn(p.m)}</td><td class="num" data-label="Total">${nn(p.t)}</td><td class="num" data-label="AI · 30d">${nn(p.aiM)}</td></tr>`);
+  if(GA.connected){
+    const sum=k=>GA.projects.reduce((a,p)=>a+(p[k]||0),0);
+    const tot=k=>sum(k).toLocaleString();
+    $('gaTiles').innerHTML=[
+      {k:"Visits today",v:tot('d')},{k:"This week",v:tot('w')},
+      {k:"This month",v:tot('m')},{k:"All-time",v:tot('t')},
+      {k:"AI referrals · 30d",v:tot('aiM')}
+    ].map(x=>`<div class="tile"><div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">portfolio</div></div>`).join('');
+    let t=`<tr><th>Project</th><th style="text-align:right">Today</th><th style="text-align:right">7 days</th><th style="text-align:right">30 days</th><th style="text-align:right">Total</th><th style="text-align:right">AI · 30d</th></tr>`;
+    GA.projects.forEach(p=>t+=`<tr><td data-label="Project">${p.name} <span style="color:var(--mut)">· ${p.site}</span></td><td class="num" data-label="Today">${nn(p.d)}</td><td class="num" data-label="7 days">${nn(p.w)}</td><td class="num" data-label="30 days">${nn(p.m)}</td><td class="num" data-label="Total">${nn(p.t)}</td><td class="num" data-label="AI · 30d">${nn(p.aiM)}</td></tr>`);
+    $('gaTable').innerHTML=t;
+    $('gaNote').innerHTML='Live GA4 data'+(GA.updatedAt?' · updated '+new Date(GA.updatedAt).toLocaleString():'')+'. <b>AI · 30d</b> = sessions referred from AI answer engines (ChatGPT, Perplexity, Copilot, Gemini, Claude, etc.) in the last 30 days.';
+    return;
+  }
+  /* Not wired to the API — jump straight into Google Analytics per project (no key needed). */
+  const first=GA.projects.find(p=>p.pid);
+  $('gaTiles').innerHTML=`<a class="tile" href="${first?gaLink(first.pid):'https://analytics.google.com/'}" target="_blank" rel="noreferrer" style="grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;text-decoration:none">
+    <span><div class="k">Live analytics</div><div class="v" style="font-size:19px">Open Google Analytics ↗</div><div class="s">real-time visits, sources & AI-referral traffic</div></span>
+    <span style="font-size:26px;color:var(--gold)">↗</span></a>`;
+  let t=`<tr><th>Project</th><th>Site</th><th style="text-align:right">Analytics</th></tr>`;
+  GA.projects.forEach(p=>{
+    const cell = p.pid
+      ? `<a href="${gaLink(p.pid)}" target="_blank" rel="noreferrer" style="color:var(--gold);font-weight:700;text-decoration:none">Open in GA4 ↗</a>`
+      : `<span style="color:var(--mut)">no GA4 yet</span>`;
+    t+=`<tr><td data-label="Project">${p.name}</td><td data-label="Site" style="color:var(--mut)">${p.site}</td><td class="num" data-label="Analytics">${cell}</td></tr>`;
+  });
   $('gaTable').innerHTML=t;
-  $('gaNote').innerHTML = GA.connected ? ('Live GA4 data'+(GA.updatedAt?' · updated '+new Date(GA.updatedAt).toLocaleString():'')+'. <b>AI · 30d</b> = sessions referred from AI answer engines (ChatGPT, Perplexity, Copilot, Gemini, Claude, etc.) in the last 30 days.') : '⏳ Awaiting GA4 connection — the table is scaffolded and ready. Real numbers fill in once the GA4 service account + property IDs are set in Cloudflare (the key stays on the server — never in this page).';
+  $('gaNote').innerHTML='Live numbers open in Google Analytics — click a project to jump straight to its traffic (the <b>source / medium</b> view there shows AI-engine referrals). Want these charts rendered right inside the portal instead of a link-out? That\'s a Looker Studio embed we can add next — no keys involved.';
 }
 
 /* nav */
