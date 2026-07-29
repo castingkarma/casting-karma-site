@@ -134,7 +134,7 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .stepper button:hover{background:rgba(217,180,91,.24)}
 .stepper input{flex:1;min-width:0;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:16px;font-weight:800;text-align:center;padding:7px 4px;font-family:inherit}
 .stepper input:focus{outline:none;border-color:var(--gold2)}
-.cout{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.cout{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
 .cbig{background:linear-gradient(180deg,rgba(217,180,91,.10),rgba(255,255,255,.02));border:1px solid var(--line2);border-radius:14px;padding:16px}
 .cbig .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
 .cbig .cv{font-size:27px;font-weight:800;color:var(--gold);margin-top:6px}
@@ -361,6 +361,7 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
           <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="500" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
       </div>
       <div class="cout">
+        <div class="cbig"><div class="cl">Daily subs</div><div class="cv" id="o_dsubs">—</div><div class="cs">daily sends × per-touch rate</div></div>
         <div class="cbig"><div class="cl">Subs from full list</div><div class="cv" id="o_subs">—</div><div class="cs">contacts × full-drip conversion</div></div>
         <div class="cbig"><div class="cl">MRR ceiling</div><div class="cv" id="o_mrr">—</div><div class="cs">whole list, full drip</div></div>
         <div class="cbig"><div class="cl">ARR ceiling</div><div class="cv" id="o_arr">—</div><div class="cs">annual run-rate at full list</div></div>
@@ -739,6 +740,9 @@ function calc(){
   $('o_subs').textContent=Math.round(listSubs).toLocaleString();
   $('o_mrr').textContent=money0(listMRR);
   $('o_arr').textContent=money0(listMRR*12);
+  /* daily subs — subs generated per day at the current send pace (per-touch conversion of daily sends) */
+  const dailySubs=daily*r;
+  $('o_dsubs').textContent = (daily>0&&r>0) ? (dailySubs<10?dailySubs.toFixed(1):Math.round(dailySubs).toLocaleString()) : '—';
   $('o_ceilcap').textContent='Ceiling = your whole '+Math.round(list).toLocaleString()+'-contact list run through a full '+touches+'-touch drip ('+(Rfull*100).toFixed(2)+'% cumulative conversion).';
   /* per-touch breakdown — touch 1 = single email, last row = full drip */
   let rows='<tr><th>Touch</th><th class="num">Subs added</th><th class="num">Total subs</th><th class="num">Total MRR</th></tr>';
