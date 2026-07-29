@@ -117,6 +117,8 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .mrow .mk{color:var(--ink2);flex:0 0 42%}
 .mrow .mv{font-weight:600;text-align:right}
 .mlink{display:inline-block;margin-top:16px;padding:9px 14px;border:1px solid var(--line2);background:var(--goldsoft);border-radius:10px;color:var(--gold);font-weight:700;font-size:12.5px}
+.techsec{margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.10)}
+.techh{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-weight:700}
 /* lead tiers */
 .la{color:var(--green);font-weight:700}
 .lb{color:#7ca9e8;font-weight:700}
@@ -443,52 +445,61 @@ const LIVE = [{
   dist:{ v:"Cold email · CK Send Engine", d:"14 inboxes · 7 domains · 1,876 A-list leads queued · warming" },
   k:{ sent:0, inbox:"—", opens:0, replies:0, subs:0, mrr:0 },
   phase:"Warmup — day 0 of 14 · first real sends ≈ Aug 7–10",
-  note:"Product is live and ready for subscribers. The distribution engine is warming; no cold sends until the 14-day warmup completes (protects deliverability)."
+  note:"Product is live and ready for subscribers. The distribution engine is warming; no cold sends until the 14-day warmup completes (protects deliverability).",
+  tech:{ stack:"Cloudflare Pages + Functions (Workers) · vanilla JS · SQL (D1)", integ:"Stripe · Resend (email) · D1 database · OTP auth · cron reminder worker", loc:"~6,150" }
+},{
+  id:"tenderproof", name:"TenderProof", tag:"P-4 · tenderproof.io",
+  what:"Per-load ordinary-care defense file for freight brokers (post-Montgomery SCOTUS ruling).",
+  site:"https://tenderproof.io",
+  dist:{ v:"Cold email · CK Send Engine", d:"6 inboxes · 3 domains · 2,858 A-list leads queued · warming" },
+  k:{ sent:0, inbox:"—", opens:0, replies:0, subs:0, mrr:0 },
+  phase:"Warmup — pod warming · first real sends ≈ mid-Aug (≈ day 15)",
+  note:"Multi-tenant app live (demo mode) — Stripe + measurement wired, GTM next. The distribution engine is warming; no cold sends until the 14-day warmup completes (protects deliverability).",
+  tech:{ stack:"Next.js · React · TypeScript · Tailwind — monorepo (web · api · engine)", integ:"Supabase (auth/DB) · Stripe · Resend/SMTP · FMCSA data ingest · Chrome extension · tamper-evident PDF freeze", loc:"~10,400" }
 }];
 
 const WORK = [
-  {id:"tenderproof",name:"TenderProof",tag:"P-4",conf:"4.7",site:"https://tenderproof.io",
-   what:"Per-load ordinary-care defense file for freight brokers (post-Montgomery SCOTUS ruling).",
-   stage:"Multi-tenant API live (demo mode). Next: Stripe + measurement → GTM.",
-   next:"Cold-email pod warming — 6 inboxes / 3 domains / 2,858 leads → sends ≈ day 15",
-   market:"~120k FMCSA broker authorities · TIA ~1,700 core · ~$60M TAM (est.)",
-   pricing:"$149 solo / $399 team / $699 brokerage · annual = 2 mo free",
-   build:"4 / 5 — multi-tenant app, FMCSA data ingest, tamper-evident freeze/PDF, Chrome extension",
-   ux:"On each load tender, the broker snapshots the carrier's live FMCSA authority/insurance/safety, scores it against their written policy, and freezes a timestamped defense file proving ordinary care."},
   {id:"hulldocs",name:"HullDocs",tag:"P-5",conf:"4.5",site:"https://hulldocs.com",
    what:"Boat maintenance-history record — a PWA that follows the hull, not the owner.",
    stage:"Live on Vercel; pre-GTM.",market:"~12M US recreational boats · owners/brokers/surveyors (est.)",pricing:"$5 / $12 per mo · 2 tiers (est.)",
    build:"2 / 5 — PWA + document storage + AI receipt import",
+   tech:{stack:"PWA · Vercel",integ:"OpenAI (AI receipt import) · document storage",loc:"—"},
    ux:"Owner logs each service/repair with photos & receipts; the full maintenance history stays with the hull and transfers to the next owner at sale."},
   {id:"rangenodes",name:"RangeNodes",tag:"P-6",conf:"4.3",
    what:"Handload database — compounding reloading-data graph (firearms-adjacent PWA).",
    stage:"Live, data public; GTM prep.",market:"~5–7M US handloaders (est.)",pricing:"Free + $6/mo Pro (est.)",
    build:"3 / 5 — structured reloading-data graph + search, contributor model",
+   tech:{stack:"PWA · Vercel",integ:"structured reloading-data graph · search · contributor model",loc:"—"},
    ux:"Reloaders search and save load recipes by cartridge/powder/bullet; the database compounds as the community contributes verified data."},
   {id:"squawktrail",name:"SquawkTrail",tag:"P-7",conf:"4.3",site:"https://squawktrail.vercel.app",
    what:"Aircraft title/lien change alerts for general aviation owners & buyers.",
    stage:"Building.",market:"~210k US GA aircraft · owners/buyers/title-escrow (est.)",pricing:"$9 / $19 per mo alerts (est.)",
    build:"3 / 5 — FAA data feed + change detection + alerting",
+   tech:{stack:"Vercel",integ:"FAA data feed · change detection · email alerts",loc:"—"},
    ux:"Owner or buyer watches an aircraft's FAA title/lien status and gets an instant alert the moment anything changes."},
   {id:"stockshows",name:"StockShowsHQ",tag:"P-8",conf:"4.3",
    what:"Junior-livestock show results aggregator (4-H / FFA).",
    stage:"Building.",market:"~6M 4-H + ~1M FFA members (est.)",pricing:"$4/mo or $29/yr (est.)",
    build:"3 / 5 — results aggregation + search across circuits",
+   tech:{stack:"web · Vercel",integ:"results aggregation · cross-circuit search",loc:"—"},
    ux:"4-H/FFA families look up junior-livestock show results, placings, and rankings across shows in one place."},
   {id:"duebell",name:"DueBell",tag:"P-2",conf:"4.6",site:"https://getduebell.com",
    what:"Auto 'your annual service is due' reminders for repeat-service trades on Jobber.",
    stage:"In Jobber marketplace review.",market:"~80–120k repeat-service trades on Jobber (est.)",pricing:"$29 / $49 / $79 per mo by client count",
    build:"2 / 5 — Jobber OAuth + daily cron + email",
+   tech:{stack:"Node · Render · Postgres",integ:"Jobber OAuth · Resend (email) · daily cron",loc:"—"},
    ux:"Connects to the pro's Jobber account and auto-emails customers 'your annual service is due,' timed from last visit + service frequency."},
   {id:"cert",name:"Cert & License Tracker",tag:"P-1",conf:"4.0",
    what:"Employee certification & license-expiry tracker on monday.com; auto-reminders before lapse.",
    stage:"In monday marketplace review.",market:"~63k monday accounts >10 users (regulated workforce, est.)",pricing:"Free / $19 / $49 / $99 per mo (monday billing)",
    build:"2 / 5 — monday app hosted on monday Code (nothing for us to host)",
+   tech:{stack:"monday Code (hosted)",integ:"monday.com SDK · marketplace billing",loc:"—"},
    ux:"Inside monday, tracks each employee's certification/license expiry and auto-reminds managers before anything lapses."},
   {id:"lastportal",name:"TheLastPortal",tag:"P-9",conf:"7.0",site:"https://thelastportal.com",
    what:"AR-automation B2B SaaS.",
    stage:"Phase 0 smoke test — product not yet green-lit.",market:"SMB accounts-receivable teams · large (to size at gate)",pricing:"$99+/mo (est.)",
    build:"4 / 5 — AR automation engine + integrations",
+   tech:{stack:"web (smoke test)",integ:"AR automation engine · accounting integrations (planned)",loc:"—"},
    ux:"Automates accounts-receivable follow-up so SMBs get paid faster; currently a smoke test to validate demand before green-light."}
 ];
 
@@ -639,17 +650,20 @@ function renderPortfolio(){
 function modal(html){$('modal').innerHTML=html;$('ov').classList.add('show');}
 function closeM(){$('ov').classList.remove('show');}
 function row(k,v){return `<div class="mrow"><span class="mk">${k}</span><span class="mv">${v}</span></div>`;}
+function techBlock(t){return t?`<div class="techsec"><div class="techh">Tech stack</div>${row("Stack",t.stack)}${row("Integrations",t.integ)}${row("Lines of code",t.loc||'—')}</div>`:'';}
 function openLive(id){const p=LIVE.find(x=>x.id===id);modal(
   `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">${p.tag} · Live</div>
    <div style="font-size:13px;color:var(--ink2);line-height:1.6;margin:14px 0">${p.note}</div>
    ${row("Distribution",p.dist.v)}${row("Engine",p.dist.d)}
    ${row("Emails sent",p.k.sent.toLocaleString())}${row("Inbox rate",p.k.inbox)}${row("Opens",p.k.opens)}${row("Replies",p.k.replies)}
    ${row("Total subs",p.k.subs)}${row("Phase",p.phase)}
+   ${techBlock(p.tech)}
    ${p.site?`<a class="mlink" href="${p.site}" target="_blank">Open site ↗</a>`:''}`);}
 function openWork(id){const p=WORK.find(x=>x.id===id);modal(
   `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">Lane ${p.tag} · In build</div>
    <div style="font-size:13px;color:var(--ink2);line-height:1.6;margin:14px 0">${p.what}</div>
    ${row("Stage",p.stage)}${p.next?row("Next",p.next):''}${row("Market size",p.market)}${row("Pricing / sub plans",p.pricing)}${row("Build size (tech lift)",p.build)}${row("User experience",p.ux)}${row("Confidence",p.conf+" / 5")}
+   ${techBlock(p.tech)}
    ${p.site?`<a class="mlink" href="${p.site}" target="_blank">Open site ↗</a>`:''}`);}
 function openPoss(id){const p=POSS.find(x=>x.id===id);modal(
   `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">Discovery candidate · Possible</div>
