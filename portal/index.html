@@ -364,7 +364,7 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
         <div class="cfield"><div class="cl">List size (contacts)</div>
           <div class="stepper"><button onclick="calcStep('c_list',-1000)">−</button><input id="c_list" type="number" value="15000" oninput="calc()"><button onclick="calcStep('c_list',1000)">+</button></div></div>
         <div class="cfield"><div class="cl">Daily sends</div>
-          <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="900" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
+          <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="450" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
         <div class="cfield"><div class="cl">Projects</div>
           <div class="stepper"><button onclick="calcStep('c_projects',-1)">−</button><input id="c_projects" type="number" min="1" value="1" oninput="calc()"><button onclick="calcStep('c_projects',1)">+</button></div>
           <div class="chelp">list &amp; sends × this many parallel projects</div></div>
@@ -757,7 +757,7 @@ function calcStep(id,d){
   el.value=v; calc();
 }
 /* reset the top inputs to their defaults */
-const CALC_DEFAULTS={c_price:200,c_conv:0.15,c_list:15000,c_daily:900,c_projects:1};
+const CALC_DEFAULTS={c_price:200,c_conv:0.15,c_list:15000,c_daily:450,c_projects:1};
 function resetCalc(){ for(const id in CALC_DEFAULTS){ const el=$(id); if(el) el.value=CALC_DEFAULTS[id]; } calc(); }
 function calc(){
   const price=parseFloat($('c_price').value)||0;
