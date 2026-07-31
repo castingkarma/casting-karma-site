@@ -129,6 +129,9 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .legend b.la,.legend b.lb,.legend b.lc{font-weight:700}
 /* calculator */
 .calc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:6px}
+.calc-head{display:flex;justify-content:flex-end;margin:-2px 0 2px}
+.rbtn{background:transparent;border:1px solid var(--line2);color:var(--gold);font-weight:700;font-size:12px;padding:6px 12px;border-radius:9px;cursor:pointer;transition:background .15s}
+.rbtn:hover{background:var(--goldsoft)}
 .cfield{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
 .cfield .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
 .stepper{display:flex;align-items:center;gap:8px;margin-top:9px}
@@ -351,16 +354,17 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
     <h2 class="sec">Revenue calculator</h2>
     <p class="lead">Set your sub price, per-touch conversion rate, list size, and daily send rate. Watch expected subs and revenue build touch by touch as the drip runs — then set a revenue goal to see how fast you'll reach it at your daily pace. It recomputes live.</p>
     <div class="panel">
+      <div class="calc-head"><button class="rbtn" onclick="resetCalc()">↺ Reset to defaults</button></div>
       <div class="calc">
         <div class="cfield"><div class="cl">Sub price ($/mo)</div>
-          <div class="stepper"><button onclick="calcStep('c_price',-5)">−</button><input id="c_price" type="number" value="225" oninput="calc()"><button onclick="calcStep('c_price',5)">+</button></div></div>
+          <div class="stepper"><button onclick="calcStep('c_price',-5)">−</button><input id="c_price" type="number" value="200" oninput="calc()"><button onclick="calcStep('c_price',5)">+</button></div></div>
         <div class="cfield"><div class="cl">Conversion / touch (%)</div>
-          <div class="stepper"><button onclick="calcStep('c_conv',-0.1)">−</button><input id="c_conv" type="number" step="0.05" value="0.1" oninput="calc()"><button onclick="calcStep('c_conv',0.1)">+</button></div>
+          <div class="stepper"><button onclick="calcStep('c_conv',-0.1)">−</button><input id="c_conv" type="number" step="0.05" value="0.15" oninput="calc()"><button onclick="calcStep('c_conv',0.1)">+</button></div>
           <div class="chelp" id="conv_help">—</div></div>
         <div class="cfield"><div class="cl">List size (contacts)</div>
           <div class="stepper"><button onclick="calcStep('c_list',-1000)">−</button><input id="c_list" type="number" value="15000" oninput="calc()"><button onclick="calcStep('c_list',1000)">+</button></div></div>
         <div class="cfield"><div class="cl">Daily sends</div>
-          <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="500" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
+          <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="900" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
         <div class="cfield"><div class="cl">Projects</div>
           <div class="stepper"><button onclick="calcStep('c_projects',-1)">−</button><input id="c_projects" type="number" min="1" value="1" oninput="calc()"><button onclick="calcStep('c_projects',1)">+</button></div>
           <div class="chelp">list &amp; sends × this many parallel projects</div></div>
@@ -752,6 +756,9 @@ function calcStep(id,d){
   else v=Math.max(0,Math.round(v));
   el.value=v; calc();
 }
+/* reset the top inputs to their defaults */
+const CALC_DEFAULTS={c_price:200,c_conv:0.15,c_list:15000,c_daily:900,c_projects:1};
+function resetCalc(){ for(const id in CALC_DEFAULTS){ const el=$(id); if(el) el.value=CALC_DEFAULTS[id]; } calc(); }
 function calc(){
   const price=parseFloat($('c_price').value)||0;
   const conv=parseFloat($('c_conv').value)||0;                       // per-touch %
