@@ -128,7 +128,7 @@ h2.sec{font-family:'Cinzel',serif;font-weight:600;font-size:22px;margin:6px 0 2p
 .legend{font-size:11px;color:var(--ink2);margin-top:10px}
 .legend b.la,.legend b.lb,.legend b.lc{font-weight:700}
 /* calculator */
-.calc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:6px}
+.calc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:6px}
 .cfield{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
 .cfield .cl{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);font-weight:600}
 .stepper{display:flex;align-items:center;gap:8px;margin-top:9px}
@@ -361,6 +361,9 @@ footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:10px 2
           <div class="stepper"><button onclick="calcStep('c_list',-1000)">−</button><input id="c_list" type="number" value="15000" oninput="calc()"><button onclick="calcStep('c_list',1000)">+</button></div></div>
         <div class="cfield"><div class="cl">Daily sends</div>
           <div class="stepper"><button onclick="calcStep('c_daily',-50)">−</button><input id="c_daily" type="number" value="500" oninput="calc()"><button onclick="calcStep('c_daily',50)">+</button></div></div>
+        <div class="cfield"><div class="cl">Projects</div>
+          <div class="stepper"><button onclick="calcStep('c_projects',-1)">−</button><input id="c_projects" type="number" min="1" value="1" oninput="calc()"><button onclick="calcStep('c_projects',1)">+</button></div>
+          <div class="chelp">list &amp; sends × this many parallel projects</div></div>
       </div>
       <div class="cout">
         <div class="cbig"><div class="cl">Daily subs</div><div class="cv" id="o_dsubs">—</div><div class="cs">daily sends × per-touch rate</div></div>
@@ -510,7 +513,15 @@ const POSS = [
    reach:"~8,000 reachable (est.) — county GIS + land-investor / REI lists",
    pricing:"$49 / $99 / $199 per mo · 3 tiers (est.)",
    build:"4 / 5 — parcel + GIS data pipeline, spatial joins, data licensing",
-   ux:"Upload or draw a batch of parcels → app auto-screens each for zoning, wetlands, slope, road & utility access → returns a ranked buildable-vs-not list with an exportable report."}
+   ux:"Upload or draw a batch of parcels → app auto-screens each for zoning, wetlands, slope, road & utility access → returns a ranked buildable-vs-not list with an exportable report."},
+  {id:"formanswer",name:"FormAnswer",conf:"5.8",
+   what:"Auto-drafts small manufacturers' responses to inbound customer compliance paperwork (conflict-minerals CMRT, RoHS/REACH/SVHC declarations, supplier quality surveys) from a saved company profile.",
+   market:"Quality mgr / owner at 10-100-employee electronics·metal·plastics contract manufacturers & distributors selling into auto/aero/electronics/medical OEMs · ~50-100k serviceable of 500k+ US mfrs",
+   reach:"~20,000-40,000 tight-ICP harvestable (60k+ broad) — Thomasnet + NIST MEP + state mfr registries · site-resolve, high yield",
+   pricing:"$199/mo entry · $299-349 multi-site (est.)",
+   wtp:"Pain recurs monthly (shops answer dozens of forms; REACH SVHC list updates ~2x/yr, CMRT annual, CoC per-shipment) and price sits inside existing quality-software spend (QT9 $150-1,500/mo) — anchor: ‘one CMRT + one REACH packet a month pays for it.’ Verified real risk is NOT competition (field is open — every incumbent is buyer-side) — it is SMB activation (‘just have Karen in QA fill it out’); the smoke test forces a $99 paid-pilot commitment before we build.",
+   build:"3 / 5 — doc parser + company knowledge-base (certs/materials/answers/part-maps) + AI form-mapping + review-&-sign copilot; portal-autofill extension = fast-follow. Low ongoing maintenance (central rule-lists). MVP wedge = CMRT + RoHS/REACH only.",
+   ux:"One-time: build the company profile (upload certs, enter material/substance data, answer a quality-manual bank once, map parts→materials). Then the loop: forward/upload the customer's packet → app auto-drafts the filled form in the customer's own template → quality manager reviews ~5 min, e-signs, returns it (PDF/Excel or paste into the customer portal). Plus cert-expiry reminders + a searchable archive of every form sent."}
 ];
 /* Re-screen bench (discovery candidates parked, not active): eBikeFit, LedgerPeppol, InvoiceIndex,
    EquiTrail, AgentLedger, BurnLedger, FormDraft, DarkTower, OrphanWellRadar. Add to POSS when a lane green-lights one. */
@@ -668,7 +679,7 @@ function openWork(id){const p=WORK.find(x=>x.id===id);modal(
 function openPoss(id){const p=POSS.find(x=>x.id===id);modal(
   `<button class="mclose" onclick="closeM()">×</button><h3>${p.name}</h3><div class="mp">Discovery candidate · Possible</div>
    <div style="font-size:13px;color:var(--ink2);line-height:1.6;margin:14px 0">${p.what}</div>
-   ${row("Market size",p.market)}${row("Reachable leads (Trawler)",p.reach)}${row("Pricing / sub plans",p.pricing)}${row("Build size (tech lift)",p.build)}${row("User experience",p.ux)}${row("Discovery confidence",p.conf+" / 10")}`);}
+   ${row("Market size",p.market)}${row("Reachable leads (Trawler)",p.reach)}${row("Pricing / sub plans",p.pricing)}${p.wtp?row("Willingness to pay",p.wtp):""}${row("Build size (tech lift)",p.build)}${row("User experience",p.ux)}${row("Discovery confidence",p.conf+" / 10")}`);}
 
 /* money */
 function renderMoney(){
@@ -735,34 +746,39 @@ function setTgt(m){TGT=m;$('tg_mrr').classList.toggle('on',m==='mrr');$('tg_arr'
 function calcStep(id,d){
   const el=$(id);
   let v=(parseFloat(el.value)||0)+d;
-  if(id==='c_conv') v=Math.max(0,Math.round(v*100)/100); else v=Math.max(0,Math.round(v));
+  if(id==='c_conv') v=Math.max(0,Math.round(v*100)/100);
+  else if(id==='c_projects') v=Math.max(1,Math.round(v));
+  else v=Math.max(0,Math.round(v));
   el.value=v; calc();
 }
 function calc(){
   const price=parseFloat($('c_price').value)||0;
   const conv=parseFloat($('c_conv').value)||0;                       // per-touch %
   const list=parseFloat($('c_list').value)||0;                       // contacts
-  const daily=parseFloat($('c_daily').value)||0;                     // sends/day
+  const daily=parseFloat($('c_daily').value)||0;                     // sends/day per project
+  const projects=Math.max(1,Math.round(parseFloat($('c_projects').value)||1)); // parallel projects
   const touches=Math.max(1,Math.round(parseFloat($('c_touch').value)||1));
   const goal=parseFloat($('c_target').value)||0;
   const r=conv/100;                                                   // per-touch fraction
   const Rfull=1-Math.pow(1-r,touches);                               // cumulative full-drip conversion
-  /* plain-language conversion helper */
+  const listAgg=list*projects, dailyAgg=daily*projects;             // aggregate across N projects
+  const pxsuffix = projects>1 ? ' across '+projects+' projects' : '';
+  /* plain-language conversion helper (per-send rate — unaffected by project count) */
   $('conv_help').textContent = r>0 ? '≈ 1 sub per '+Math.round(1/r).toLocaleString()+' sends' : 'set a rate';
-  /* ceiling — whole list, full drip */
-  const listSubs=list*Rfull, listMRR=listSubs*price;
+  /* ceiling — whole (aggregate) list, full drip */
+  const listSubs=listAgg*Rfull, listMRR=listSubs*price;
   $('o_subs').textContent=Math.round(listSubs).toLocaleString();
   $('o_mrr').textContent=money0(listMRR);
   $('o_arr').textContent=money0(listMRR*12);
-  /* daily subs — subs generated per day at the current send pace (per-touch conversion of daily sends) */
-  const dailySubs=daily*r;
-  $('o_dsubs').textContent = (daily>0&&r>0) ? (dailySubs<10?dailySubs.toFixed(1):Math.round(dailySubs).toLocaleString()) : '—';
-  $('o_ceilcap').textContent='Ceiling = your whole '+Math.round(list).toLocaleString()+'-contact list run through a full '+touches+'-touch drip ('+(Rfull*100).toFixed(2)+'% cumulative conversion).';
+  /* daily subs — subs generated per day at the current send pace, across all projects */
+  const dailySubs=dailyAgg*r;
+  $('o_dsubs').textContent = (dailyAgg>0&&r>0) ? (dailySubs<10?dailySubs.toFixed(1):Math.round(dailySubs).toLocaleString()) : '—';
+  $('o_ceilcap').textContent='Ceiling = your whole '+Math.round(listAgg).toLocaleString()+'-contact list'+pxsuffix+' run through a full '+touches+'-touch drip ('+(Rfull*100).toFixed(2)+'% cumulative conversion).';
   /* per-touch breakdown — touch 1 = single email, last row = full drip */
   let rows='<tr><th>Touch</th><th class="num">Subs added</th><th class="num">Total subs</th><th class="num">Total MRR</th></tr>';
   let prev=0;
   for(let k=1;k<=touches;k++){
-    const subsK=list*(1-Math.pow(1-r,k));
+    const subsK=listAgg*(1-Math.pow(1-r,k));
     const add=subsK-prev; prev=subsK;
     const cls=k===touches?' class="full"':'';
     rows+='<tr'+cls+'><td class="tlab">Touch '+k+(k===touches?' · full drip':'')+'</td><td class="num">'+Math.round(add).toLocaleString()+'</td><td class="num">'+Math.round(subsK).toLocaleString()+'</td><td class="num">'+money0(subsK*price)+'</td></tr>';
@@ -777,23 +793,23 @@ function calc(){
     $('o_need_subs').textContent=Math.ceil(needSubs).toLocaleString();
     $('o_need_contacts').textContent=Math.ceil(needContacts).toLocaleString();
     $('o_need_emails').textContent=Math.ceil(needSends).toLocaleString();
-    if(daily>0){
-      const days=needSends/daily, weeks=days/7;
+    if(dailyAgg>0){
+      const days=needSends/dailyAgg, weeks=days/7;
       $('o_weeks').textContent=Math.ceil(weeks).toLocaleString()+(Math.ceil(weeks)===1?' wk':' wks');
       $('o_days').textContent=Math.ceil(days).toLocaleString();
-      $('o_weeks_sub').textContent='sending '+Math.round(daily).toLocaleString()+' emails/day';
+      $('o_weeks_sub').textContent='sending '+Math.round(dailyAgg).toLocaleString()+' emails/day'+pxsuffix;
     } else {
       $('o_weeks').textContent='—'; $('o_days').textContent='—';
       $('o_weeks_sub').textContent='set a daily send rate';
     }
     /* reachability vs the contacts you actually have */
-    if(needContacts>list){
-      const short=Math.ceil(needContacts-list);
+    if(needContacts>listAgg){
+      const short=Math.ceil(needContacts-listAgg);
       $('o_reach').className='reach warn';
-      $('o_reach').innerHTML='⚠️ Your list of '+Math.round(list).toLocaleString()+' contacts tops out at '+money0(listMRR)+' MRR. Reaching '+money0(goalMRR)+'/mo needs ~'+Math.ceil(needContacts).toLocaleString()+' contacts — about '+short.toLocaleString()+' more than you have. Grow the list, add touches, or raise price/conversion.';
+      $('o_reach').innerHTML='⚠️ Your list of '+Math.round(listAgg).toLocaleString()+' contacts'+pxsuffix+' tops out at '+money0(listMRR)+' MRR. Reaching '+money0(goalMRR)+'/mo needs ~'+Math.ceil(needContacts).toLocaleString()+' contacts — about '+short.toLocaleString()+' more than you have. Grow the list, add touches/projects, or raise price/conversion.';
     } else {
       $('o_reach').className='reach ok';
-      $('o_reach').innerHTML='✅ Reachable within your list — needs ~'+Math.ceil(needContacts).toLocaleString()+' of your '+Math.round(list).toLocaleString()+' contacts ('+Math.ceil(needSends).toLocaleString()+' sends).';
+      $('o_reach').innerHTML='✅ Reachable within your list — needs ~'+Math.ceil(needContacts).toLocaleString()+' of your '+Math.round(listAgg).toLocaleString()+' contacts'+pxsuffix+' ('+Math.ceil(needSends).toLocaleString()+' sends).';
     }
   } else {
     ['o_weeks','o_days','o_need_emails','o_need_subs','o_need_contacts'].forEach(id=>$(id).textContent='—');
